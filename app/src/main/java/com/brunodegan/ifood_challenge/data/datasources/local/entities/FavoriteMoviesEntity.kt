@@ -9,6 +9,8 @@ data class FavoriteMoviesEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: Int = 0,
+    @ColumnInfo(name = "lastUpdated")
+    val lastUpdated: Long,
     @ColumnInfo(name = "title")
     val title: String,
     @ColumnInfo(name = "posterPath")

@@ -2,6 +2,7 @@ package com.brunodegan.ifood_challenge.data.repositories
 
 import com.brunodegan.ifood_challenge.base.network.base.ErrorType
 import com.brunodegan.ifood_challenge.base.network.base.Resource
+import com.brunodegan.ifood_challenge.base.utils.isCacheValid
 import com.brunodegan.ifood_challenge.data.datasources.local.LocalDataSource
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoritesRequest
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.FavoriteMoviesEntity
@@ -131,36 +132,37 @@ class MoviesRepositoryImpl(
         }
 
     override suspend fun removeFavorite(id: Int): Flow<Resource<FavoriteMoviesResponse>> = flow {
-            runCatching {
-                val request = AddToFavoritesRequest(mediaId = id, favorite = false)
-                remoteDataSource.addOrRemoveFromFavorites(request)
-            }.onFailure { error ->
-                emit(Resource.Error(ErrorType.Generic(error.message)))
-            }.map { apiDataModel ->
-                val mappedResult = addOrRemoveToFavoritesResponseDataMapper.map(apiDataModel)
-                mappedResult
-            }.onSuccess { convertedData ->
-                emit(Resource.Success(convertedData))
-            }
+        runCatching {
+            val request = AddToFavoritesRequest(mediaId = id, favorite = false)
+            remoteDataSource.addOrRemoveFromFavorites(request)
+        }.onFailure { error ->
+            emit(Resource.Error(ErrorType.Generic(error.message)))
+        }.map { apiDataModel ->
+            val mappedResult = addOrRemoveToFavoritesResponseDataMapper.map(apiDataModel)
+            mappedResult
+        }.onSuccess { convertedData ->
+            emit(Resource.Success(convertedData))
         }
+    }
 
     override suspend fun getFavorites(): Flow<Resource<List<FavoriteMoviesEntity>>> = flow {
         val favorites = localDataSource.getFavoriteMovies().first()
 
-        if (!favorites.isNullOrEmpty()) {
+        if (!favorites.isNullOrEmpty() && favorites.all { isCacheValid(it.lastUpdated) }) {
             emit(Resource.Success(favorites))
-        } else {
-            runCatching {
-                remoteDataSource.getFavorites()
-            }.onFailure { error ->
-                emit(Resource.Error(ErrorType.Generic(error.message)))
-            }.map { apiDataModel ->
-                val mappedResult = favoritesDataMapper.map(apiDataModel)
-                localDataSource.saveFavorites(mappedResult)
-                mappedResult
-            }.onSuccess { convertedData ->
-                emit(Resource.Success(convertedData))
-            }
+            return@flow
+        }
+
+        runCatching {
+            remoteDataSource.getFavorites()
+        }.onFailure { error ->
+            emit(Resource.Error(ErrorType.Generic(error.message)))
+        }.map { apiDataModel ->
+            val mappedResult = favoritesDataMapper.map(apiDataModel)
+            localDataSource.saveFavorites(mappedResult)
+            mappedResult
+        }.onSuccess { convertedData ->
+            emit(Resource.Success(convertedData))
         }
     }
 }

@@ -21,6 +21,10 @@ fun String?.formatUsDateToBrDate(): String {
     }
 }
 
+fun isCacheValid(lastUpdated: Long, expirationTime: Long = 10L): Boolean {
+    return System.currentTimeMillis() - lastUpdated < expirationTime
+}
+
 fun Double?.orZero(): Double {
     return this ?: 0.0
 }
