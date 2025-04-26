@@ -6,6 +6,7 @@ import com.brunodegan.ifood_challenge.base.utils.orZero
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.MoviesApiDataResponse
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.TopRatedMoviesEntity
 import org.koin.core.annotation.Factory
+import kotlin.random.Random
 
 @Factory
 class TopRatedDataMapper : BaseMapper<MoviesApiDataResponse, List<TopRatedMoviesEntity>> {
@@ -14,7 +15,7 @@ class TopRatedDataMapper : BaseMapper<MoviesApiDataResponse, List<TopRatedMovies
             input.results.forEach { movie ->
                 add(
                     TopRatedMoviesEntity(
-                        id = movie.id ?: 0,
+                        id = movie.id ?: Random.nextInt(),
                         title = movie.title.orEmpty(),
                         posterPath = movie.posterPath.formatFullCDNUrl(),
                         overview = movie.overview.orEmpty(),

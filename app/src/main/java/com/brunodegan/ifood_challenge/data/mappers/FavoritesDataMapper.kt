@@ -5,6 +5,7 @@ import com.brunodegan.ifood_challenge.base.utils.formatUsDateToBrDate
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.FavoriteMoviesEntity
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.MoviesApiDataResponse
 import org.koin.core.annotation.Factory
+import kotlin.random.Random
 
 @Factory
 class FavoritesDataMapper : BaseMapper<MoviesApiDataResponse, List<FavoriteMoviesEntity>> {
@@ -13,7 +14,8 @@ class FavoritesDataMapper : BaseMapper<MoviesApiDataResponse, List<FavoriteMovie
             input.results.forEach { movie ->
                 add(
                     FavoriteMoviesEntity(
-                        id = movie.id ?: 0,
+                        id = movie.id ?: Random.nextInt(),
+                        lastUpdated = System.currentTimeMillis(),
                         title = movie.title.orEmpty(),
                         posterPath = movie.posterPath.formatFullCDNUrl(),
                         overview = movie.overview.orEmpty(),
