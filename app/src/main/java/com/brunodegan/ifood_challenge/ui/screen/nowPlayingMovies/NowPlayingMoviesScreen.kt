@@ -61,8 +61,8 @@ import coil.size.Scale
 import com.brunodegan.ifood_challenge.R
 import com.brunodegan.ifood_challenge.base.ui.ErrorUiState
 import com.brunodegan.ifood_challenge.base.ui.LoaderUiState
-import com.brunodegan.ifood_challenge.base.ui.MovieShape
 import com.brunodegan.ifood_challenge.base.ui.ObserveAsEvent
+import com.brunodegan.ifood_challenge.base.ui.PosterShape
 import com.brunodegan.ifood_challenge.base.ui.SnackbarUiStateHolder
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.NowPlayingMoviesEntity
 import com.brunodegan.ifood_challenge.data.metrics.TrackScreen
@@ -222,13 +222,16 @@ private fun NowPlayingMovies(
                 contentDescription = "",
                 filterQuality = FilterQuality.Low,
                 modifier = Modifier
-                    .clip(MovieShape(cornerRadius = 60.0f))
                     .size(
                         dimensionResource(R.dimen.movie_poster_size),
                         dimensionResource(R.dimen.movie_poster_size)
                     )
                     .align(Alignment.CenterHorizontally)
-
+                    .padding(
+                        top = dimensionResource(R.dimen.double_padding),
+                        bottom = dimensionResource(R.dimen.base_padding)
+                    )
+                    .clip(PosterShape())
             )
             Text(
                 text = viewData.title,
@@ -242,7 +245,10 @@ private fun NowPlayingMovies(
                 textAlign = TextAlign.Justify,
                 overflow = TextOverflow.Ellipsis,
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(dimensionResource(R.dimen.base_padding))
+                modifier = Modifier.padding(
+                    top = dimensionResource(R.dimen.double_padding),
+                    start = dimensionResource(R.dimen.base_padding)
+                )
             )
             Text(
                 text = viewData.overview,

@@ -2,13 +2,10 @@ package com.brunodegan.ifood_challenge.base.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Outline
@@ -17,31 +14,33 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
 
-class MovieShape(
-    val cornerRadius: Float = 0f,
-    val color: Color = Color.Transparent
+class PosterShape(
+    private val cutOutHeight: Float = 10f,
+    private val topCutOutHeight: Float = 10f
 ) : Shape {
     override fun createOutline(
         size: Size,
         layoutDirection: LayoutDirection,
         density: Density
     ): Outline {
-        val path = Path().apply {
-            addRoundRect(
-                RoundRect(
-                    rect = Rect(
-                        left = 0f,
-                        top = 0f,
-                        right = size.width,
-                        bottom = size.height
-                    ),
-                    cornerRadius = CornerRadius(cornerRadius)
-                )
-            )
-            close()
-        }
-        return Outline.Generic(path)
+            val halfImgWidth = size.width / 2
+            val cornerLineWidth = 10f
+            val path = Path().apply {
+
+                moveTo(0f, topCutOutHeight)
+                lineTo(halfImgWidth - cornerLineWidth, 0f)
+                lineTo(halfImgWidth + cornerLineWidth, 0f)
+                lineTo(size.width, topCutOutHeight)
+                lineTo(size.width, size.height - cutOutHeight)
+
+                lineTo(halfImgWidth + cornerLineWidth, size.height)
+                lineTo(halfImgWidth - cornerLineWidth, size.height)
+                lineTo(0f, size.height - cutOutHeight)
+                close()
+            }
+            return Outline.Generic(path)
     }
 }
 
@@ -50,7 +49,8 @@ class MovieShape(
 fun CustomMovieShapePreview() {
     Box(
         modifier = Modifier
-            .wrapContentSize()
-            .clip(MovieShape(cornerRadius = 16f, color = Color.Red))
+            .size(200.dp, 300.dp)
+            .clip(PosterShape(cutOutHeight = 80f))
+            .background(Color.Gray)
     )
 }

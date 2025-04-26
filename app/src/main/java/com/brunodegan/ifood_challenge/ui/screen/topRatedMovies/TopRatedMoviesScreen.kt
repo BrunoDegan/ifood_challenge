@@ -9,7 +9,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -31,8 +30,10 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -63,8 +64,8 @@ import coil.size.Scale
 import com.brunodegan.ifood_challenge.R
 import com.brunodegan.ifood_challenge.base.ui.ErrorUiState
 import com.brunodegan.ifood_challenge.base.ui.LoaderUiState
-import com.brunodegan.ifood_challenge.base.ui.MovieShape
 import com.brunodegan.ifood_challenge.base.ui.ObserveAsEvent
+import com.brunodegan.ifood_challenge.base.ui.PosterShape
 import com.brunodegan.ifood_challenge.base.ui.SnackbarUiStateHolder
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.TopRatedMoviesEntity
 import com.brunodegan.ifood_challenge.data.metrics.TrackScreen
@@ -185,6 +186,7 @@ private fun TopRatedMoviesCard(
     viewData: TopRatedMoviesEntity,
     onFavoriteButtonClicked: (Int) -> Unit
 ) {
+
     var isFavoriteButtonClicked by rememberSaveable { mutableStateOf(false) }
 
     val imageRequest = ImageRequest.Builder(LocalContext.current).data(viewData.posterPath)
@@ -228,7 +230,6 @@ private fun TopRatedMoviesCard(
                 contentDescription = "",
                 filterQuality = FilterQuality.Low,
                 modifier = Modifier
-                    .clip(MovieShape(cornerRadius = 60.0f))
                     .size(
                         dimensionResource(R.dimen.movie_poster_size),
                         dimensionResource(R.dimen.movie_poster_size)
@@ -237,6 +238,9 @@ private fun TopRatedMoviesCard(
                     .padding(
                         top = dimensionResource(R.dimen.double_padding),
                         bottom = dimensionResource(R.dimen.base_padding)
+                    )
+                    .clip(
+                        shape = PosterShape()
                     )
             )
             Text(

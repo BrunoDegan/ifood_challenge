@@ -1,7 +1,8 @@
 package com.brunodegan.ifood_challenge.data.mappers
 
-import com.brunodegan.ifood_challenge.base.utils.MOVIES_POSTER_CDN_URL
+import com.brunodegan.ifood_challenge.base.utils.formatFullCDNUrl
 import com.brunodegan.ifood_challenge.base.utils.formatUsDateToBrDate
+import com.brunodegan.ifood_challenge.base.utils.orZero
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.MoviesApiDataModel
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.NowPlayingMoviesEntity
 import org.koin.core.annotation.Factory
@@ -14,12 +15,12 @@ class NowPlayingDataMapper : BaseMapper<MoviesApiDataModel, List<NowPlayingMovie
                 add(
                     NowPlayingMoviesEntity(
                         title = movie.title.orEmpty(),
-                        posterPath = MOVIES_POSTER_CDN_URL + movie.posterPath.orEmpty(),
+                        posterPath = movie.posterPath.formatFullCDNUrl(),
                         overview = movie.overview.orEmpty(),
                         originalLanguage = movie.originalLanguage.orEmpty(),
-                        popularity = movie.popularity ?: 0.0,
-                        voteAverage = movie.voteAverage ?: 0.0,
-                        releaseDate = movie.releaseDate?.let { formatUsDateToBrDate(it) }.orEmpty()
+                        popularity = movie.popularity.orZero(),
+                        voteAverage = movie.voteAverage.orZero(),
+                        releaseDate = movie.releaseDate.formatUsDateToBrDate()
                     )
                 )
             }

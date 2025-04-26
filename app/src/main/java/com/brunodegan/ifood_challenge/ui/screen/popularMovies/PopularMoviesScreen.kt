@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
@@ -41,7 +40,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -64,6 +62,7 @@ import com.brunodegan.ifood_challenge.R
 import com.brunodegan.ifood_challenge.base.ui.ErrorUiState
 import com.brunodegan.ifood_challenge.base.ui.LoaderUiState
 import com.brunodegan.ifood_challenge.base.ui.ObserveAsEvent
+import com.brunodegan.ifood_challenge.base.ui.PosterShape
 import com.brunodegan.ifood_challenge.base.ui.SnackbarUiStateHolder
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.PopularMoviesEntity
 import com.brunodegan.ifood_challenge.data.metrics.TrackScreen
@@ -227,7 +226,6 @@ private fun PopularMovies(
                 contentDescription = "",
                 filterQuality = FilterQuality.Low,
                 modifier = Modifier
-                    .clip(RoundedCornerShape(dimensionResource(R.dimen.movie_poster_corner_radius)))
                     .size(
                         dimensionResource(R.dimen.movie_poster_size),
                         dimensionResource(R.dimen.movie_poster_size)
@@ -237,6 +235,8 @@ private fun PopularMovies(
                         top = dimensionResource(R.dimen.double_padding),
                         bottom = dimensionResource(R.dimen.base_padding)
                     )
+                    .clip(PosterShape())
+
             )
             Text(
                 text = viewData.title,
@@ -250,7 +250,10 @@ private fun PopularMovies(
                 textAlign = TextAlign.Justify,
                 overflow = TextOverflow.Ellipsis,
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(dimensionResource(R.dimen.base_padding))
+                modifier = Modifier.padding(
+                    top = dimensionResource(R.dimen.double_padding),
+                    start = dimensionResource(R.dimen.base_padding)
+                )
             )
             Text(
                 text = viewData.overview,

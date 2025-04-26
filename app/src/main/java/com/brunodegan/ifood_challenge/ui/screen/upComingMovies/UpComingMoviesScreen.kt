@@ -9,7 +9,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -63,7 +62,7 @@ import coil.size.Scale
 import com.brunodegan.ifood_challenge.R
 import com.brunodegan.ifood_challenge.base.ui.ErrorUiState
 import com.brunodegan.ifood_challenge.base.ui.LoaderUiState
-import com.brunodegan.ifood_challenge.base.ui.MovieShape
+import com.brunodegan.ifood_challenge.base.ui.PosterShape
 import com.brunodegan.ifood_challenge.base.ui.ObserveAsEvent
 import com.brunodegan.ifood_challenge.base.ui.SnackbarUiStateHolder
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.UpcomingMoviesEntity
@@ -226,7 +225,7 @@ private fun UpComingMovesCard(
                 contentDescription = "",
                 filterQuality = FilterQuality.Low,
                 modifier = Modifier
-                    .clip(MovieShape(cornerRadius = 60.0f))
+                    .clip(PosterShape())
                     .size(
                         dimensionResource(R.dimen.movie_poster_size),
                         dimensionResource(R.dimen.movie_poster_size)
@@ -249,7 +248,10 @@ private fun UpComingMovesCard(
                 textAlign = TextAlign.Justify,
                 overflow = TextOverflow.Ellipsis,
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(dimensionResource(R.dimen.base_padding))
+                modifier = Modifier.padding(
+                    top = dimensionResource(R.dimen.double_padding),
+                    start = dimensionResource(R.dimen.base_padding)
+                )
             )
             Text(
                 text = viewData.overview,
