@@ -1,4 +1,5 @@
 package com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.events
 
-interface FavoriteMoviesUiEvents {
+sealed interface FavoriteMoviesUiEvents {
+    data object OnRetryButtonClickedUiEvent : FavoriteMoviesUiEvents
 }

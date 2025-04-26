@@ -3,6 +3,7 @@
     <string name="upcoming_movies">Por vir</string>
     <string name="top_rated_movies">Top Ranking</string>
     <string name="popular_movies">Populares</string>
+    <string name="favorites_movies">Favoritos</string>
     <string name="try_again_label">Try again</string>
     <string name="app_name">Ifood Challenge</string>
     <string name="http_response_generic_error_message">Error on processing your request, try again later !</string>

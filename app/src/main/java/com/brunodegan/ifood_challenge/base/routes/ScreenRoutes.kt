@@ -5,4 +5,5 @@ sealed class ScreenRoutes(val route: String) {
     data object PopularScreen : ScreenRoutes("popular")
     data object TopRatedScreen : ScreenRoutes("top_rated")
     data object UpComingScreen : ScreenRoutes("upcoming")
+    data object FavoritesScreen: ScreenRoutes("favorites")
 }

@@ -15,12 +15,6 @@ data class FavoriteMoviesEntity(
     val posterPath: String,
     @ColumnInfo(name = "overview")
     val overview: String,
-    @ColumnInfo(name = "original_language")
-    val originalLanguage: String,
-    @ColumnInfo(name = "popularity")
-    val popularity: Double,
-    @ColumnInfo(name = "vote_average")
-    val voteAverage: Double,
     @ColumnInfo(name = "release_date")
     val releaseDate: String
 )

@@ -278,7 +278,7 @@ private fun UpComingMovesCard(
                 fontSize = TextUnit(
                     value = ResourcesCompat.getFloat(
                         LocalContext.current.resources,
-                        R.dimen.movie_language_font_size
+                        R.dimen.movie_title_font_size
                     ), type = TextUnitType.Sp
                 ),
                 textAlign = TextAlign.Justify,

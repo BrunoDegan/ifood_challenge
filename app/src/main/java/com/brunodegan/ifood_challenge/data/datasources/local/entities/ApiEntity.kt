@@ -23,13 +23,19 @@ data class AddToFavoritesResponse(
     @SerializedName("success") val success: Boolean,
     @SerializedName("status_code") val statusCode: String,
     @SerializedName("status_message") val statusMessage: String,
-)
+) : ApiData()
 
 data class AddToFavoritesRequest(
     @SerializedName("media_type") val mediaType: String = MEDIA_TYPE,
     @SerializedName("media_id") val mediaId: Int,
     @SerializedName("favorite") val favorite: Boolean,
-)
+) : ApiData()
+
+data class FavoriteMoviesResponse(
+    val success: Boolean,
+    val statusMessage: String,
+    val statusCode: String
+) : ApiData()
 
 @Parcelize
 open class BaseApiData : Parcelable

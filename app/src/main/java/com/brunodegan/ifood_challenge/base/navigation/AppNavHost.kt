@@ -38,6 +38,7 @@ import androidx.navigation.compose.rememberNavController
 import com.brunodegan.ifood_challenge.R
 import com.brunodegan.ifood_challenge.base.routes.ScreenRoutes
 import com.brunodegan.ifood_challenge.base.ui.CustomAppBar
+import com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.FavoriteMoviesScreen
 import com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.NowPlayingMoviesScreen
 import com.brunodegan.ifood_challenge.ui.screen.popularMovies.PopularMoviesScreen
 import com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.TopRatedVideosScreen
@@ -177,6 +178,22 @@ fun AppNavHost() {
                 }
                 composable(ScreenRoutes.UpComingScreen.route) {
                     UpComingMoviesScreen(
+                        scrollBehavior = topbarScrollBehavior,
+                        onNavigateUp = {
+                            val popped = navController.popBackStack()
+                            if (!popped) {
+                                activity?.finish()
+                            }
+                        },
+                        onShowSnackbar = { msg ->
+                            coroutineScope.launch {
+                                snackbarHostState.showSnackbar(message = msg)
+                            }
+                        }
+                    )
+                }
+                composable(ScreenRoutes.FavoritesScreen.route) {
+                    FavoriteMoviesScreen(
                         scrollBehavior = topbarScrollBehavior,
                         onNavigateUp = {
                             val popped = navController.popBackStack()

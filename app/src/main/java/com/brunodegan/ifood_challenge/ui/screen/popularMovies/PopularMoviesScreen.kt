@@ -39,7 +39,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -278,7 +277,7 @@ private fun PopularMoviesCard(
                 fontSize = TextUnit(
                     value = ResourcesCompat.getFloat(
                         LocalContext.current.resources,
-                        R.dimen.movie_language_font_size
+                        R.dimen.movie_title_font_size
                     ), type = TextUnitType.Sp
                 ),
                 textAlign = TextAlign.Justify,

@@ -47,6 +47,14 @@ sealed class BottomNavRoutes(
             R.string.popular_movies,
             R.drawable.popular_movies
         )
+
+    data object Favorites :
+        BottomNavRoutes(
+            FAVORITES,
+            ScreenRoutes.FavoritesScreen.route,
+            R.string.favorites_movies,
+            R.drawable.favorite
+        )
 }
 
 fun getBottomNavItems(): List<BottomNavItem> {
@@ -74,6 +82,12 @@ fun getBottomNavItems(): List<BottomNavItem> {
             route = BottomNavRoutes.Popular.route,
             label = BottomNavRoutes.Popular.title,
             iconResourceId = BottomNavRoutes.Popular.imgResId,
+        ),
+        BottomNavItem(
+            position = BottomNavRoutes.Favorites.position,
+            route = BottomNavRoutes.Favorites.route,
+            label = BottomNavRoutes.Favorites.title,
+            iconResourceId = BottomNavRoutes.Favorites.imgResId,
         )
     )
 }
@@ -82,3 +96,4 @@ private const val NOW_PLAYING = 0
 private const val UP_COMMING = 1
 private const val TOP_RATED = 2
 private const val POPULAR = 3
+private const val FAVORITES = 4

@@ -5,6 +5,7 @@ import com.brunodegan.ifood_challenge.base.network.base.Resource
 import com.brunodegan.ifood_challenge.data.datasources.local.LocalDataSource
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoritesRequest
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.FavoriteMoviesEntity
+import com.brunodegan.ifood_challenge.data.datasources.local.entities.FavoriteMoviesResponse
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.NowPlayingMoviesEntity
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.PopularMoviesEntity
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.TopRatedMoviesEntity
@@ -16,7 +17,6 @@ import com.brunodegan.ifood_challenge.data.mappers.NowPlayingDataMapper
 import com.brunodegan.ifood_challenge.data.mappers.PopularDataMapper
 import com.brunodegan.ifood_challenge.data.mappers.TopRatedDataMapper
 import com.brunodegan.ifood_challenge.data.mappers.UpcomingDataMapper
-import com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.model.FavoriteMoviesViewData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -115,7 +115,7 @@ class MoviesRepositoryImpl(
             }
         }
 
-    override suspend fun addFavorite(id: Int): Flow<Resource<FavoriteMoviesViewData>> =
+    override suspend fun addFavorite(id: Int): Flow<Resource<FavoriteMoviesResponse>> =
         flow {
             runCatching {
                 val request = AddToFavoritesRequest(mediaId = id, favorite = true)
@@ -130,8 +130,7 @@ class MoviesRepositoryImpl(
             }
         }
 
-    override suspend fun removeFavorite(id: Int): Flow<Resource<FavoriteMoviesViewData>> =
-        flow {
+    override suspend fun removeFavorite(id: Int): Flow<Resource<FavoriteMoviesResponse>> = flow {
             runCatching {
                 val request = AddToFavoritesRequest(mediaId = id, favorite = false)
                 remoteDataSource.addOrRemoveFromFavorites(request)

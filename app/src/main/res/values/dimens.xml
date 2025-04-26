@@ -15,4 +15,5 @@
     <item name="progress_circular_indicator_alpha" format="float" type="dimen">0.5f</item>
     <item name="movie_language_font_size" format="float" type="dimen">22.0</item>
     <item name="movie_overview_font_size" format="float" type="dimen">16.0</item>
+    <item name="movie_title_font_size" format="float" type="dimen">18.0</item>
 </resources>
