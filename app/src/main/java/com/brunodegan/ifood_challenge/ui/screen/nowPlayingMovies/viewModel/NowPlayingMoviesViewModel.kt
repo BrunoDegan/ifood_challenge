@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.brunodegan.ifood_challenge.base.network.base.Resource
 import com.brunodegan.ifood_challenge.base.ui.SnackbarUiStateHolder
+import com.brunodegan.ifood_challenge.domain.addToFavorites.AddToFavoritesUseCase
 import com.brunodegan.ifood_challenge.domain.getNowPlaying.GetNowPlayingUseCase
+import com.brunodegan.ifood_challenge.domain.removeFromFavorites.RemoveFromFavoritesUseCase
 import com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.events.NowPlayingMoviesUiEvents
 import com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.state.NowPlayingMoviesUiState
 import kotlinx.coroutines.CoroutineDispatcher
@@ -26,6 +28,8 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 class NowPlayingMoviesViewModel(
     private val useCase: GetNowPlayingUseCase,
+    private val addToFavoritesUseCase: AddToFavoritesUseCase,
+    private val removeFromFavoritesUseCase: RemoveFromFavoritesUseCase,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : ViewModel() {
 
@@ -42,13 +46,15 @@ class NowPlayingMoviesViewModel(
 
     fun onUiEvent(event: NowPlayingMoviesUiEvents) {
         when (event) {
-            is NowPlayingMoviesUiEvents.OnRetryButtonClickedUiEvent -> {
+            is NowPlayingMoviesUiEvents.OnRetryButtonClickedUiEvent ->
                 getNowPlayingMovies()
-            }
 
-            is NowPlayingMoviesUiEvents.OnAddFavButtonClickedUiEvent -> {
-                // TODO Add favorite button clicked
-            }
+            is NowPlayingMoviesUiEvents.OnAddFavButtonClickedUiEvent ->
+                addMovieToFavorites(movieId = event.id)
+
+            is NowPlayingMoviesUiEvents.OnRemoveFavButtonClickedUiEvent ->
+                removeMovieFromFavorites(movieId = event.id)
+
         }
     }
 
@@ -72,6 +78,58 @@ class NowPlayingMoviesViewModel(
 
                         is Resource.Error -> {
                             _uiState.value = NowPlayingMoviesUiState.Error(result.error)
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun addMovieToFavorites(movieId: Int) {
+        viewModelScope.launch {
+            addToFavoritesUseCase.invoke(movieId)
+                .flowOn(dispatcher)
+                .distinctUntilChanged()
+                .catch { error ->
+                    error.message?.let {
+                        _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(it))
+                    }
+                }
+                .collectLatest { result ->
+                    when (result) {
+                        is Resource.Success -> {
+                            _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(result.data.statusMessage))
+                        }
+
+                        is Resource.Error -> {
+                            _uiState.value = NowPlayingMoviesUiState.Error(result.error)
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun removeMovieFromFavorites(movieId: Int) {
+        viewModelScope.launch {
+            removeFromFavoritesUseCase.invoke(movieId)
+                .flowOn(dispatcher)
+                .distinctUntilChanged()
+                .catch { error ->
+                    error.message?.let {
+                        _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(it))
+                    }
+                }
+                .collectLatest { result ->
+                    when (result) {
+                        is Resource.Success -> {
+                            if (result.data.success) {
+                                _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(result.data.statusMessage))
+                            }
+                        }
+
+                        is Resource.Error -> {
+                            result.error.message?.let {
+                                _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(it))
+                            }
                         }
                     }
                 }

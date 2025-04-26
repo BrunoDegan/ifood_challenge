@@ -1,5 +1,6 @@
 package com.brunodegan.ifood_challenge.data.datasources.local
 
+import com.brunodegan.ifood_challenge.data.datasources.local.entities.FavoriteMoviesEntity
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.NowPlayingMoviesEntity
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.PopularMoviesEntity
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.TopRatedMoviesEntity
@@ -7,6 +8,7 @@ import com.brunodegan.ifood_challenge.data.datasources.local.entities.UpcomingMo
 import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {
+    suspend fun getFavoriteMovies(): Flow<List<FavoriteMoviesEntity>?>
     suspend fun getNowPlaying(): Flow<List<NowPlayingMoviesEntity>?>
     suspend fun getPopular(): Flow<List<PopularMoviesEntity>?>
     suspend fun getTopRated(): Flow<List<TopRatedMoviesEntity>?>
@@ -15,4 +17,5 @@ interface LocalDataSource {
     fun savePopular(popularData: List<PopularMoviesEntity>)
     fun saveTopRated(topRatedData: List<TopRatedMoviesEntity>)
     fun saveUpcoming(upcomingData: List<UpcomingMoviesEntity>)
+    fun saveFavorites(favoriteMovie: List<FavoriteMoviesEntity>)
 }

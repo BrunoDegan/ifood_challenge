@@ -71,9 +71,7 @@ fun AppNavHost() {
             snackbarHost = {
                 SnackbarHost(
                     hostState = snackbarHostState,
-                    modifier = Modifier
-                        .background(color = MaterialTheme.colorScheme.onError)
-                        .safeContentPadding()
+                    modifier = Modifier.safeContentPadding()
                 )
             },
             bottomBar = {

@@ -3,17 +3,18 @@ package com.brunodegan.ifood_challenge.data.mappers
 import com.brunodegan.ifood_challenge.base.utils.formatFullCDNUrl
 import com.brunodegan.ifood_challenge.base.utils.formatUsDateToBrDate
 import com.brunodegan.ifood_challenge.base.utils.orZero
-import com.brunodegan.ifood_challenge.data.datasources.local.entities.MoviesApiDataModel
+import com.brunodegan.ifood_challenge.data.datasources.local.entities.MoviesApiDataResponse
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.NowPlayingMoviesEntity
 import org.koin.core.annotation.Factory
 
 @Factory
-class NowPlayingDataMapper : BaseMapper<MoviesApiDataModel, List<NowPlayingMoviesEntity>> {
-    override fun map(input: MoviesApiDataModel): List<NowPlayingMoviesEntity> {
+class NowPlayingDataMapper : BaseMapper<MoviesApiDataResponse, List<NowPlayingMoviesEntity>> {
+    override fun map(input: MoviesApiDataResponse): List<NowPlayingMoviesEntity> {
         return buildList {
             input.results.forEach { movie ->
                 add(
                     NowPlayingMoviesEntity(
+                        id = movie.id ?: 0,
                         title = movie.title.orEmpty(),
                         posterPath = movie.posterPath.formatFullCDNUrl(),
                         overview = movie.overview.orEmpty(),

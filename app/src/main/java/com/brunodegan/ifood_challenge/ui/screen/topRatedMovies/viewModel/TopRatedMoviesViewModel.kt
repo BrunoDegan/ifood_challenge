@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.brunodegan.ifood_challenge.base.network.base.Resource
 import com.brunodegan.ifood_challenge.base.ui.SnackbarUiStateHolder
+import com.brunodegan.ifood_challenge.domain.addToFavorites.AddToFavoritesUseCase
 import com.brunodegan.ifood_challenge.domain.getTopRated.GetTopRatedUseCase
+import com.brunodegan.ifood_challenge.domain.removeFromFavorites.RemoveFromFavoritesUseCase
 import com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.events.TopRatedMoviesUiEvents
 import com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.state.TopRatedMoviesUiState
 import kotlinx.coroutines.CoroutineDispatcher
@@ -26,6 +28,8 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 class TopRatedMoviesViewModel(
     private val useCase: GetTopRatedUseCase,
+    private val addToFavoritesUseCase: AddToFavoritesUseCase,
+    private val removeFromFavoritesUseCase: RemoveFromFavoritesUseCase,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : ViewModel() {
 
@@ -45,9 +49,11 @@ class TopRatedMoviesViewModel(
                 getTopRatedMovies()
             }
 
-            is TopRatedMoviesUiEvents.OnAddFavButtonClickedUiEvent -> {
-                // TODO Add favorite button clicked
-            }
+            is TopRatedMoviesUiEvents.OnAddFavButtonClickedUiEvent -> addMovieToFavorites(event.id)
+
+            is TopRatedMoviesUiEvents.OnRemoveFavButtonClickedUiEvent -> removeMovieFromFavorites(
+                event.id
+            )
         }
     }
 
@@ -66,6 +72,56 @@ class TopRatedMoviesViewModel(
                     when (result) {
                         is Resource.Success -> {
                             _uiState.value = TopRatedMoviesUiState.Success(result.data)
+                        }
+
+                        is Resource.Error -> {
+                            _uiState.value = TopRatedMoviesUiState.Error(result.error)
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun addMovieToFavorites(movieId: Int) {
+        viewModelScope.launch {
+            addToFavoritesUseCase.invoke(movieId)
+                .flowOn(dispatcher)
+                .distinctUntilChanged()
+                .catch { error ->
+                    error.message?.let {
+                        _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(it))
+                    }
+                }
+                .collectLatest { result ->
+                    when (result) {
+                        is Resource.Success -> {
+                            _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(result.data.statusMessage))
+                        }
+
+                        is Resource.Error -> {
+                            _uiState.value = TopRatedMoviesUiState.Error(result.error)
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun removeMovieFromFavorites(movieId: Int) {
+        viewModelScope.launch {
+            removeFromFavoritesUseCase.invoke(movieId)
+                .flowOn(dispatcher)
+                .distinctUntilChanged()
+                .catch { error ->
+                    error.message?.let {
+                        _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(it))
+                    }
+                }
+                .collectLatest { result ->
+                    when (result) {
+                        is Resource.Success -> {
+                            if (result.data.success) {
+                                _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(result.data.statusMessage))
+                            }
                         }
 
                         is Resource.Error -> {

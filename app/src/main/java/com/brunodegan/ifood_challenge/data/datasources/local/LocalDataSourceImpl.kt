@@ -1,9 +1,11 @@
 package com.brunodegan.ifood_challenge.data.datasources.local
 
+import com.brunodegan.ifood_challenge.data.datasources.local.daos.FavoritesDao
 import com.brunodegan.ifood_challenge.data.datasources.local.daos.NowPlayingDao
 import com.brunodegan.ifood_challenge.data.datasources.local.daos.PopularDao
 import com.brunodegan.ifood_challenge.data.datasources.local.daos.TopRatedDao
 import com.brunodegan.ifood_challenge.data.datasources.local.daos.UpComingDao
+import com.brunodegan.ifood_challenge.data.datasources.local.entities.FavoriteMoviesEntity
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.NowPlayingMoviesEntity
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.PopularMoviesEntity
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.TopRatedMoviesEntity
@@ -13,11 +15,17 @@ import org.koin.core.annotation.Single
 
 @Single
 class LocalDataSourceImpl(
+    private val favoriteDao: FavoritesDao,
     private val nowPlayingDao: NowPlayingDao,
     private val topRatedPopular: TopRatedDao,
     private val upComingDao: UpComingDao,
     private val popularDao: PopularDao
 ) : LocalDataSource {
+    override fun saveFavorites(favoriteMovie: List<FavoriteMoviesEntity>) =
+        favoriteDao.insertFavorite(favoriteMovie)
+
+    override suspend fun getFavoriteMovies(): Flow<List<FavoriteMoviesEntity>> =
+        favoriteDao.getFavoriteMovies()
 
     override suspend fun getNowPlaying(): Flow<List<NowPlayingMoviesEntity>> =
         nowPlayingDao.getAllNowPlaying()

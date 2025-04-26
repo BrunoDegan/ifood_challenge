@@ -2,6 +2,7 @@ package com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.state
 
 import com.brunodegan.ifood_challenge.base.network.base.ErrorType
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.TopRatedMoviesEntity
+import com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.model.FavoriteMoviesViewData
 
 sealed interface TopRatedMoviesUiState {
     data object Initial : TopRatedMoviesUiState

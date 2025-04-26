@@ -2,6 +2,7 @@ package com.brunodegan.ifood_challenge.ui.screen.upComingMovies.state
 
 import com.brunodegan.ifood_challenge.base.network.base.ErrorType
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.UpcomingMoviesEntity
+import com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.model.FavoriteMoviesViewData
 
 sealed interface UpComingMoviesUiState {
     data object Initial : UpComingMoviesUiState

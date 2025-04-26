@@ -5,7 +5,9 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,10 +32,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -132,10 +132,14 @@ private fun TopRatedVideosScreen(
             SuccessState(
                 scrollBehavior = scrollBehavior,
                 modifier = modifier,
-                viewData = state.viewData
-            ) {
-                onEvent(TopRatedMoviesUiEvents.OnAddFavButtonClickedUiEvent(it))
-            }
+                viewData = state.viewData,
+                onFavoriteButtonClicked = {
+                    onEvent(TopRatedMoviesUiEvents.OnAddFavButtonClickedUiEvent(it))
+                },
+                onRemoveFavButtonClickedUiEvent = {
+                    onEvent(TopRatedMoviesUiEvents.OnRemoveFavButtonClickedUiEvent(it))
+                }
+            )
         }
 
         is TopRatedMoviesUiState.Error -> {
@@ -159,7 +163,8 @@ private fun SuccessState(
     scrollBehavior: TopAppBarScrollBehavior,
     modifier: Modifier = Modifier,
     viewData: List<TopRatedMoviesEntity>,
-    onFavoriteButtonClicked: (Int) -> Unit
+    onFavoriteButtonClicked: (Int) -> Unit,
+    onRemoveFavButtonClickedUiEvent: (Int) -> Unit
 ) {
     val scrollState = rememberLazyListState()
 
@@ -173,9 +178,15 @@ private fun SuccessState(
             .fillMaxSize()
     ) {
         items(viewData.size, key = { index -> viewData[index].title }) { position ->
-            TopRatedMoviesCard(viewData = viewData[position]) {
-                onFavoriteButtonClicked(it)
-            }
+            TopRatedMoviesCard(
+                viewData = viewData[position],
+                onFavoriteButtonClicked = {
+                    onFavoriteButtonClicked(it)
+                },
+                onRemoveFavButtonClickedUiEvent = {
+                    onRemoveFavButtonClickedUiEvent(it)
+                }
+            )
         }
     }
 }
@@ -184,9 +195,9 @@ private fun SuccessState(
 private fun TopRatedMoviesCard(
     modifier: Modifier = Modifier,
     viewData: TopRatedMoviesEntity,
-    onFavoriteButtonClicked: (Int) -> Unit
+    onFavoriteButtonClicked: (Int) -> Unit,
+    onRemoveFavButtonClickedUiEvent: (Int) -> Unit
 ) {
-
     var isFavoriteButtonClicked by rememberSaveable { mutableStateOf(false) }
 
     val imageRequest = ImageRequest.Builder(LocalContext.current).data(viewData.posterPath)
@@ -195,7 +206,7 @@ private fun TopRatedMoviesCard(
 
     val cardColor by animateColorAsState(
         targetValue = if (isFavoriteButtonClicked) {
-            Color.Yellow
+            MaterialTheme.colorScheme.onSecondary
         } else {
             MaterialTheme.colorScheme.primaryContainer
         }, animationSpec = spring(
@@ -223,6 +234,28 @@ private fun TopRatedMoviesCard(
                 .padding(start = dimensionResource(R.dimen.double_padding))
                 .wrapContentSize()
         ) {
+            Image(
+                painter = painterResource(
+                    if (isFavoriteButtonClicked) {
+                        R.drawable.added_to_favorites
+                    } else {
+                        R.drawable.not_added_to_favorites
+                    }
+                ),
+                contentDescription = "",
+                modifier = Modifier
+                    .size(dimensionResource(R.dimen.favorite_icon_size))
+                    .align(Alignment.End)
+                    .padding(top = dimensionResource(R.dimen.double_padding))
+                    .clickable {
+                        isFavoriteButtonClicked = !isFavoriteButtonClicked
+                        if (isFavoriteButtonClicked) {
+                            onFavoriteButtonClicked(viewData.id)
+                        } else {
+                            onRemoveFavButtonClickedUiEvent(viewData.id)
+                        }
+                    }
+            )
             AsyncImage(
                 model = imageRequest,
                 fallback = painterResource(R.drawable.movie_icon),

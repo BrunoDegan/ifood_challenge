@@ -11,6 +11,7 @@
     <dimen name="movie_poster_size">250dp</dimen>
     <dimen name="movie_poster_corner_radius">10dp</dimen>
     <dimen name="circular_progress_indicator_size">35dp</dimen>
+    <dimen name="favorite_icon_size">50dp</dimen>
     <item name="progress_circular_indicator_alpha" format="float" type="dimen">0.5f</item>
     <item name="movie_language_font_size" format="float" type="dimen">22.0</item>
     <item name="movie_overview_font_size" format="float" type="dimen">16.0</item>

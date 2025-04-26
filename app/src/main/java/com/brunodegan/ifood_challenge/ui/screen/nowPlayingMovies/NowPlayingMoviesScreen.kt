@@ -5,7 +5,9 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,6 +35,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -101,9 +104,12 @@ fun NowPlayingMoviesScreen(
     }
 
     NowPlayingMoviesScreen(
-        state = uiState, scrollBehavior = scrollBehavior, onEvent = {
+        state = uiState,
+        scrollBehavior = scrollBehavior,
+        onEvent = {
             viewModel.onUiEvent(event = it)
-        }, modifier = modifier
+        },
+        modifier = modifier
     )
 }
 
@@ -122,10 +128,15 @@ private fun NowPlayingMoviesScreen(
 
         is NowPlayingMoviesUiState.Success -> {
             SuccessState(
-                modifier = modifier, scrollBehavior = scrollBehavior, viewData = state.viewData
-            ) { id ->
-                onEvent(NowPlayingMoviesUiEvents.OnAddFavButtonClickedUiEvent(id))
-            }
+                modifier = modifier,
+                scrollBehavior = scrollBehavior,
+                viewData = state.viewData,
+                onFavoriteButtonClicked = {
+                    onEvent(NowPlayingMoviesUiEvents.OnAddFavButtonClickedUiEvent(it))
+                },
+                onRemoveFavButtonClickedUiEvent = {
+                    onEvent(NowPlayingMoviesUiEvents.OnRemoveFavButtonClickedUiEvent(it))
+                })
         }
 
         is NowPlayingMoviesUiState.Error -> {
@@ -149,7 +160,8 @@ private fun SuccessState(
     modifier: Modifier,
     scrollBehavior: TopAppBarScrollBehavior,
     viewData: List<NowPlayingMoviesEntity>,
-    onFavoriteButtonClicked: (Int) -> Unit
+    onFavoriteButtonClicked: (Int) -> Unit,
+    onRemoveFavButtonClickedUiEvent: (Int) -> Unit
 ) {
     val scrollState = rememberLazyListState()
 
@@ -164,22 +176,27 @@ private fun SuccessState(
     ) {
 
         items(viewData.size, key = { index -> viewData[index].title }) { position ->
-            NowPlayingMovies(
+            NowPlayingMoviesCard(
                 viewData = viewData[position],
-            ) {
-                onFavoriteButtonClicked(it)
-            }
+                onFavoriteButtonClicked = {
+                    onFavoriteButtonClicked(it)
+                },
+                onRemoveFavButtonClickedUiEvent = {
+                    onRemoveFavButtonClickedUiEvent(it)
+                }
+            )
         }
     }
 }
 
 @Composable
-private fun NowPlayingMovies(
+private fun NowPlayingMoviesCard(
     modifier: Modifier = Modifier,
     viewData: NowPlayingMoviesEntity,
-    onFavoriteButtonClicked: (Int) -> Unit
+    onFavoriteButtonClicked: (Int) -> Unit,
+    onRemoveFavButtonClickedUiEvent: (Int) -> Unit
 ) {
-    val isFavoriteButtonClicked by rememberSaveable { mutableStateOf(false) }
+    var isFavoriteButtonClicked by rememberSaveable { mutableStateOf(false) }
 
     val imageRequest = ImageRequest.Builder(LocalContext.current).data(viewData.posterPath)
         .decoderFactory(SvgDecoder.Factory()).scale(Scale.FIT).crossfade(true)
@@ -187,7 +204,7 @@ private fun NowPlayingMovies(
 
     val cardColor by animateColorAsState(
         targetValue = if (isFavoriteButtonClicked) {
-            Color.Yellow
+            MaterialTheme.colorScheme.onSecondary
         } else {
             MaterialTheme.colorScheme.primaryContainer
         }, animationSpec = spring(
@@ -215,6 +232,28 @@ private fun NowPlayingMovies(
                 .padding(start = dimensionResource(R.dimen.double_padding))
                 .wrapContentSize()
         ) {
+            Image(
+                painter = painterResource(
+                    if (isFavoriteButtonClicked) {
+                        R.drawable.added_to_favorites
+                    } else {
+                        R.drawable.not_added_to_favorites
+                    }
+                ),
+                contentDescription = "",
+                modifier = Modifier
+                    .size(dimensionResource(R.dimen.favorite_icon_size))
+                    .align(Alignment.End)
+                    .padding(top = dimensionResource(R.dimen.double_padding))
+                    .clickable {
+                        isFavoriteButtonClicked = !isFavoriteButtonClicked
+                        if (isFavoriteButtonClicked) {
+                            onFavoriteButtonClicked(viewData.id)
+                        } else {
+                            onRemoveFavButtonClickedUiEvent(viewData.id)
+                        }
+                    }
+            )
             AsyncImage(
                 model = imageRequest,
                 fallback = painterResource(R.drawable.movie_icon),
@@ -238,8 +277,7 @@ private fun NowPlayingMovies(
                 fontWeight = FontWeight.W600,
                 fontSize = TextUnit(
                     value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources,
-                        R.dimen.movie_language_font_size
+                        LocalContext.current.resources, R.dimen.movie_language_font_size
                     ), type = TextUnitType.Sp
                 ),
                 textAlign = TextAlign.Justify,
@@ -256,8 +294,7 @@ private fun NowPlayingMovies(
                 fontWeight = FontWeight.W400,
                 fontSize = TextUnit(
                     value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources,
-                        R.dimen.movie_overview_font_size
+                        LocalContext.current.resources, R.dimen.movie_overview_font_size
                     ), type = TextUnitType.Sp
                 ),
                 textAlign = TextAlign.Justify,
@@ -274,8 +311,7 @@ private fun NowPlayingMovies(
                 fontWeight = FontWeight.Medium,
                 fontSize = TextUnit(
                     value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources,
-                        R.dimen.movie_language_font_size
+                        LocalContext.current.resources, R.dimen.movie_language_font_size
                     ), type = TextUnitType.Sp
                 ),
                 textAlign = TextAlign.Justify,
@@ -292,8 +328,7 @@ private fun NowPlayingMovies(
                 fontWeight = FontWeight.Medium,
                 fontSize = TextUnit(
                     value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources,
-                        R.dimen.movie_language_font_size
+                        LocalContext.current.resources, R.dimen.movie_language_font_size
                     ), type = TextUnitType.Sp
                 ),
                 textAlign = TextAlign.Justify,
@@ -310,8 +345,7 @@ private fun NowPlayingMovies(
                 fontWeight = FontWeight.Medium,
                 fontSize = TextUnit(
                     value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources,
-                        R.dimen.movie_language_font_size
+                        LocalContext.current.resources, R.dimen.movie_language_font_size
                     ), type = TextUnitType.Sp
                 ),
                 textAlign = TextAlign.Justify,
@@ -322,8 +356,7 @@ private fun NowPlayingMovies(
             )
 
             Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.Start
+                verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.Start
             ) {
                 Text(
                     text = stringResource(R.string.movie_vote_average),
@@ -331,8 +364,7 @@ private fun NowPlayingMovies(
                     fontWeight = FontWeight.Medium,
                     fontSize = TextUnit(
                         value = ResourcesCompat.getFloat(
-                            LocalContext.current.resources,
-                            R.dimen.movie_language_font_size
+                            LocalContext.current.resources, R.dimen.movie_language_font_size
                         ), type = TextUnitType.Sp
                     ),
                     textAlign = TextAlign.Justify,

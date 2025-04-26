@@ -13,7 +13,7 @@ fun String?.formatFullCDNUrl(): String {
 fun String?.formatUsDateToBrDate(): String {
     if (this.isNullOrEmpty()) return ""
     return try {
-        val usDateFormat = SimpleDateFormat("MM-dd-yyyy", Locale.US)
+        val usDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         val brDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR"))
         brDateFormat.format(usDateFormat.parse(this) ?: return "")
     } catch (e: Exception) {

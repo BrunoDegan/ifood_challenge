@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 
 class PosterShape(
-    private val cutOutHeight: Float = 10f,
-    private val topCutOutHeight: Float = 10f
+    private val cutOutHeight: Float = 20f,
+    private val topCutOutHeight: Float = 20f
 ) : Shape {
     override fun createOutline(
         size: Size,

@@ -24,6 +24,9 @@ object DatabaseModule {
     fun providePopularDao(database: AppDatabase) = database.popularDao()
 
     @Single
+    fun provideFavoriteDao(database: AppDatabase) = database.favoritesDao()
+
+    @Single
     fun initializeDb(context: Context) = Room.databaseBuilder(
         context,
         AppDatabase::class.java,
