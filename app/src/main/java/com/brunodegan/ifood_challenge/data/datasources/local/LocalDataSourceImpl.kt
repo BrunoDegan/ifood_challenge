@@ -17,7 +17,7 @@ import org.koin.core.annotation.Single
 class LocalDataSourceImpl(
     private val favoriteDao: FavoritesDao,
     private val nowPlayingDao: NowPlayingDao,
-    private val topRatedPopular: TopRatedDao,
+    private val topRatedDao: TopRatedDao,
     private val upComingDao: UpComingDao,
     private val popularDao: PopularDao
 ) : LocalDataSource {
@@ -34,7 +34,7 @@ class LocalDataSourceImpl(
         popularDao.getAllPopular()
 
     override suspend fun getTopRated(): Flow<List<TopRatedMoviesEntity>> =
-        topRatedPopular.getAllTopRated()
+        topRatedDao.getAllTopRated()
 
     override suspend fun getUpcoming(): Flow<List<UpcomingMoviesEntity>> =
         upComingDao.getAllUpcoming()
@@ -48,7 +48,7 @@ class LocalDataSourceImpl(
     }
 
     override fun saveTopRated(topRatedData: List<TopRatedMoviesEntity>) {
-        topRatedPopular.insertTopRatedMovies(topRatedData)
+        topRatedDao.insertTopRatedMovies(topRatedData)
     }
 
     override fun saveUpcoming(upcomingData: List<UpcomingMoviesEntity>) {

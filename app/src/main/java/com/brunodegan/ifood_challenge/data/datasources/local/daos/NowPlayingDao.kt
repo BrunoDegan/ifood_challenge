@@ -13,5 +13,5 @@ interface NowPlayingDao {
     fun getAllNowPlaying(): Flow<List<NowPlayingMoviesEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertNowPlayingMovies(upcomingMovies: List<NowPlayingMoviesEntity>)
+    fun insertNowPlayingMovies(nowPlayingMovies: List<NowPlayingMoviesEntity>)
 }

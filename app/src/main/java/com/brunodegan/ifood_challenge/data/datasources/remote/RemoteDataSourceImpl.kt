@@ -5,7 +5,7 @@ import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavor
 import org.koin.core.annotation.Single
 
 @Single
-class RemoteDataSourceContractImpl(
+class RemoteDataSourceImpl(
     private val restApi: RestApiService
 ) : RemoteDataSource {
     override suspend fun fetchNowPlaying() = restApi.fetchNowPlaying()
