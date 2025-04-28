@@ -4,6 +4,7 @@ import com.brunodegan.ifood_challenge.base.network.base.Resource
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoriteMoviesData
 import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils
 import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils.getResourceError
+import com.brunodegan.ifood_challenge.data.datasources.utils.TestDispatcherRule
 import com.brunodegan.ifood_challenge.data.repositories.MoviesRepository
 import com.brunodegan.ifood_challenge.domain.removeFromFavorites.RemoveFromFavoritesUseCase
 import com.brunodegan.ifood_challenge.domain.removeFromFavorites.RemoveFromFavoritesUseCaseImpl
@@ -13,14 +14,17 @@ import io.mockk.mockk
 import io.mockk.unmockkAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertTrue
 
 class RemoveFromFavoritesUseCaseTest {
+    @get:Rule
+    val mainDispatcher = TestDispatcherRule()
 
     private val repository: MoviesRepository = mockk(relaxed = true)
     private lateinit var useCase: RemoveFromFavoritesUseCase
@@ -32,7 +36,7 @@ class RemoveFromFavoritesUseCaseTest {
     }
 
     @Test
-    fun `GIVEN favorite movies WHEN invoke is called THEN emit Resource_Success and call removeFavorite once`() = runBlocking {
+    fun `GIVEN favorite movies WHEN invoke is called THEN emit Resource_Success and call removeFavorite once`() = runTest {
 
         //Given
         val expectedData = Resource.Success(MockUtils.mockAddToFavoriteMoviesData())
@@ -54,7 +58,7 @@ class RemoveFromFavoritesUseCaseTest {
     }
 
     @Test
-    fun `GIVEN an exception WHEN invoke is called THEN emit ResourceError`() = runBlocking {
+    fun `GIVEN an exception WHEN invoke is called THEN emit ResourceError`() = runTest {
         // GIVEN
         val exception = Exception("Error removing favorite movie")
         val resourceError = getResourceError<AddToFavoriteMoviesData>(exception)

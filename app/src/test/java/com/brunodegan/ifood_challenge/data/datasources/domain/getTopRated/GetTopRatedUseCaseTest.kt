@@ -4,6 +4,7 @@ import com.brunodegan.ifood_challenge.base.network.base.Resource
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.TopRatedMoviesEntity
 import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils
 import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils.getResourceError
+import com.brunodegan.ifood_challenge.data.datasources.utils.TestDispatcherRule
 import com.brunodegan.ifood_challenge.data.repositories.MoviesRepository
 import com.brunodegan.ifood_challenge.domain.getTopRated.GetTopRatedUseCase
 import com.brunodegan.ifood_challenge.domain.getTopRated.GetTopRatedUseCaseImpl
@@ -13,14 +14,17 @@ import io.mockk.mockk
 import io.mockk.unmockkAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertTrue
 
 class GetTopRatedUseCaseTest {
+    @get:Rule
+    val mainDispatcher = TestDispatcherRule()
 
     private val repository: MoviesRepository = mockk(relaxed = true)
     private lateinit var useCase: GetTopRatedUseCase
@@ -32,7 +36,7 @@ class GetTopRatedUseCaseTest {
 
     @Test
     fun `GIVEN top rated movies WHEN invoke is called THEN emit Resource Success`() =
-        runBlocking {
+        runTest {
 
             //Given
             val expectedData = Resource.Success(MockUtils.mockTopRatedMoviesEntity())
@@ -54,7 +58,7 @@ class GetTopRatedUseCaseTest {
         }
 
     @Test
-    fun `GIVEN an exception WHEN invoke is called THEN emit ResourceError`() = runBlocking {
+    fun `GIVEN an exception WHEN invoke is called THEN emit ResourceError`() = runTest {
         // GIVEN
         val exception = Exception("Error fetching now top rated movies")
         val resourceError = getResourceError<List<TopRatedMoviesEntity>>(exception)
@@ -78,7 +82,7 @@ class GetTopRatedUseCaseTest {
 
     @Test
     fun `GIVEN no top rated movies WHEN invoke is called THEN emit Resource_Success with empty list`() =
-        runBlocking {
+        runTest {
             // GIVEN
             coEvery { repository.getTopRateMovies() } returns flow {
                 emit(Resource.Success(emptyList()))
