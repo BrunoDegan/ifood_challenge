@@ -22,7 +22,7 @@ This project is an Android application built using **Kotlin** and **Jetpack Comp
 - **Image Loading**: Coil
 - **Testing**:
   - Unit Tests: JUnit, MockK
-  - UI Tests: Jetpack Compose Testing, Espresso, UiAutomator
+  - UI Tests: Jetpack Compose Testing, Espresso, UiAutomator, MockWebServer (for Testing API)
 
 ## Project Structure
 
