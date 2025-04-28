@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Background -->
+  <rect x="2" y="4" width="20" height="16" rx="3" ry="3" fill="#f0f0f0" stroke="none"></rect>
+  
+  <!-- Clapperboard top section -->
+  <path d="M2 8h20" stroke="#333"></path>
+  <path d="M7 4v4" stroke="#333"></path>
+  <path d="M12 4v4" stroke="#333"></path>
+  <path d="M17 4v4" stroke="#333"></path>
+  
+  <!-- Border of the clapperboard -->
+  <rect x="2" y="4" width="20" height="16" rx="3" ry="3" stroke="#333" fill="none"></rect>
+
+  <!-- Heart shape for favorites -->
+  <path d="M12 13c-1.333-1.333-4-1-4 1 0 1.5 2 3 4 5 2-2 4-3.5 4-5 0-2-2.667-2.333-4-1z" fill="#e63946" stroke="none"></path>
+</svg>
