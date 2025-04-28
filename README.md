@@ -33,6 +33,10 @@ This project is an Android application built using **Kotlin** and **Jetpack Comp
   - **data**: Data sources and repository implementations.
   - **base**: Common utilities and base classes.
   - **metrics**: Base metrics layer, with object to handle onEvent and onEnteredScreen created and used
+ 
+## Future
+
+  Add more instrumented tests, refine a better UI, add logic to show favorites movies liked on all other BottomNav Pages
 
 ## Setup Instructions
 
