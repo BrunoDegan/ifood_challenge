@@ -3,9 +3,9 @@ package com.brunodegan.ifood_challenge.data.datasources.utils
 import com.brunodegan.ifood_challenge.base.network.base.ErrorType
 import com.brunodegan.ifood_challenge.base.network.base.Resource
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoritesRequest
-import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoritesResponse
+import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoritesApiResponse
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.FavoriteMoviesEntity
-import com.brunodegan.ifood_challenge.data.datasources.local.entities.FavoriteMoviesResponse
+import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoriteMoviesData
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.Movies
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.MoviesApiDataResponse
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.NowPlayingMoviesEntity
@@ -166,8 +166,8 @@ object MockUtils {
         )
     }
 
-    fun mockAddToFavoritesResponse(): AddToFavoritesResponse {
-        return AddToFavoritesResponse(
+    fun mockAddToFavoritesApiResponse(): AddToFavoritesApiResponse {
+        return AddToFavoritesApiResponse(
             success = true,
             statusMessage = "Movie added to favorites successfully",
             statusCode = "200",
@@ -182,8 +182,8 @@ object MockUtils {
         )
     }
 
-    fun mockFavoriteMoviesResponse(): FavoriteMoviesResponse {
-        return FavoriteMoviesResponse(
+    fun mockAddToFavoriteMoviesData(): AddToFavoriteMoviesData {
+        return AddToFavoriteMoviesData(
             success = true,
             statusMessage = "Movie added to favorites successfully",
             statusCode = "200",
