@@ -36,7 +36,7 @@ This project is an Android application built using **Kotlin** and **Jetpack Comp
  
 ## Future
 
-  Add more instrumented tests, refine a better UI, add logic to show favorites movies liked on all other BottomNav Pages
+  Add more instrumented tests, refine a better UI, add logic to show favorites movies liked on all BottomNav Pages 
 
 ## Setup Instructions
 
