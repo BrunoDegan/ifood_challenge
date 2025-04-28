@@ -4,19 +4,24 @@ import com.brunodegan.ifood_challenge.data.api.RestApiService
 import com.brunodegan.ifood_challenge.data.datasources.remote.RemoteDataSource
 import com.brunodegan.ifood_challenge.data.datasources.remote.RemoteDataSourceImpl
 import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils
+import com.brunodegan.ifood_challenge.data.datasources.utils.TestDispatcherRule
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.unmockkAll
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 class RemoteDataSourceImplTest {
-    private val restApiService: RestApiService = mockk(relaxed = true)
 
+    @get:Rule
+    val mainDispatcher = TestDispatcherRule()
+
+    private val restApiService: RestApiService = mockk(relaxed = true)
     private lateinit var remoteDataSource: RemoteDataSource
 
     @Before
@@ -26,7 +31,7 @@ class RemoteDataSourceImplTest {
 
     @Test
     fun `GIVEN movies api data response mocks WHEN fetchNowPlaying is invoked THEN asserts response equality`() =
-        runBlocking {
+        runTest {
             val mockResponse = MockUtils.mockMoviesApiDataResponse()
 
             coEvery { restApiService.fetchNowPlaying() } returns mockResponse
@@ -41,7 +46,7 @@ class RemoteDataSourceImplTest {
 
     @Test
     fun `GIVEN movies api data response mocks WHEN fetchPopular is invoked THEN asserts response equality`() =
-        runBlocking {
+        runTest {
             val mockResponse = MockUtils.mockMoviesApiDataResponse()
 
             coEvery { restApiService.fetchPopular() } returns mockResponse
@@ -56,7 +61,7 @@ class RemoteDataSourceImplTest {
 
     @Test
     fun `GIVEN movies api data response mocks WHEN fetchTopRated is invoked THEN asserts response equality`() =
-        runBlocking {
+        runTest {
             val mockResponse = MockUtils.mockMoviesApiDataResponse()
 
             coEvery { restApiService.fetchTopRated() } returns mockResponse
@@ -71,7 +76,7 @@ class RemoteDataSourceImplTest {
 
     @Test
     fun `GIVEN movies api data response mocks WHEN fetchUpcoming is invoked THEN asserts response equality`() =
-        runBlocking {
+        runTest {
             val mockResponse = MockUtils.mockMoviesApiDataResponse()
 
             coEvery { restApiService.fetchUpcoming() } returns mockResponse
@@ -86,7 +91,7 @@ class RemoteDataSourceImplTest {
 
     @Test
     fun `GIVEN movies api data response mocks WHEN getFavorites is invoked THEN asserts response equality`() =
-        runBlocking {
+        runTest {
             val mockResponse = MockUtils.mockMoviesApiDataResponse()
 
             coEvery { restApiService.getFavorites() } returns mockResponse
@@ -101,7 +106,7 @@ class RemoteDataSourceImplTest {
 
     @Test
     fun `GIVEN movies api data response mocks WHEN addToFavorites is invoked THEN asserts response equality`() =
-        runBlocking {
+        runTest {
             val mockResponse = MockUtils.mockAddToFavoritesApiResponse()
             val mockRequest = MockUtils.mockAddToFavoritesRequest()
 

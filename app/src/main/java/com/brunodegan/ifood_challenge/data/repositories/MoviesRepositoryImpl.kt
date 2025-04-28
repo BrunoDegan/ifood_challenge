@@ -35,7 +35,7 @@ class MoviesRepositoryImpl(
     private val remoteDataSource: RemoteDataSource,
 ) : MoviesRepository {
 
-    override suspend fun getTopRateMovies(): Flow<Resource<List<TopRatedMoviesEntity>>> = flow {
+    override fun getTopRateMovies(): Flow<Resource<List<TopRatedMoviesEntity>>> = flow {
         val localTopRatedMovies = localDataSource.getTopRated().first()
 
         if (!localTopRatedMovies.isNullOrEmpty()) {
@@ -55,7 +55,7 @@ class MoviesRepositoryImpl(
         }
     }
 
-    override suspend fun getPopularMovies(): Flow<Resource<List<PopularMoviesEntity>>> = flow {
+    override fun getPopularMovies(): Flow<Resource<List<PopularMoviesEntity>>> = flow {
         val localPopularMovies = localDataSource.getPopular().first()
 
         if (!localPopularMovies.isNullOrEmpty()) {
@@ -75,7 +75,7 @@ class MoviesRepositoryImpl(
         }
     }
 
-    override suspend fun getUpcomingMovies(): Flow<Resource<List<UpcomingMoviesEntity>>> = flow {
+    override fun getUpcomingMovies(): Flow<Resource<List<UpcomingMoviesEntity>>> = flow {
         val localUpcomingMovies = localDataSource.getUpcoming().first()
 
         if (!localUpcomingMovies.isNullOrEmpty()) {
@@ -95,7 +95,7 @@ class MoviesRepositoryImpl(
         }
     }
 
-    override suspend fun getNowPlayingMovies(): Flow<Resource<List<NowPlayingMoviesEntity>>> =
+    override fun getNowPlayingMovies(): Flow<Resource<List<NowPlayingMoviesEntity>>> =
         flow {
             val nowPlayingMovies = localDataSource.getNowPlaying().first()
 
@@ -116,7 +116,7 @@ class MoviesRepositoryImpl(
             }
         }
 
-    override suspend fun addFavorite(id: Int): Flow<Resource<AddToFavoriteMoviesData>> =
+    override fun addFavorite(id: Int): Flow<Resource<AddToFavoriteMoviesData>> =
         flow {
             runCatching {
                 val request = AddToFavoritesRequest(mediaId = id, favorite = true)
@@ -131,7 +131,7 @@ class MoviesRepositoryImpl(
             }
         }
 
-    override suspend fun removeFavorite(id: Int): Flow<Resource<AddToFavoriteMoviesData>> = flow {
+    override fun removeFavorite(id: Int): Flow<Resource<AddToFavoriteMoviesData>> = flow {
         runCatching {
             val request = AddToFavoritesRequest(mediaId = id, favorite = false)
             remoteDataSource.addOrRemoveFromFavorites(request)
@@ -145,7 +145,7 @@ class MoviesRepositoryImpl(
         }
     }
 
-    override suspend fun getFavorites(): Flow<Resource<List<FavoriteMoviesEntity>>> = flow {
+    override fun getFavorites(): Flow<Resource<List<FavoriteMoviesEntity>>> = flow {
         val favorites = localDataSource.getFavoriteMovies().first()
 
         if (!favorites.isNullOrEmpty() && favorites.all { isCacheValid(it.lastUpdated) }) {

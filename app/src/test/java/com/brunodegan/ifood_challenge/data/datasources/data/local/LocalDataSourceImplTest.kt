@@ -8,18 +8,22 @@ import com.brunodegan.ifood_challenge.data.datasources.local.daos.PopularDao
 import com.brunodegan.ifood_challenge.data.datasources.local.daos.TopRatedDao
 import com.brunodegan.ifood_challenge.data.datasources.local.daos.UpComingDao
 import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils
+import com.brunodegan.ifood_challenge.data.datasources.utils.TestDispatcherRule
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.unmockkAll
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
 
 class LocalDataSourceTest {
+    @get:Rule
+    val mainDispatcher = TestDispatcherRule()
 
     private lateinit var localDataSource: LocalDataSource
     private val favoritesDao: FavoritesDao = mockk(relaxed = true)
@@ -41,7 +45,7 @@ class LocalDataSourceTest {
 
     @Test
     fun `GIVEN favorite movies entity mocks WHEN local storage saves favorite movies THEN assert favoriteDao inserts is called`() =
-        runBlocking {
+        runTest {
             val mockFavoritesMovies = MockUtils.mockFavoriteMoviesEntity()
 
             localDataSource.saveFavorites(mockFavoritesMovies)
@@ -53,7 +57,7 @@ class LocalDataSourceTest {
 
     @Test
     fun `GIVEN favorite movies entity mocks WHEN local storage gets favorite movies THEN asserts mocks equality and calling once`() =
-        runBlocking {
+        runTest {
             val mockFavorites = MockUtils.mockFavoriteMoviesEntity()
             coEvery { favoritesDao.getFavoriteMovies() } returns flowOf(mockFavorites)
 
@@ -69,7 +73,7 @@ class LocalDataSourceTest {
 
     @Test
     fun `GIVEN upcoming movies entity mocks WHEN local storage saves upcoming movies THEN asserts mocks equality and calling once`() =
-        runBlocking {
+        runTest {
             val mockUpComingMovies = MockUtils.mockUpcomingMoviesEntity()
 
             coEvery { upComingDao.getAllUpcoming() } returns flowOf(mockUpComingMovies)
@@ -85,7 +89,7 @@ class LocalDataSourceTest {
 
     @Test
     fun `GIVEN now playing movies entity mocks WHEN local storage saves now playing movies THEN asserts mocks equality and calling once`() =
-        runBlocking {
+        runTest {
             val mockNowPlayingMovies = MockUtils.mockNowPlayingMoviesEntity()
 
             coEvery { nowPlayingDao.getAllNowPlaying() } returns flowOf(mockNowPlayingMovies)
@@ -101,7 +105,7 @@ class LocalDataSourceTest {
 
     @Test
     fun `GIVEN now popular movies entity mocks WHEN local storage saves popular movies THEN  asserts mocks equality and calling once`() =
-        runBlocking {
+        runTest {
             val mockPopularMovies = MockUtils.mockPopularMoviesEntity()
 
             coEvery { popularDao.getAllPopular() } returns flowOf(mockPopularMovies)
@@ -117,7 +121,7 @@ class LocalDataSourceTest {
 
     @Test
     fun `GIVEN top rated movies entity mocks WHEN local storage saves popular movies THEN  asserts mocks equality and calling once`() =
-        runBlocking {
+        runTest {
             val mockTopRatedMovies = MockUtils.mockTopRatedMoviesEntity()
 
             coEvery { topRatedDao.getAllTopRated() } returns flowOf(mockTopRatedMovies)
@@ -133,7 +137,7 @@ class LocalDataSourceTest {
 
     @Test
     fun `GIVEN now playing movies entity mocks WHEN local storage saves now playing movie THEN asserts mocks equality and calling once`() =
-        runBlocking {
+        runTest {
             val mockNowPlayingMovies = MockUtils.mockNowPlayingMoviesEntity()
             coEvery { localDataSource.saveNowPlaying(mockNowPlayingMovies) } returns Unit
 
@@ -150,7 +154,7 @@ class LocalDataSourceTest {
 
     @Test
     fun `GIVEN popular movies entity mocks WHEN local storage saves popular movies THEN asserts mocks equality and calling once`() =
-        runBlocking {
+        runTest {
             val mockPopularMovies = MockUtils.mockPopularMoviesEntity()
             coEvery { localDataSource.savePopular(mockPopularMovies) } returns Unit
 
@@ -167,7 +171,7 @@ class LocalDataSourceTest {
 
     @Test
     fun `GIVEN top rated movies entity mocks WHEN local storage top rated movies THEN asserts mocks equality and calling once`() =
-        runBlocking {
+        runTest {
             val mockTopRatedMovies = MockUtils.mockTopRatedMoviesEntity()
             coEvery { localDataSource.saveTopRated(mockTopRatedMovies) } returns Unit
 
@@ -184,7 +188,7 @@ class LocalDataSourceTest {
 
     @Test
     fun `GIVEN upcoming movies entity mocks WHEN local storage upcoming movies THEN asserts mocks equality and calling once`() =
-        runBlocking {
+        runTest {
             val mockUpcomingMovies = MockUtils.mockUpcomingMoviesEntity()
             coEvery { localDataSource.saveUpcoming(mockUpcomingMovies) } returns Unit
 

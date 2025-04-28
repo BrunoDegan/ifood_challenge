@@ -15,6 +15,7 @@ import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils.mockMovie
 import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils.mockNowPlayingMoviesEntity
 import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils.mockPopularMoviesEntity
 import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils.mockTopRatedMoviesEntity
+import com.brunodegan.ifood_challenge.data.datasources.utils.TestDispatcherRule
 import com.brunodegan.ifood_challenge.data.mappers.AddOrRemoveToFavoritesResponseDataMapper
 import com.brunodegan.ifood_challenge.data.mappers.FavoritesDataMapper
 import com.brunodegan.ifood_challenge.data.mappers.NowPlayingDataMapper
@@ -29,13 +30,16 @@ import io.mockk.unmockkAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 class MoviesRepositoryTest {
+    @get:Rule
+    val mainDispatcher = TestDispatcherRule()
 
     private val localDataSource: LocalDataSource = mockk(relaxed = true)
     private val remoteDataSource: RemoteDataSource = mockk(relaxed = true)
@@ -65,7 +69,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun `GIVEN local data WHEN getTopRateMovies is called THEN emit Resource_Success`() =
-        runBlocking {
+        runTest {
             // Given
             val topRatedMovies = mockTopRatedMoviesEntity()
             coEvery { localDataSource.getTopRated() } returns flow { emit(topRatedMovies) }
@@ -79,7 +83,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun `GIVEN empty local data and fetchs remote data successfully WHEN getTopRateMovies is called THEN emit Resource_Success`() =
-        runBlocking {
+        runTest {
             // GIVEN
             val topRatedMovies = mockTopRatedMoviesEntity()
             val apiData = mockMoviesApiDataResponse()
@@ -97,7 +101,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun `GIVEN NULL local data and fetchs remote data with error WHEN getTopRateMovies is called THEN emit Resource_Error`() =
-        runBlocking {
+        runTest {
             // GIVEN
             val errorMessage = "Network error"
             val genericError = ErrorType.Generic(errorMessage)
@@ -117,7 +121,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun `GIVEN TopRated mock api response data WHEN local data source answers with null and remote data source fetchs data successfully THEN asserts Success Data`() =
-        runBlocking {
+        runTest {
             // GIVEN
             val topRatedMoviesApiResponse = mockMoviesApiDataResponse()
             val expectedViewData = mockTopRatedMoviesEntity()
@@ -137,7 +141,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun `GIVEN favorites local data WHEN getFavorites is called THEN emit Resource_Success`() =
-        runBlocking {
+        runTest {
             // Given
             val favoritesdMovies = mockFavoriteMoviesEntity()
             coEvery { localDataSource.getFavoriteMovies() } returns flow { emit(favoritesdMovies) }
@@ -151,7 +155,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun `GIVEN empty favorites local data and fetchs remote data successfully WHEN getFavorites is called THEN emit Resource_Success`() =
-        runBlocking {
+        runTest {
             // GIVEN
             val favoriteMoviesApiResponse = mockFavoriteMoviesEntity()
             val apiData = mockMoviesApiDataResponse()
@@ -169,7 +173,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun `GIVEN NULL favorites local data and fetchs remote data with error WHEN getFavorites is called THEN emit Resource_Error`() =
-        runBlocking {
+        runTest {
             // GIVEN
             val errorMessage = "Network error"
             val genericError = ErrorType.Generic(errorMessage)
@@ -189,7 +193,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun `GIVEN favorite movies mock api response data WHEN local data source answers with null and remote data source fetchs data successfully THEN asserts Success Data`() =
-        runBlocking {
+        runTest {
             // GIVEN
             val favoriteMoviesApiResponse = mockMoviesApiDataResponse()
             val expectedViewData = mockFavoriteMoviesEntity()
@@ -208,7 +212,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun `GIVEN popular local data WHEN getPopularMovies is called THEN emit Resource_Success`() =
-        runBlocking {
+        runTest {
             // Given
             val popularMovies = mockPopularMoviesEntity()
             coEvery { localDataSource.getPopular() } returns flow { emit(popularMovies) }
@@ -222,7 +226,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun `GIVEN empty popular local data and fetchs remote data successfully WHEN getPopularMovies is called THEN emit Resource_Success`() =
-        runBlocking {
+        runTest {
             // GIVEN
             val popularMovies = mockPopularMoviesEntity()
             val apiData = mockMoviesApiDataResponse()
@@ -240,7 +244,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun `GIVEN NULL popular local data and fetchs remote data with error WHEN getPopularMovies is called THEN emit Resource_Error`() =
-        runBlocking {
+        runTest {
             // GIVEN
             val errorMessage = "Network error"
             val genericError = ErrorType.Generic(errorMessage)
@@ -260,7 +264,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun `GIVEN popular movies mock api response data WHEN local data source answers with null and remote data source fetchs data successfully THEN asserts Success Data`() =
-        runBlocking {
+        runTest {
             // GIVEN
             val popularMoviesApiResponse = mockMoviesApiDataResponse()
             val expectedViewData = mockPopularMoviesEntity()
@@ -279,7 +283,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun `GIVEN empty now playing local data and fetchs remote data successfully WHEN getNowPlayingMovies is called THEN emit Resource_Success`() =
-        runBlocking {
+        runTest {
             // GIVEN
             val nowPlaying = mockNowPlayingMoviesEntity()
             val apiData = mockMoviesApiDataResponse()
@@ -297,7 +301,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun `GIVEN NULL now playing local data and fetchs remote data with error WHEN getNowPlayingMovies is called THEN emit Resource_Error`() =
-        runBlocking {
+        runTest {
             // GIVEN
             val errorMessage = "Network error"
             val genericError = ErrorType.Generic(errorMessage)
@@ -317,7 +321,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun `GIVEN now playing movies mock api response data WHEN local data source answers with null and remote data source fetchs data successfully THEN asserts Success Data`() =
-        runBlocking {
+        runTest {
             // GIVEN
             val nowPlayingMoviesApiResponse = mockMoviesApiDataResponse()
             val expectedViewData = mockNowPlayingMoviesEntity()
@@ -335,7 +339,7 @@ class MoviesRepositoryTest {
         }
 
     @Test
-    fun `GIVEN favorite movie data WHEN addFavorite THEN `() = runBlocking {
+    fun `GIVEN favorite movie data WHEN addFavorite THEN `() = runTest {
         val expectedViewData = mockAddToFavoriteMoviesData()
         val requestData = mockAddToFavoritesRequest()
         val mockAddToFavoritesApiResponse = mockAddToFavoritesApiResponse()
@@ -349,27 +353,25 @@ class MoviesRepositoryTest {
     }
 
     @Test
-    fun `GIVEN network error when fetching favorite movies WHEN addOrRemoveFromFavorites on remote data source THEN asserts Resource_Error result`() = runBlocking {
-        val expectedViewData = mockAddToFavoriteMoviesData()
-        val mockAddToFavoritesApiResponse = mockAddToFavoritesApiResponse()
-        val requestData = mockAddToFavoritesRequest()
-        val errorMessage = "Network error"
-        val genericError = ErrorType.Generic(errorMessage)
-        val expectedError = Resource.Error<FavoriteMoviesEntity>(genericError)
+    fun `GIVEN network error when fetching favorite movies WHEN addOrRemoveFromFavorites on remote data source THEN asserts Resource_Error result`() =
+        runTest {
+            val expectedViewData = mockAddToFavoriteMoviesData()
+            val mockAddToFavoritesApiResponse = mockAddToFavoritesApiResponse()
+            val requestData = mockAddToFavoritesRequest()
+            val errorMessage = "Network error"
+            val genericError = ErrorType.Generic(errorMessage)
+            val expectedError = Resource.Error<FavoriteMoviesEntity>(genericError)
 
-        coEvery { addOrRemoveToFavoritesResponseDataMapper.map(mockAddToFavoritesApiResponse) } returns expectedViewData
-        coEvery { remoteDataSource.addOrRemoveFromFavorites(requestData) } throws Exception(
-            errorMessage
-        )
+            coEvery { addOrRemoveToFavoritesResponseDataMapper.map(mockAddToFavoritesApiResponse) } returns expectedViewData
+            coEvery { remoteDataSource.addOrRemoveFromFavorites(requestData) } throws Exception(
+                errorMessage
+            )
 
-        val result = repository.addFavorite(id = 1)
+            val result = repository.addFavorite(id = 1)
 
-        assertEquals(expectedError, result.first())
-    }
-
+            assertEquals(expectedError, result.first())
+        }
 
     @After
-    fun tearDown() {
-        unmockkAll()
-    }
+    fun tearDown() = unmockkAll()
 }

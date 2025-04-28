@@ -10,11 +10,11 @@ import com.brunodegan.ifood_challenge.data.datasources.local.entities.UpcomingMo
 import kotlinx.coroutines.flow.Flow
 
 interface MoviesRepository {
-    suspend fun getTopRateMovies(): Flow<Resource<List<TopRatedMoviesEntity>>>
-    suspend fun getPopularMovies(): Flow<Resource<List<PopularMoviesEntity>>>
-    suspend fun getUpcomingMovies(): Flow<Resource<List<UpcomingMoviesEntity>>>
-    suspend fun getNowPlayingMovies(): Flow<Resource<List<NowPlayingMoviesEntity>>>
-    suspend fun addFavorite(id: Int): Flow<Resource<AddToFavoriteMoviesData>>
-    suspend fun removeFavorite(id: Int): Flow<Resource<AddToFavoriteMoviesData>>
-    suspend fun getFavorites(): Flow<Resource<List<FavoriteMoviesEntity>>>
+    fun getTopRateMovies(): Flow<Resource<List<TopRatedMoviesEntity>>>
+    fun getPopularMovies(): Flow<Resource<List<PopularMoviesEntity>>>
+    fun getUpcomingMovies(): Flow<Resource<List<UpcomingMoviesEntity>>>
+    fun getNowPlayingMovies(): Flow<Resource<List<NowPlayingMoviesEntity>>>
+    fun addFavorite(id: Int): Flow<Resource<AddToFavoriteMoviesData>>
+    fun removeFavorite(id: Int): Flow<Resource<AddToFavoriteMoviesData>>
+    fun getFavorites(): Flow<Resource<List<FavoriteMoviesEntity>>>
 }
