@@ -19,7 +19,7 @@ data class Movies(
     @SerializedName("vote_average") val voteAverage: Double?,
 ) : ApiData()
 
-data class AddToFavoritesResponse(
+data class AddToFavoritesApiResponse(
     @SerializedName("success") val success: Boolean,
     @SerializedName("status_code") val statusCode: String,
     @SerializedName("status_message") val statusMessage: String,
@@ -31,7 +31,7 @@ data class AddToFavoritesRequest(
     @SerializedName("favorite") val favorite: Boolean,
 ) : ApiData()
 
-data class FavoriteMoviesResponse(
+data class AddToFavoriteMoviesData(
     val success: Boolean,
     val statusMessage: String,
     val statusCode: String

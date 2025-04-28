@@ -1,15 +1,12 @@
 package com.brunodegan.ifood_challenge.data.datasources.domain.addToFavorites
 
 import com.brunodegan.ifood_challenge.base.network.base.Resource
-import com.brunodegan.ifood_challenge.data.datasources.local.entities.FavoriteMoviesEntity
-import com.brunodegan.ifood_challenge.data.datasources.local.entities.FavoriteMoviesResponse
+import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoriteMoviesData
 import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils
 import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils.getResourceError
 import com.brunodegan.ifood_challenge.data.repositories.MoviesRepository
 import com.brunodegan.ifood_challenge.domain.addToFavorites.AddToFavoritesUseCase
 import com.brunodegan.ifood_challenge.domain.addToFavorites.AddToFavoritesUseCaseImpl
-import com.brunodegan.ifood_challenge.domain.getFavorites.GetFavoritesUseCase
-import com.brunodegan.ifood_challenge.domain.getFavorites.GetFavoritesUseCaseImpl
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -38,7 +35,7 @@ class AddToFavoritesUseCaseTest {
     fun `GIVEN favorite movies WHEN invoke is called THEN emit Resource_Success and call addFavorite once`() = runBlocking {
 
         //Given
-        val expectedData = Resource.Success(MockUtils.mockFavoriteMoviesResponse())
+        val expectedData = Resource.Success(MockUtils.mockAddToFavoriteMoviesData())
         coEvery { repository.addFavorite(id = movieId) } returns flow {
             emit(expectedData)
         }
@@ -60,7 +57,7 @@ class AddToFavoritesUseCaseTest {
     fun `GIVEN an exception WHEN invoke is called THEN emit ResourceError`() = runBlocking {
         // GIVEN
         val exception = Exception("Error adding favorite movie")
-        val resourceError = getResourceError<FavoriteMoviesResponse>(exception)
+        val resourceError = getResourceError<AddToFavoriteMoviesData>(exception)
 
         coEvery { repository.addFavorite(id = movieId) } returns flow {
             emit(resourceError)
@@ -71,7 +68,7 @@ class AddToFavoritesUseCaseTest {
 
         // THEN
         assertTrue {
-            result.first() is Resource.Error<FavoriteMoviesResponse>
+            result.first() is Resource.Error<AddToFavoriteMoviesData>
         }
         assertEquals("Error adding favorite movie", (result.first() as Resource.Error).error.message)
     }

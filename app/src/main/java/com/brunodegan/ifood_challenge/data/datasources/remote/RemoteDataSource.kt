@@ -1,7 +1,7 @@
 package com.brunodegan.ifood_challenge.data.datasources.remote
 
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoritesRequest
-import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoritesResponse
+import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoritesApiResponse
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.MoviesApiDataResponse
 
 interface RemoteDataSource {
@@ -9,6 +9,6 @@ interface RemoteDataSource {
     suspend fun fetchPopular(): MoviesApiDataResponse
     suspend fun fetchTopRated(): MoviesApiDataResponse
     suspend fun fetchUpcoming(): MoviesApiDataResponse
-    suspend fun addOrRemoveFromFavorites(requestData: AddToFavoritesRequest): AddToFavoritesResponse
-    suspend fun getFavorites(): MoviesApiDataResponse
+    suspend fun fetchFavorites(): MoviesApiDataResponse
+    suspend fun addOrRemoveFromFavorites(requestData: AddToFavoritesRequest): AddToFavoritesApiResponse
 }

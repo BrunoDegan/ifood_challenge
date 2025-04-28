@@ -80,7 +80,7 @@ class RestApiServiceTest {
 
     @Test
     fun `GIVEN mock response WHEN addToFavorites is called THEN verify response`() = runBlocking {
-        val mockResponse = MockUtils.mockAddToFavoritesResponse()
+        val mockResponse = MockUtils.mockAddToFavoritesApiResponse()
         val mockRequest = MockUtils.mockAddToFavoritesRequest()
         val jsonResponse = MockUtils.toJsonString(mockResponse)
 

@@ -1,7 +1,7 @@
 package com.brunodegan.ifood_challenge.data.datasources.domain.removeFromFavorites
 
 import com.brunodegan.ifood_challenge.base.network.base.Resource
-import com.brunodegan.ifood_challenge.data.datasources.local.entities.FavoriteMoviesResponse
+import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoriteMoviesData
 import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils
 import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils.getResourceError
 import com.brunodegan.ifood_challenge.data.repositories.MoviesRepository
@@ -35,7 +35,7 @@ class RemoveFromFavoritesUseCaseTest {
     fun `GIVEN favorite movies WHEN invoke is called THEN emit Resource_Success and call removeFavorite once`() = runBlocking {
 
         //Given
-        val expectedData = Resource.Success(MockUtils.mockFavoriteMoviesResponse())
+        val expectedData = Resource.Success(MockUtils.mockAddToFavoriteMoviesData())
         coEvery { repository.removeFavorite(id = movieId) } returns flow {
             emit(expectedData)
         }
@@ -57,7 +57,7 @@ class RemoveFromFavoritesUseCaseTest {
     fun `GIVEN an exception WHEN invoke is called THEN emit ResourceError`() = runBlocking {
         // GIVEN
         val exception = Exception("Error removing favorite movie")
-        val resourceError = getResourceError<FavoriteMoviesResponse>(exception)
+        val resourceError = getResourceError<AddToFavoriteMoviesData>(exception)
 
         coEvery { repository.removeFavorite(id = movieId) } returns flow {
             emit(resourceError)
@@ -68,7 +68,7 @@ class RemoveFromFavoritesUseCaseTest {
 
         // THEN
         assertTrue {
-            result.first() is Resource.Error<FavoriteMoviesResponse>
+            result.first() is Resource.Error<AddToFavoriteMoviesData>
         }
         assertEquals(
             "Error removing favorite movie",

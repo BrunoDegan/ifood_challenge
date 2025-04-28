@@ -15,5 +15,5 @@ class RemoteDataSourceImpl(
     override suspend fun addOrRemoveFromFavorites(requestData: AddToFavoritesRequest) =
         restApi.addToFavorites(addToFavoritesRequest = requestData)
 
-    override suspend fun getFavorites() = restApi.getFavorites()
+    override suspend fun fetchFavorites() = restApi.getFavorites()
 }

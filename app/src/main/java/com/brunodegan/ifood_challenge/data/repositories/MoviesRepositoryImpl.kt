@@ -6,7 +6,7 @@ import com.brunodegan.ifood_challenge.base.utils.isCacheValid
 import com.brunodegan.ifood_challenge.data.datasources.local.LocalDataSource
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoritesRequest
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.FavoriteMoviesEntity
-import com.brunodegan.ifood_challenge.data.datasources.local.entities.FavoriteMoviesResponse
+import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoriteMoviesData
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.NowPlayingMoviesEntity
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.PopularMoviesEntity
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.TopRatedMoviesEntity
@@ -116,7 +116,7 @@ class MoviesRepositoryImpl(
             }
         }
 
-    override suspend fun addFavorite(id: Int): Flow<Resource<FavoriteMoviesResponse>> =
+    override suspend fun addFavorite(id: Int): Flow<Resource<AddToFavoriteMoviesData>> =
         flow {
             runCatching {
                 val request = AddToFavoritesRequest(mediaId = id, favorite = true)
@@ -131,7 +131,7 @@ class MoviesRepositoryImpl(
             }
         }
 
-    override suspend fun removeFavorite(id: Int): Flow<Resource<FavoriteMoviesResponse>> = flow {
+    override suspend fun removeFavorite(id: Int): Flow<Resource<AddToFavoriteMoviesData>> = flow {
         runCatching {
             val request = AddToFavoritesRequest(mediaId = id, favorite = false)
             remoteDataSource.addOrRemoveFromFavorites(request)
@@ -154,7 +154,7 @@ class MoviesRepositoryImpl(
         }
 
         runCatching {
-            remoteDataSource.getFavorites()
+            remoteDataSource.fetchFavorites()
         }.onFailure { error ->
             emit(Resource.Error(ErrorType.Generic(error.message)))
         }.map { apiDataModel ->

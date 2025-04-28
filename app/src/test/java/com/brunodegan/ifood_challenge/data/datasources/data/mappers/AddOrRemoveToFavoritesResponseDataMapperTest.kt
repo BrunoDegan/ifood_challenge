@@ -19,7 +19,7 @@ class AddOrRemoveToFavoritesResponseDataMapperTest {
 
     @Test
     fun `GIVEN mock add to favorites response WHEN map THEN asserts equality`() {
-        val response = MockUtils.mockAddToFavoritesResponse()
+        val response = MockUtils.mockAddToFavoritesApiResponse()
 
         val result = mapper.map(response)
 

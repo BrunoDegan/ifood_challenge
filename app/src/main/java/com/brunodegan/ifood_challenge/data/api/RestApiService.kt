@@ -1,7 +1,7 @@
 package com.brunodegan.ifood_challenge.data.api
 
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoritesRequest
-import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoritesResponse
+import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoritesApiResponse
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.MoviesApiDataResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -35,7 +35,7 @@ interface RestApiService {
     suspend fun addToFavorites(
         @Path(ACCOUNT_ID) accountId: String = ID,
         @Body addToFavoritesRequest: AddToFavoritesRequest
-    ): AddToFavoritesResponse
+    ): AddToFavoritesApiResponse
 
     @GET(GET_FAVORITES_URL)
     suspend fun getFavorites(

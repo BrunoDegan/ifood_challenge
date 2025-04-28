@@ -91,7 +91,7 @@ class RemoteDataSourceImplTest {
 
             coEvery { restApiService.getFavorites() } returns mockResponse
 
-            val result = remoteDataSource.getFavorites()
+            val result = remoteDataSource.fetchFavorites()
 
             assertEquals(mockResponse, result)
             coVerify(exactly = 1) {
@@ -102,7 +102,7 @@ class RemoteDataSourceImplTest {
     @Test
     fun `GIVEN movies api data response mocks WHEN addToFavorites is invoked THEN asserts response equality`() =
         runBlocking {
-            val mockResponse = MockUtils.mockAddToFavoritesResponse()
+            val mockResponse = MockUtils.mockAddToFavoritesApiResponse()
             val mockRequest = MockUtils.mockAddToFavoritesRequest()
 
             coEvery { restApiService.addToFavorites(addToFavoritesRequest = mockRequest) } returns mockResponse
