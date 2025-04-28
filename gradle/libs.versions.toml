@@ -26,6 +26,7 @@ koinAnnotationsBom = "2.0.0"
 room = "2.7.1"
 mockk = "1.14.0"
 turbine-test = "1.2.0"
+uiautomator = "2.3.0"
 
 [libraries]
 kotlinx-flow-test-tubine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine-test" }
@@ -74,6 +75,7 @@ koin-ksp-compiler = { group = "io.insert-koin", name = "koin-ksp-compiler", vers
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

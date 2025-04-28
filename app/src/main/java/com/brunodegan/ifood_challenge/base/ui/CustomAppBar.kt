@@ -14,8 +14,11 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import com.brunodegan.ifood_challenge.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,7 +37,11 @@ fun CustomAppBar(
             )
         },
         navigationIcon = {
-            IconButton(enabled = true, onClick = onBackButtonClicked) {
+            IconButton(
+                enabled = true, onClick = onBackButtonClicked, modifier = Modifier.testTag(
+                    "BackButton"
+                )
+            ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
