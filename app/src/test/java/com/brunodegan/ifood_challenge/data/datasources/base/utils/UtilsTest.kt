@@ -2,13 +2,9 @@ package com.brunodegan.ifood_challenge.data.datasources.base.utils
 
 import com.brunodegan.ifood_challenge.base.utils.formatFullCDNUrl
 import com.brunodegan.ifood_challenge.base.utils.formatUsDateToBrDate
-import com.brunodegan.ifood_challenge.base.utils.isCacheValid
-import io.mockk.every
 import io.mockk.unmockkAll
 import org.junit.After
 import org.junit.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 
 class UtilsTest {
 
