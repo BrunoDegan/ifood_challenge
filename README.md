@@ -1,4 +1,4 @@
-![ifood_challlenge_video](https://github.com/user-attachments/assets/50f1f80a-bc0b-473f-87b9-a0307d599ae6)![ifood_challlenge_video](https://github.com/user-attachments/assets/e58a24fb-2f99-4628-9ce9-c257f25845a2)# iFood Challenge
+# iFood Challenge
 
 This project is an Android application built using **Kotlin** and **Jetpack Compose**. It showcases a list of favorite movies, allowing users to view details, interact with the UI, and manage their favorite movies. The app follows modern Android development practices, including MVVM architecture, dependency injection with Koin, and Jetpack libraries.
 
