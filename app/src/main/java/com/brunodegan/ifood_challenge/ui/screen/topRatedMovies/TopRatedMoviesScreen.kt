@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -39,7 +40,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -80,6 +80,7 @@ private const val SCREEN_NAME = "TopRelatedVideosScreen"
 @Composable
 fun TopRatedVideosScreen(
     scrollBehavior: TopAppBarScrollBehavior,
+    listState: LazyListState,
     onShowSnackbar: (String) -> Unit,
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
@@ -106,6 +107,7 @@ fun TopRatedVideosScreen(
     TopRatedVideosScreen(
         scrollBehavior = scrollBehavior,
         state = uiState,
+        listState = listState,
         onEvent = {
             viewModel.onUiEvent(
                 event = it
@@ -122,6 +124,7 @@ private fun TopRatedVideosScreen(
     state: TopRatedMoviesUiState,
     onEvent: (TopRatedMoviesUiEvents) -> Unit,
     modifier: Modifier,
+    listState: LazyListState,
 ) {
     when (state) {
         is TopRatedMoviesUiState.Initial -> {
@@ -131,6 +134,7 @@ private fun TopRatedVideosScreen(
         is TopRatedMoviesUiState.Success -> {
             SuccessState(
                 scrollBehavior = scrollBehavior,
+                listState = listState,
                 modifier = modifier,
                 viewData = state.viewData,
                 onFavoriteButtonClicked = {
@@ -161,15 +165,15 @@ private fun TopRatedVideosScreen(
 @Composable
 private fun SuccessState(
     scrollBehavior: TopAppBarScrollBehavior,
+    listState: LazyListState,
     modifier: Modifier = Modifier,
     viewData: List<TopRatedMoviesEntity>,
     onFavoriteButtonClicked: (Int) -> Unit,
     onRemoveFavButtonClickedUiEvent: (Int) -> Unit
 ) {
-    val scrollState = rememberLazyListState()
 
     LazyColumn(
-        state = scrollState,
+        state = listState,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         flingBehavior = ScrollableDefaults.flingBehavior(),
@@ -411,6 +415,7 @@ private fun TopRatedMoviesCard(
 @Composable
 fun TopRatedMoviesScreen() {
     TopRatedVideosScreen(
+        listState = rememberLazyListState(),
         state = TopRatedMoviesUiState.Success(
             viewData = listOf(
                 TopRatedMoviesEntity(

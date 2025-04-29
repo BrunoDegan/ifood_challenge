@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -39,7 +40,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -80,6 +80,7 @@ private const val SCREEN_NAME = "NowPlayingScreen"
 @Composable
 fun NowPlayingMoviesScreen(
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
+    listState: LazyListState,
     onNavigateUp: () -> Unit,
     onShowSnackbar: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -105,6 +106,7 @@ fun NowPlayingMoviesScreen(
 
     NowPlayingMoviesScreen(
         state = uiState,
+        listState = listState,
         scrollBehavior = scrollBehavior,
         onEvent = {
             viewModel.onUiEvent(event = it)
@@ -116,6 +118,7 @@ fun NowPlayingMoviesScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun NowPlayingMoviesScreen(
+    listState: LazyListState,
     scrollBehavior: TopAppBarScrollBehavior,
     state: NowPlayingMoviesUiState,
     onEvent: (NowPlayingMoviesUiEvents) -> Unit,
@@ -130,6 +133,7 @@ private fun NowPlayingMoviesScreen(
             SuccessState(
                 modifier = modifier,
                 scrollBehavior = scrollBehavior,
+                listState = listState,
                 viewData = state.viewData,
                 onFavoriteButtonClicked = {
                     onEvent(NowPlayingMoviesUiEvents.OnAddFavButtonClickedUiEvent(it))
@@ -159,14 +163,13 @@ private fun NowPlayingMoviesScreen(
 private fun SuccessState(
     modifier: Modifier,
     scrollBehavior: TopAppBarScrollBehavior,
+    listState: LazyListState,
     viewData: List<NowPlayingMoviesEntity>,
     onFavoriteButtonClicked: (Int) -> Unit,
     onRemoveFavButtonClickedUiEvent: (Int) -> Unit
 ) {
-    val scrollState = rememberLazyListState()
-
     LazyColumn(
-        state = scrollState,
+        state = listState,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         flingBehavior = ScrollableDefaults.flingBehavior(),
@@ -404,6 +407,7 @@ private fun NowPlayingMoviesCard(
 @Preview
 fun NowPlayingScreenPreview() {
     NowPlayingMoviesScreen(
+        listState = rememberLazyListState(),
         state = NowPlayingMoviesUiState.Success(
             viewData = listOf(
                 NowPlayingMoviesEntity(

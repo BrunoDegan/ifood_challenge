@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -37,6 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.core.content.res.ResourcesCompat
@@ -63,6 +65,7 @@ private const val SCREEN_NAME = "FavoriteMoviesScreen"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavoriteMoviesScreen(
+    listState: LazyListState,
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
     onNavigateUp: () -> Unit,
     onShowSnackbar: (String) -> Unit,
@@ -90,6 +93,7 @@ fun FavoriteMoviesScreen(
     FavoritesMoviesScreen(
         state = uiState,
         scrollBehavior = scrollBehavior,
+        listState = listState,
         onEvent = {
             viewModel.onUiEvent(event = it)
         },
@@ -100,8 +104,9 @@ fun FavoriteMoviesScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavoritesMoviesScreen(
-    state: FavoriteMoviesUiState,
     scrollBehavior: TopAppBarScrollBehavior,
+    listState: LazyListState,
+    state: FavoriteMoviesUiState,
     onEvent: (FavoriteMoviesUiEvents) -> Unit,
     modifier: Modifier
 ) {
@@ -117,6 +122,7 @@ fun FavoritesMoviesScreen(
         is FavoriteMoviesUiState.Success -> {
             SuccessState(
                 modifier = modifier,
+                listState = listState,
                 scrollBehavior = scrollBehavior,
                 viewData = state.viewData,
             )
@@ -137,13 +143,12 @@ fun FavoritesMoviesScreen(
 @Composable
 fun SuccessState(
     modifier: Modifier,
+    listState: LazyListState,
     scrollBehavior: TopAppBarScrollBehavior,
     viewData: List<FavoriteMoviesEntity>
 ) {
-    val scrollState = rememberLazyListState()
-
     LazyColumn(
-        state = scrollState,
+        state = listState,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         flingBehavior = ScrollableDefaults.flingBehavior(),
@@ -259,6 +264,30 @@ fun FavoritesMoviesCard(
             )
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+@Preview
+fun PopularMoviesScreenPreview() {
+    FavoritesMoviesScreen(
+        scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
+        listState = rememberLazyListState(),
+        state = FavoriteMoviesUiState.Success(
+            viewData = listOf(
+                FavoriteMoviesEntity(
+                    id = 0,
+                    title = "title",
+                    posterPath = "posterPath",
+                    overview = "overview",
+                    lastUpdated = 1212,
+                    releaseDate = "29/04/2025"
+                )
+            )
+        ),
+        onEvent = {},
+        modifier = Modifier,
+    )
 }
 
 

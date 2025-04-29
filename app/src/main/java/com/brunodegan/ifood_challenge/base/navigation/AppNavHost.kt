@@ -10,6 +10,7 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -26,6 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -56,6 +58,9 @@ fun AppNavHost() {
     val topbarScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     var selectedItem by remember {
         mutableStateOf(getBottomNavItems().first())
+    }
+    val listState = rememberSaveable(saver = LazyListState.Saver) {
+        LazyListState()
     }
 
     KoinContext {
@@ -126,6 +131,7 @@ fun AppNavHost() {
             ) {
                 composable(ScreenRoutes.NowPlayingScreen.route) {
                     NowPlayingMoviesScreen(
+                        listState = listState,
                         scrollBehavior = topbarScrollBehavior,
                         onShowSnackbar = { msg ->
                             coroutineScope.launch {
@@ -146,6 +152,7 @@ fun AppNavHost() {
                 }
                 composable(ScreenRoutes.PopularScreen.route) {
                     PopularMoviesScreen(
+                        listState = listState,
                         scrollBehavior = topbarScrollBehavior,
                         onNavigateUp = {
                             val popped = navController.popBackStack()
@@ -162,6 +169,7 @@ fun AppNavHost() {
                 }
                 composable(ScreenRoutes.TopRatedScreen.route) { _ ->
                     TopRatedVideosScreen(
+                        listState = listState,
                         scrollBehavior = topbarScrollBehavior,
                         onNavigateUp = {
                             val popped = navController.popBackStack()
@@ -178,6 +186,7 @@ fun AppNavHost() {
                 }
                 composable(ScreenRoutes.UpComingScreen.route) {
                     UpComingMoviesScreen(
+                        listState = listState,
                         scrollBehavior = topbarScrollBehavior,
                         onNavigateUp = {
                             val popped = navController.popBackStack()
@@ -194,6 +203,7 @@ fun AppNavHost() {
                 }
                 composable(ScreenRoutes.FavoritesScreen.route) {
                     FavoriteMoviesScreen(
+                        listState = listState,
                         scrollBehavior = topbarScrollBehavior,
                         onNavigateUp = {
                             val popped = navController.popBackStack()

@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -80,6 +81,7 @@ private const val SCREEN_NAME = "UpComingMoviesScreen"
 @Composable
 fun UpComingMoviesScreen(
     scrollBehavior: TopAppBarScrollBehavior,
+    listState: LazyListState,
     onShowSnackbar: (String) -> Unit,
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
@@ -105,6 +107,7 @@ fun UpComingMoviesScreen(
 
     UpComingMoviesScreen(
         scrollBehavior = scrollBehavior,
+        listState = listState,
         state = uiState,
         onEvent = {
             viewModel.onUiEvent(event = it)
@@ -118,6 +121,7 @@ fun UpComingMoviesScreen(
 private fun UpComingMoviesScreen(
     scrollBehavior: TopAppBarScrollBehavior,
     state: UpComingMoviesUiState,
+    listState: LazyListState,
     onEvent: (UpcomingMoviesUiEvent) -> Unit,
     modifier: Modifier,
 ) {
@@ -131,6 +135,7 @@ private fun UpComingMoviesScreen(
                 scrollBehavior = scrollBehavior,
                 modifier = modifier,
                 viewData = state.viewData,
+                listState = listState,
                 onFavoriteButtonClicked = {
                     onEvent(UpcomingMoviesUiEvent.OnAddFavButtonClickedUiEvent(it))
                 },
@@ -160,14 +165,13 @@ private fun UpComingMoviesScreen(
 private fun SuccessState(
     scrollBehavior: TopAppBarScrollBehavior,
     modifier: Modifier = Modifier,
+    listState: LazyListState,
     viewData: List<UpcomingMoviesEntity>,
     onFavoriteButtonClicked: (Int) -> Unit,
     onRemoveFavButtonClickedUiEvent: (Int) -> Unit,
 ) {
-    val scrollState = rememberLazyListState()
-
     LazyColumn(
-        state = scrollState,
+        state = listState,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         flingBehavior = ScrollableDefaults.flingBehavior(),
@@ -410,6 +414,8 @@ private fun UpComingMovesCard(
 @Composable
 fun UpcomingScreenPreview() {
     UpComingMoviesScreen(
+        scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
+        listState = rememberLazyListState(),
         state = UpComingMoviesUiState.Success(
             viewData = listOf(
                 UpcomingMoviesEntity(
@@ -425,7 +431,6 @@ fun UpcomingScreenPreview() {
             )
         ),
         onEvent = {},
-        modifier = Modifier,
-        scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+        modifier = Modifier
     )
 }

@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -79,6 +80,7 @@ private const val SCREEN_NAME = "PopularMoviesScreen"
 @Composable
 fun PopularMoviesScreen(
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
+    listState: LazyListState,
     onNavigateUp: () -> Unit,
     onShowSnackbar: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -104,6 +106,7 @@ fun PopularMoviesScreen(
 
     PopularMoviesScreen(
         state = uiState,
+        listState= listState,
         scrollBehavior = scrollBehavior,
         onEvent = {
             viewModel.onUiEvent(event = it)
@@ -115,6 +118,7 @@ fun PopularMoviesScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PopularMoviesScreen(
+    listState: LazyListState,
     scrollBehavior: TopAppBarScrollBehavior,
     state: PopularMoviesUiState,
     onEvent: (PopularMoviesUiEvents) -> Unit,
@@ -131,7 +135,10 @@ private fun PopularMoviesScreen(
 
         is PopularMoviesUiState.Success -> {
             SuccessState(
-                modifier = modifier, scrollBehavior = scrollBehavior, viewData = state.viewData,
+                listState = listState,
+                scrollBehavior = scrollBehavior,
+                modifier = modifier,
+                viewData = state.viewData,
                 onFavoriteButtonClicked = {
                     onEvent(PopularMoviesUiEvents.OnAddFavButtonClickedUiEvent(it))
                 },
@@ -156,15 +163,15 @@ private fun PopularMoviesScreen(
 @Composable
 private fun SuccessState(
     modifier: Modifier,
+    listState: LazyListState,
     scrollBehavior: TopAppBarScrollBehavior,
     viewData: List<PopularMoviesEntity>,
     onFavoriteButtonClicked: (Int) -> Unit,
     onRemoveFavButtonClickedUiEvent: (Int) -> Unit
 ) {
-    val scrollState = rememberLazyListState()
 
     LazyColumn(
-        state = scrollState,
+        state = listState,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         flingBehavior = ScrollableDefaults.flingBehavior(),
@@ -410,6 +417,7 @@ private fun PopularMoviesCard(
 @Preview
 fun PopularMoviesScreenPreview() {
     PopularMoviesScreen(
+        listState = rememberLazyListState(),
         state = PopularMoviesUiState.Success(
             viewData = listOf(
                 PopularMoviesEntity(
