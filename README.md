@@ -40,6 +40,10 @@ This project is an Android application built using **Kotlin** and **Jetpack Comp
 
   Add more instrumented tests, refine a better UI, add logic to show favorites movies liked on all BottomNav Pages 
 
+## Known Issues
+
+- Scroll State hasn't been cached after activity reconstruction (screen rotation) (FIXED)
+
 ## Setup Instructions
 
 1. Clone the repository:
