@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -104,7 +105,7 @@ fun PopularMoviesScreen(
         }
     }
 
-    PopularMoviesScreen(
+    PopularMoviesScreenContent(
         state = uiState,
         listState= listState,
         scrollBehavior = scrollBehavior,
@@ -117,7 +118,7 @@ fun PopularMoviesScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun PopularMoviesScreen(
+internal fun PopularMoviesScreenContent(
     listState: LazyListState,
     scrollBehavior: TopAppBarScrollBehavior,
     state: PopularMoviesUiState,
@@ -229,6 +230,7 @@ private fun PopularMoviesCard(
             .wrapContentHeight()
             .padding(all = dimensionResource(R.dimen.card_padding))
             .background(color = MaterialTheme.colorScheme.primaryContainer)
+            .testTag(stringResource(R.string.popular_movies_card_tag) + " " + viewData.id)
     ) {
         Column(
             horizontalAlignment = Alignment.Start,
@@ -245,7 +247,7 @@ private fun PopularMoviesCard(
                         R.drawable.not_added_to_favorites
                     }
                 ),
-                contentDescription = "",
+                contentDescription = stringResource(R.string.add_to_favorites) + " " + viewData.id,
                 modifier = Modifier
                     .size(dimensionResource(R.dimen.favorite_icon_size))
                     .align(Alignment.End)
@@ -263,7 +265,7 @@ private fun PopularMoviesCard(
                 model = imageRequest,
                 fallback = painterResource(R.drawable.movie_icon),
                 error = painterResource(R.drawable.error_img),
-                contentDescription = "",
+                contentDescription = stringResource(R.string.popular_movies) + " " + viewData.id,
                 filterQuality = FilterQuality.Low,
                 modifier = Modifier
                     .size(
@@ -416,7 +418,7 @@ private fun PopularMoviesCard(
 @Composable
 @Preview
 fun PopularMoviesScreenPreview() {
-    PopularMoviesScreen(
+    PopularMoviesScreenContent(
         listState = rememberLazyListState(),
         state = PopularMoviesUiState.Success(
             viewData = listOf(

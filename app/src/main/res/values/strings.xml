@@ -11,4 +11,12 @@
     <string name="movie_release_date">Release date: %s</string>
     <string name="movie_popularity">Popularity: %s</string>
     <string name="movie_vote_average">Vote average</string>
+    <string name="add_to_favorites">Adicionar aos favoritos</string>
+
+
+    <string name="now_playing_movies_card_tag">now playing movies card tag</string>
+    <string name="favorites_movies_card_tag">favorites movies card tag</string>
+    <string name="upcoming_movies_card_tag">upcoming movies card tag</string>
+    <string name="top_rated_movies_card_tag">top rated movies card tag</string>
+    <string name="popular_movies_card_tag">popular movies card tag</string>
 </resources>

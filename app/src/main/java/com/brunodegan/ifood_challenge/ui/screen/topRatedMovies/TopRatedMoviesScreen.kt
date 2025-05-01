@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -79,7 +80,7 @@ private const val SCREEN_NAME = "TopRelatedVideosScreen"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopRatedVideosScreen(
-    scrollBehavior: TopAppBarScrollBehavior,
+    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
     listState: LazyListState,
     onShowSnackbar: (String) -> Unit,
     onNavigateUp: () -> Unit,
@@ -104,7 +105,7 @@ fun TopRatedVideosScreen(
         }
     }
 
-    TopRatedVideosScreen(
+    TopRatedVideosScreenContent(
         scrollBehavior = scrollBehavior,
         state = uiState,
         listState = listState,
@@ -119,7 +120,7 @@ fun TopRatedVideosScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun TopRatedVideosScreen(
+internal fun TopRatedVideosScreenContent(
     scrollBehavior: TopAppBarScrollBehavior,
     state: TopRatedMoviesUiState,
     onEvent: (TopRatedMoviesUiEvents) -> Unit,
@@ -230,6 +231,7 @@ private fun TopRatedMoviesCard(
             .wrapContentHeight()
             .padding(all = dimensionResource(R.dimen.card_padding))
             .background(color = MaterialTheme.colorScheme.primaryContainer)
+            .testTag(stringResource(R.string.top_rated_movies_card_tag) + " " + viewData.id)
     ) {
         Column(
             horizontalAlignment = Alignment.Start,
@@ -246,7 +248,7 @@ private fun TopRatedMoviesCard(
                         R.drawable.not_added_to_favorites
                     }
                 ),
-                contentDescription = "",
+                contentDescription = stringResource(R.string.add_to_favorites) + " " + viewData.id,
                 modifier = Modifier
                     .size(dimensionResource(R.dimen.favorite_icon_size))
                     .align(Alignment.End)
@@ -264,7 +266,7 @@ private fun TopRatedMoviesCard(
                 model = imageRequest,
                 fallback = painterResource(R.drawable.movie_icon),
                 error = painterResource(R.drawable.error_img),
-                contentDescription = "",
+                contentDescription = stringResource(R.string.top_rated_movies) + " " + viewData.id,
                 filterQuality = FilterQuality.Low,
                 modifier = Modifier
                     .size(
@@ -414,7 +416,7 @@ private fun TopRatedMoviesCard(
 @Preview
 @Composable
 fun TopRatedMoviesScreen() {
-    TopRatedVideosScreen(
+    TopRatedVideosScreenContent(
         listState = rememberLazyListState(),
         state = TopRatedMoviesUiState.Success(
             viewData = listOf(

@@ -40,11 +40,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -105,7 +105,7 @@ fun UpComingMoviesScreen(
         }
     }
 
-    UpComingMoviesScreen(
+    UpComingMoviesScreenContent(
         scrollBehavior = scrollBehavior,
         listState = listState,
         state = uiState,
@@ -118,7 +118,7 @@ fun UpComingMoviesScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun UpComingMoviesScreen(
+internal fun UpComingMoviesScreenContent(
     scrollBehavior: TopAppBarScrollBehavior,
     state: UpComingMoviesUiState,
     listState: LazyListState,
@@ -228,6 +228,7 @@ private fun UpComingMovesCard(
             .wrapContentHeight()
             .padding(all = dimensionResource(R.dimen.card_padding))
             .background(color = MaterialTheme.colorScheme.primaryContainer)
+            .testTag(stringResource(R.string.upcoming_movies_card_tag) + " " + viewData.id)
     ) {
         Column(
             horizontalAlignment = Alignment.Start,
@@ -244,7 +245,7 @@ private fun UpComingMovesCard(
                         R.drawable.not_added_to_favorites
                     }
                 ),
-                contentDescription = "",
+                contentDescription = stringResource(R.string.add_to_favorites) + " " + viewData.id,
                 modifier = Modifier
                     .size(dimensionResource(R.dimen.favorite_icon_size))
                     .align(Alignment.End)
@@ -262,7 +263,7 @@ private fun UpComingMovesCard(
                 model = imageRequest,
                 fallback = painterResource(R.drawable.movie_icon),
                 error = painterResource(R.drawable.error_img),
-                contentDescription = "",
+                contentDescription = stringResource(R.string.upcoming_movies) + " " + viewData.id,
                 filterQuality = FilterQuality.Low,
                 modifier = Modifier
                     .clip(PosterShape())
@@ -413,7 +414,7 @@ private fun UpComingMovesCard(
 @Preview
 @Composable
 fun UpcomingScreenPreview() {
-    UpComingMoviesScreen(
+    UpComingMoviesScreenContent(
         scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
         listState = rememberLazyListState(),
         state = UpComingMoviesUiState.Success(

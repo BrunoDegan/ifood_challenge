@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -104,7 +105,7 @@ fun NowPlayingMoviesScreen(
         }
     }
 
-    NowPlayingMoviesScreen(
+    NowPlayingMoviesScreenContent(
         state = uiState,
         listState = listState,
         scrollBehavior = scrollBehavior,
@@ -117,7 +118,7 @@ fun NowPlayingMoviesScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun NowPlayingMoviesScreen(
+internal fun NowPlayingMoviesScreenContent(
     listState: LazyListState,
     scrollBehavior: TopAppBarScrollBehavior,
     state: NowPlayingMoviesUiState,
@@ -218,6 +219,7 @@ private fun NowPlayingMoviesCard(
     Card(
         colors = CardDefaults.elevatedCardColors(cardColor),
         shape = RectangleShape,
+
         elevation = CardDefaults.cardElevation(dimensionResource(R.dimen.card_elevation)),
         border = BorderStroke(
             dimensionResource(R.dimen.card_border_elevation), MaterialTheme.colorScheme.tertiary
@@ -227,6 +229,7 @@ private fun NowPlayingMoviesCard(
             .wrapContentHeight()
             .padding(all = dimensionResource(R.dimen.card_padding))
             .background(color = MaterialTheme.colorScheme.primaryContainer)
+            .testTag(stringResource(R.string.now_playing_movies_card_tag) + " " + viewData.id)
     ) {
         Column(
             horizontalAlignment = Alignment.Start,
@@ -243,7 +246,7 @@ private fun NowPlayingMoviesCard(
                         R.drawable.not_added_to_favorites
                     }
                 ),
-                contentDescription = "",
+                contentDescription = stringResource(R.string.add_to_favorites) + " " + viewData.id,
                 modifier = Modifier
                     .size(dimensionResource(R.dimen.favorite_icon_size))
                     .align(Alignment.End)
@@ -261,7 +264,7 @@ private fun NowPlayingMoviesCard(
                 model = imageRequest,
                 fallback = painterResource(R.drawable.movie_icon),
                 error = painterResource(R.drawable.error_img),
-                contentDescription = "",
+                contentDescription = stringResource(R.string.now_playing_movies) + " " + viewData.id,
                 filterQuality = FilterQuality.Low,
                 modifier = Modifier
                     .size(
@@ -406,7 +409,7 @@ private fun NowPlayingMoviesCard(
 @Composable
 @Preview
 fun NowPlayingScreenPreview() {
-    NowPlayingMoviesScreen(
+    NowPlayingMoviesScreenContent(
         listState = rememberLazyListState(),
         state = NowPlayingMoviesUiState.Success(
             viewData = listOf(

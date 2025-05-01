@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -90,7 +91,7 @@ fun FavoriteMoviesScreen(
         }
     }
 
-    FavoritesMoviesScreen(
+    FavoritesMoviesScreenContent(
         state = uiState,
         scrollBehavior = scrollBehavior,
         listState = listState,
@@ -103,7 +104,7 @@ fun FavoriteMoviesScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FavoritesMoviesScreen(
+internal fun FavoritesMoviesScreenContent(
     scrollBehavior: TopAppBarScrollBehavior,
     listState: LazyListState,
     state: FavoriteMoviesUiState,
@@ -185,6 +186,7 @@ fun FavoritesMoviesCard(
             .wrapContentHeight()
             .padding(all = dimensionResource(R.dimen.card_padding))
             .background(color = MaterialTheme.colorScheme.primaryContainer)
+            .testTag(stringResource(R.string.favorites_movies_card_tag) + " " + viewData.id)
     ) {
         Column(
             horizontalAlignment = Alignment.Start,
@@ -197,7 +199,7 @@ fun FavoritesMoviesCard(
                 model = imageRequest,
                 fallback = painterResource(R.drawable.movie_icon),
                 error = painterResource(R.drawable.error_img),
-                contentDescription = "",
+                contentDescription = stringResource(R.string.favorites_movies) + " " + viewData.id,
                 filterQuality = FilterQuality.Low,
                 modifier = Modifier
                     .size(
@@ -270,7 +272,7 @@ fun FavoritesMoviesCard(
 @Composable
 @Preview
 fun PopularMoviesScreenPreview() {
-    FavoritesMoviesScreen(
+    FavoritesMoviesScreenContent(
         scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
         listState = rememberLazyListState(),
         state = FavoriteMoviesUiState.Success(
