@@ -2,6 +2,7 @@ package com.brunodegan.ifood_challenge.ui.screen.upComingMovies.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.brunodegan.ifood_challenge.base.dispatchers.DispatchersProviderInterface
 import com.brunodegan.ifood_challenge.base.network.base.Resource
 import com.brunodegan.ifood_challenge.base.ui.SnackbarUiStateHolder
 import com.brunodegan.ifood_challenge.domain.addToFavorites.AddToFavoritesUseCase
@@ -9,8 +10,6 @@ import com.brunodegan.ifood_challenge.domain.getUpComing.GetUpComingUseCase
 import com.brunodegan.ifood_challenge.domain.removeFromFavorites.RemoveFromFavoritesUseCase
 import com.brunodegan.ifood_challenge.ui.screen.upComingMovies.events.UpcomingMoviesUiEvent
 import com.brunodegan.ifood_challenge.ui.screen.upComingMovies.state.UpComingMoviesUiState
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -30,7 +29,7 @@ class UpComingMoviesViewModel(
     private val useCase: GetUpComingUseCase,
     private val addToFavoritesUseCase: AddToFavoritesUseCase,
     private val removeFromFavoritesUseCase: RemoveFromFavoritesUseCase,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val dispatcher: DispatchersProviderInterface,
 ) : ViewModel() {
 
     private val _snackbarState = Channel<SnackbarUiStateHolder>()
@@ -48,13 +47,15 @@ class UpComingMoviesViewModel(
         when (event) {
             is UpcomingMoviesUiEvent.OnRetryButtonClickedUiEvent -> getUpCommingMovies()
             is UpcomingMoviesUiEvent.OnAddFavButtonClickedUiEvent -> addMovieToFavorites(event.id)
-            is UpcomingMoviesUiEvent.OnRemoveFavButtonClickedUiEvent -> removeMovieFromFavorites(event.id)
+            is UpcomingMoviesUiEvent.OnRemoveFavButtonClickedUiEvent -> removeMovieFromFavorites(
+                event.id
+            )
         }
     }
 
     fun getUpCommingMovies() {
         viewModelScope.launch {
-            useCase().flowOn(dispatcher)
+            useCase().flowOn(dispatcher.io)
                 .distinctUntilChanged()
                 .onStart {
                     _uiState.update { UpComingMoviesUiState.Loading }
@@ -81,7 +82,7 @@ class UpComingMoviesViewModel(
     private fun addMovieToFavorites(movieId: Int) {
         viewModelScope.launch {
             addToFavoritesUseCase.invoke(movieId)
-                .flowOn(dispatcher)
+                .flowOn(dispatcher.io)
                 .distinctUntilChanged()
                 .catch { error ->
                     error.message?.let {
@@ -91,7 +92,7 @@ class UpComingMoviesViewModel(
                 .collectLatest { result ->
                     when (result) {
                         is Resource.Success -> {
-                           _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(result.data.statusMessage))
+                            _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(result.data.statusMessage))
                         }
 
                         is Resource.Error -> {
@@ -105,7 +106,7 @@ class UpComingMoviesViewModel(
     private fun removeMovieFromFavorites(movieId: Int) {
         viewModelScope.launch {
             removeFromFavoritesUseCase.invoke(movieId)
-                .flowOn(dispatcher)
+                .flowOn(dispatcher.io)
                 .distinctUntilChanged()
                 .catch { error ->
                     error.message?.let {

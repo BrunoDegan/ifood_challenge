@@ -27,7 +27,7 @@ import kotlin.test.assertEquals
 
 class NowPlayingMoviesViewModelTest {
     @get:Rule
-    val mainDispatcher = TestDispatcherRule()
+    val testDispatcher = TestDispatcherRule()
 
     private val getNowPlayingUseCase: GetNowPlayingUseCase = mockk()
     private val addToFavoritesUseCase: AddToFavoritesUseCase = mockk()
@@ -41,6 +41,7 @@ class NowPlayingMoviesViewModelTest {
             useCase = getNowPlayingUseCase,
             addToFavoritesUseCase = addToFavoritesUseCase,
             removeFromFavoritesUseCase = removeFromFavoritesUseCase,
+            dispatcher = testDispatcher
         )
     }
 

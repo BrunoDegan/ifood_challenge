@@ -28,7 +28,7 @@ import kotlin.test.assertEquals
 class PopularMoviesViewModelTest {
 
     @get:Rule
-    val mainDispatcher = TestDispatcherRule()
+    val testDispatcher = TestDispatcherRule()
 
     private val getPopularUseCase: GetPopularUseCase = mockk()
     private val addToFavoritesUseCase: AddToFavoritesUseCase = mockk()
@@ -42,6 +42,7 @@ class PopularMoviesViewModelTest {
             useCase = getPopularUseCase,
             addToFavoritesUseCase = addToFavoritesUseCase,
             removeFromFavoritesUseCase = removeFromFavoritesUseCase,
+            dispatcher = testDispatcher
         )
     }
 

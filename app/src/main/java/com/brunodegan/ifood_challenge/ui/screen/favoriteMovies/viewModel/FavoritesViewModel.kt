@@ -2,13 +2,12 @@ package com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.brunodegan.ifood_challenge.base.dispatchers.DispatchersProviderInterface
 import com.brunodegan.ifood_challenge.base.network.base.Resource
 import com.brunodegan.ifood_challenge.base.ui.SnackbarUiStateHolder
 import com.brunodegan.ifood_challenge.domain.getFavorites.GetFavoritesUseCase
 import com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.events.FavoriteMoviesUiEvents
 import com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.state.FavoriteMoviesUiState
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -26,7 +25,7 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 class FavoritesViewModel(
     private val useCase: GetFavoritesUseCase,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val dispatcher: DispatchersProviderInterface,
 ) : ViewModel() {
 
     private val _snackbarState = Channel<SnackbarUiStateHolder>()
@@ -49,7 +48,7 @@ class FavoritesViewModel(
 
     fun getFavoriteMovies() {
         viewModelScope.launch {
-            useCase().flowOn(dispatcher)
+            useCase().flowOn(dispatcher.io)
                 .distinctUntilChanged()
                 .onStart {
                     _uiState.update { FavoriteMoviesUiState.Loading }

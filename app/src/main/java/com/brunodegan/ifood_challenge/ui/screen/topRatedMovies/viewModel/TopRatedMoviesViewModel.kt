@@ -2,6 +2,7 @@ package com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.brunodegan.ifood_challenge.base.dispatchers.DispatchersProviderInterface
 import com.brunodegan.ifood_challenge.base.network.base.Resource
 import com.brunodegan.ifood_challenge.base.ui.SnackbarUiStateHolder
 import com.brunodegan.ifood_challenge.domain.addToFavorites.AddToFavoritesUseCase
@@ -9,8 +10,6 @@ import com.brunodegan.ifood_challenge.domain.getTopRated.GetTopRatedUseCase
 import com.brunodegan.ifood_challenge.domain.removeFromFavorites.RemoveFromFavoritesUseCase
 import com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.events.TopRatedMoviesUiEvents
 import com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.state.TopRatedMoviesUiState
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -30,7 +29,7 @@ class TopRatedMoviesViewModel(
     private val useCase: GetTopRatedUseCase,
     private val addToFavoritesUseCase: AddToFavoritesUseCase,
     private val removeFromFavoritesUseCase: RemoveFromFavoritesUseCase,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val dispatcher: DispatchersProviderInterface,
 ) : ViewModel() {
 
     private val _snackbarState = Channel<SnackbarUiStateHolder>()
@@ -60,7 +59,7 @@ class TopRatedMoviesViewModel(
     fun getTopRatedMovies() {
         viewModelScope.launch {
             useCase()
-                .flowOn(dispatcher)
+                .flowOn(dispatcher.io)
                 .distinctUntilChanged()
                 .onStart {
                     _uiState.update { TopRatedMoviesUiState.Loading }
@@ -85,7 +84,7 @@ class TopRatedMoviesViewModel(
     private fun addMovieToFavorites(movieId: Int) {
         viewModelScope.launch {
             addToFavoritesUseCase.invoke(movieId)
-                .flowOn(dispatcher)
+                .flowOn(dispatcher.io)
                 .distinctUntilChanged()
                 .catch { error ->
                     error.message?.let {
@@ -109,7 +108,7 @@ class TopRatedMoviesViewModel(
     private fun removeMovieFromFavorites(movieId: Int) {
         viewModelScope.launch {
             removeFromFavoritesUseCase.invoke(movieId)
-                .flowOn(dispatcher)
+                .flowOn(dispatcher.io)
                 .distinctUntilChanged()
                 .catch { error ->
                     error.message?.let {

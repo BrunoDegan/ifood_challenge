@@ -24,7 +24,7 @@ import kotlin.test.assertEquals
 
 class FavoritesViewModelTest {
     @get:Rule
-    val mainDispatcher = TestDispatcherRule()
+    val testDispatcher = TestDispatcherRule()
 
     private val useCase: GetFavoritesUseCase = mockk()
 
@@ -32,7 +32,7 @@ class FavoritesViewModelTest {
 
     @Before
     fun setup() {
-        viewModel = FavoritesViewModel(useCase = useCase)
+        viewModel = FavoritesViewModel(useCase = useCase, dispatcher = testDispatcher)
     }
 
     @Test
