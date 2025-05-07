@@ -22,5 +22,16 @@ data class NowPlayingMoviesEntity(
     @ColumnInfo(name = "vote_average")
     val voteAverage: Double,
     @ColumnInfo(name = "release_date")
-    val releaseDate: String
+    val releaseDate: String,
+    @ColumnInfo(name = "is_favorite")
+    val isFavorite: Boolean
 )
+
+fun List<NowPlayingMoviesEntity>.update(
+    favoritesMovies: List<FavoriteMoviesEntity>?
+): List<NowPlayingMoviesEntity>? {
+    return this.map { movie ->
+        val isFavorite = favoritesMovies?.any { it.id == movie.id }
+        movie.copy(isFavorite = isFavorite == true)
+    }
+}

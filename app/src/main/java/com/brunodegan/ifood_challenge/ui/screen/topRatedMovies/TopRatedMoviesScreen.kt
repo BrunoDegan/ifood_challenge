@@ -203,14 +203,14 @@ private fun TopRatedMoviesCard(
     onFavoriteButtonClicked: (Int) -> Unit,
     onRemoveFavButtonClickedUiEvent: (Int) -> Unit
 ) {
-    var isFavoriteButtonClicked by rememberSaveable { mutableStateOf(false) }
+    var isFavoriteButtonClicked by rememberSaveable { mutableStateOf(viewData.isFavorite) }
 
     val imageRequest = ImageRequest.Builder(LocalContext.current).data(viewData.posterPath)
         .decoderFactory(SvgDecoder.Factory()).scale(Scale.FIT).crossfade(true)
         .placeholder(R.drawable.movie_icon).error(R.drawable.error_img).build()
 
     val cardColor by animateColorAsState(
-        targetValue = if (isFavoriteButtonClicked) {
+        targetValue = if (isFavoriteButtonClicked == true) {
             MaterialTheme.colorScheme.onSecondary
         } else {
             MaterialTheme.colorScheme.primaryContainer
@@ -242,7 +242,7 @@ private fun TopRatedMoviesCard(
         ) {
             Image(
                 painter = painterResource(
-                    if (isFavoriteButtonClicked) {
+                    if (isFavoriteButtonClicked == true) {
                         R.drawable.added_to_favorites
                     } else {
                         R.drawable.not_added_to_favorites
@@ -254,8 +254,8 @@ private fun TopRatedMoviesCard(
                     .align(Alignment.End)
                     .padding(top = dimensionResource(R.dimen.double_padding))
                     .clickable {
-                        isFavoriteButtonClicked = !isFavoriteButtonClicked
-                        if (isFavoriteButtonClicked) {
+                        isFavoriteButtonClicked = isFavoriteButtonClicked.not()
+                        if (isFavoriteButtonClicked == true) {
                             onFavoriteButtonClicked(viewData.id)
                         } else {
                             onRemoveFavButtonClickedUiEvent(viewData.id)
@@ -428,7 +428,8 @@ fun TopRatedMoviesScreen() {
                     originalLanguage = "originalLanguage",
                     popularity = 10.0,
                     voteAverage = 7.5,
-                    releaseDate = "24/04/2025"
+                    releaseDate = "24/04/2025",
+                    isFavorite = false
                 )
             )
         ),

@@ -22,7 +22,8 @@ class UpcomingDataMapper : BaseMapper<MoviesApiDataResponse, List<UpcomingMovies
                         originalLanguage = movie.originalLanguage.orEmpty(),
                         popularity = movie.popularity.orZero(),
                         voteAverage = movie.voteAverage.orZero(),
-                        releaseDate = movie.releaseDate.formatUsDateToBrDate()
+                        releaseDate = movie.releaseDate.formatUsDateToBrDate(),
+                        isFavorite = false
                     )
                 )
             }
