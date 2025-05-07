@@ -39,7 +39,8 @@ object AndroidTestUtils {
                 originalLanguage = "en",
                 popularity = 9.5,
                 voteAverage = 8.9,
-                releaseDate = "2023-03-01"
+                releaseDate = "2023-03-01",
+                isFavorite = true
             ),
             TopRatedMoviesEntity(
                 id = 2,
@@ -49,7 +50,8 @@ object AndroidTestUtils {
                 originalLanguage = "fr",
                 popularity = 8.8,
                 voteAverage = 8.5,
-                releaseDate = "2023-04-01"
+                releaseDate = "2023-04-01",
+                isFavorite = true
             )
         )
     }
@@ -64,7 +66,8 @@ object AndroidTestUtils {
                 originalLanguage = "es",
                 popularity = 7.5,
                 voteAverage = 7.0,
-                releaseDate = "2023-05-01"
+                releaseDate = "2023-05-01",
+                isFavorite = true
             ),
             NowPlayingMoviesEntity(
                 id = 2,
@@ -74,7 +77,8 @@ object AndroidTestUtils {
                 originalLanguage = "it",
                 popularity = 8.0,
                 voteAverage = 7.5,
-                releaseDate = "2023-06-01"
+                releaseDate = "2023-06-01",
+                isFavorite = true
             )
         )
     }
@@ -89,7 +93,8 @@ object AndroidTestUtils {
                 originalLanguage = "de",
                 popularity = 6.5,
                 voteAverage = 6.8,
-                releaseDate = "2023-07-01"
+                releaseDate = "2023-07-01",
+                isFavorite = true
             ),
             UpcomingMoviesEntity(
                 id = 2,
@@ -99,7 +104,8 @@ object AndroidTestUtils {
                 originalLanguage = "ja",
                 popularity = 7.2,
                 voteAverage = 7.1,
-                releaseDate = "2023-08-01"
+                releaseDate = "2023-08-01",
+                isFavorite = true
             )
         )
     }
@@ -114,7 +120,8 @@ object AndroidTestUtils {
                 originalLanguage = "de",
                 popularity = 6.5,
                 voteAverage = 6.8,
-                releaseDate = "2023-07-01"
+                releaseDate = "2023-07-01",
+                isFavorite = true
             ),
             PopularMoviesEntity(
                 id = 2,
@@ -124,7 +131,8 @@ object AndroidTestUtils {
                 originalLanguage = "ja",
                 popularity = 7.2,
                 voteAverage = 7.1,
-                releaseDate = "2023-08-01"
+                releaseDate = "2023-08-01",
+                isFavorite = true
             )
         )
     }
