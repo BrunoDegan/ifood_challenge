@@ -36,11 +36,13 @@ class TopRatedMoviesViewModel(
     val snackbarState = _snackbarState.receiveAsFlow()
 
     private val _uiState = MutableStateFlow<TopRatedMoviesUiState>(TopRatedMoviesUiState.Initial)
-    val uiState = _uiState.stateIn(
-        viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = TopRatedMoviesUiState.Initial,
-    )
+    val uiState = _uiState
+        .onStart { getTopRatedMovies() }
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = TopRatedMoviesUiState.Initial,
+        )
 
     fun onUiEvent(event: TopRatedMoviesUiEvents) {
         when (event) {

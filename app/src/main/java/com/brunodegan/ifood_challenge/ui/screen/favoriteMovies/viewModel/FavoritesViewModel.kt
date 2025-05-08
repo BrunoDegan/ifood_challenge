@@ -33,11 +33,15 @@ class FavoritesViewModel(
 
     private val _uiState =
         MutableStateFlow<FavoriteMoviesUiState>(FavoriteMoviesUiState.Initial)
-    val uiState = _uiState.stateIn(
-        viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = FavoriteMoviesUiState.Initial,
-    )
+    val uiState = _uiState
+        .onStart {
+            getFavoriteMovies()
+        }
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = FavoriteMoviesUiState.Initial,
+        )
 
     fun onUiEvent(event: FavoriteMoviesUiEvents) {
         when (event) {

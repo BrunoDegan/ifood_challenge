@@ -93,9 +93,6 @@ fun TopRatedVideosScreen(
         onNavigateUp()
     }
 
-    LaunchedEffect(Unit) {
-        viewModel.getTopRatedMovies()
-    }
 
     ObserveAsEvent(events = viewModel.snackbarState) { event ->
         when (event) {
@@ -234,7 +231,6 @@ private fun TopRatedMoviesCard(
             .testTag(stringResource(R.string.top_rated_movies_card_tag) + " " + viewData.id)
     ) {
         Column(
-            horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .padding(start = dimensionResource(R.dimen.double_padding))

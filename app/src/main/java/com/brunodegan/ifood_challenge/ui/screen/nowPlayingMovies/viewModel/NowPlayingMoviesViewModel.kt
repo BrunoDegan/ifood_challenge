@@ -37,11 +37,15 @@ class NowPlayingMoviesViewModel(
 
     private val _uiState =
         MutableStateFlow<NowPlayingMoviesUiState>(NowPlayingMoviesUiState.Initial)
-    val uiState = _uiState.stateIn(
-        viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = NowPlayingMoviesUiState.Initial,
-    )
+    val uiState = _uiState
+        .onStart {
+            getNowPlayingMovies()
+        }
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = NowPlayingMoviesUiState.Initial,
+        )
 
     fun onUiEvent(event: NowPlayingMoviesUiEvents) {
         when (event) {

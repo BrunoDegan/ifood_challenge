@@ -93,10 +93,6 @@ fun PopularMoviesScreen(
         onNavigateUp()
     }
 
-    LaunchedEffect(Unit) {
-        viewModel.getPopularMovies()
-    }
-
     ObserveAsEvent(events = viewModel.snackbarState) { event ->
         when (event) {
             is SnackbarUiStateHolder.SnackbarUi -> {
@@ -233,7 +229,6 @@ private fun PopularMoviesCard(
             .testTag(stringResource(R.string.popular_movies_card_tag) + " " + viewData.id)
     ) {
         Column(
-            horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .padding(start = dimensionResource(R.dimen.double_padding))
@@ -249,8 +244,8 @@ private fun PopularMoviesCard(
                 ),
                 contentDescription = stringResource(R.string.add_to_favorites) + " " + viewData.id,
                 modifier = Modifier
-                    .size(dimensionResource(R.dimen.favorite_icon_size))
                     .align(Alignment.End)
+                    .size(dimensionResource(R.dimen.favorite_icon_size))
                     .padding(top = dimensionResource(R.dimen.double_padding))
                     .clickable {
                         isFavoriteButtonClicked = isFavoriteButtonClicked.not()

@@ -37,11 +37,14 @@ class UpComingMoviesViewModel(
 
     private val _uiState =
         MutableStateFlow<UpComingMoviesUiState>(UpComingMoviesUiState.Initial)
-    val uiState = _uiState.stateIn(
-        viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = UpComingMoviesUiState.Initial,
-    )
+    val uiState = _uiState
+        .onStart {
+            getUpCommingMovies()
+        }.stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = UpComingMoviesUiState.Initial,
+        )
 
     fun onUiEvent(event: UpcomingMoviesUiEvent) {
         when (event) {

@@ -93,10 +93,6 @@ fun UpComingMoviesScreen(
         onNavigateUp()
     }
 
-    LaunchedEffect(Unit) {
-        viewModel.getUpCommingMovies()
-    }
-
     ObserveAsEvent(events = viewModel.snackbarState) { event ->
         when (event) {
             is SnackbarUiStateHolder.SnackbarUi -> {
@@ -231,7 +227,6 @@ private fun UpComingMovesCard(
             .testTag(stringResource(R.string.upcoming_movies_card_tag) + " " + viewData.id)
     ) {
         Column(
-            horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .padding(start = dimensionResource(R.dimen.double_padding))

@@ -93,10 +93,6 @@ fun NowPlayingMoviesScreen(
         onNavigateUp()
     }
 
-    LaunchedEffect(Unit) {
-        viewModel.getNowPlayingMovies()
-    }
-
     ObserveAsEvent(events = viewModel.snackbarState) { event ->
         when (event) {
             is SnackbarUiStateHolder.SnackbarUi -> {
@@ -232,7 +228,6 @@ private fun NowPlayingMoviesCard(
             .testTag(stringResource(R.string.now_playing_movies_card_tag) + " " + viewData.id)
     ) {
         Column(
-            horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .padding(start = dimensionResource(R.dimen.double_padding))

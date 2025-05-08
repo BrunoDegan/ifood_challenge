@@ -79,10 +79,6 @@ fun FavoriteMoviesScreen(
         onNavigateUp()
     }
 
-    LaunchedEffect(Unit) {
-        viewModel.getFavoriteMovies()
-    }
-
     ObserveAsEvent(events = viewModel.snackbarState) { event ->
         when (event) {
             is SnackbarUiStateHolder.SnackbarUi -> {
