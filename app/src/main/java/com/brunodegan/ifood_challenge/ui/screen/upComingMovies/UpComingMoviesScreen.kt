@@ -32,7 +32,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -224,36 +223,38 @@ private fun UpComingMovesCard(
             .wrapContentHeight()
             .padding(all = dimensionResource(R.dimen.card_padding))
             .background(color = MaterialTheme.colorScheme.primaryContainer)
+            .clip(PosterShape())
             .testTag(stringResource(R.string.upcoming_movies_card_tag) + " " + viewData.id)
     ) {
+        Image(
+            painter = painterResource(
+                if (isFavoriteButtonClicked == true) {
+                    R.drawable.added_to_favorites
+                } else {
+                    R.drawable.not_added_to_favorites
+                }
+            ),
+            contentDescription = stringResource(R.string.add_to_favorites) + " " + viewData.id,
+            modifier = Modifier
+                .align(Alignment.End)
+                .size(dimensionResource(R.dimen.favorite_icon_size))
+                .padding(top = dimensionResource(R.dimen.double_padding))
+                .clickable {
+                    isFavoriteButtonClicked = isFavoriteButtonClicked.not()
+                    if (isFavoriteButtonClicked == true) {
+                        onFavoriteButtonClicked(viewData.id)
+                    } else {
+                        onRemoveFavButtonClickedUiEvent(viewData.id)
+                    }
+                }
+        )
         Column(
-            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.Start,
             modifier = Modifier
                 .padding(start = dimensionResource(R.dimen.double_padding))
                 .wrapContentSize()
         ) {
-            Image(
-                painter = painterResource(
-                    if (isFavoriteButtonClicked == true) {
-                        R.drawable.added_to_favorites
-                    } else {
-                        R.drawable.not_added_to_favorites
-                    }
-                ),
-                contentDescription = stringResource(R.string.add_to_favorites) + " " + viewData.id,
-                modifier = Modifier
-                    .size(dimensionResource(R.dimen.favorite_icon_size))
-                    .align(Alignment.End)
-                    .padding(top = dimensionResource(R.dimen.double_padding))
-                    .clickable {
-                        isFavoriteButtonClicked = isFavoriteButtonClicked.not()
-                        if (isFavoriteButtonClicked == true) {
-                            onFavoriteButtonClicked(viewData.id)
-                        } else {
-                            onRemoveFavButtonClickedUiEvent(viewData.id)
-                        }
-                    }
-            )
+
             AsyncImage(
                 model = imageRequest,
                 fallback = painterResource(R.drawable.movie_icon),

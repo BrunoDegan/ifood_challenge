@@ -1,9 +1,13 @@
 package com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,7 +36,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -77,15 +80,16 @@ import org.koin.compose.viewmodel.koinViewModel
 
 private const val SCREEN_NAME = "NowPlayingScreen"
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
-fun NowPlayingMoviesScreen(
+fun SharedTransitionScope.NowPlayingMoviesScreen(
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
     listState: LazyListState,
     onNavigateUp: () -> Unit,
     onShowSnackbar: (String) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: NowPlayingMoviesViewModel = koinViewModel()
+    viewModel: NowPlayingMoviesViewModel = koinViewModel(),
+    animatedVisibilityScope: AnimatedVisibilityScope
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -108,7 +112,13 @@ fun NowPlayingMoviesScreen(
         onEvent = {
             viewModel.onUiEvent(event = it)
         },
-        modifier = modifier
+        modifier = modifier.sharedElement(
+            sharedContentState = rememberSharedContentState(uiState),
+            animatedVisibilityScope = animatedVisibilityScope,
+            boundsTransform = { _, _ ->
+                tween(durationMillis = 1000)
+            }
+        )
     )
 }
 
@@ -227,34 +237,34 @@ private fun NowPlayingMoviesCard(
             .background(color = MaterialTheme.colorScheme.primaryContainer)
             .testTag(stringResource(R.string.now_playing_movies_card_tag) + " " + viewData.id)
     ) {
+        Image(
+            painter = painterResource(
+                if (isFavoriteButtonClicked == true) {
+                    R.drawable.added_to_favorites
+                } else {
+                    R.drawable.not_added_to_favorites
+                }
+            ),
+            contentDescription = stringResource(R.string.add_to_favorites) + " " + viewData.id,
+            modifier = Modifier
+                .align(Alignment.End)
+                .size(dimensionResource(R.dimen.favorite_icon_size))
+                .padding(top = dimensionResource(R.dimen.double_padding))
+                .clickable {
+                    isFavoriteButtonClicked = isFavoriteButtonClicked.not()
+                    if (isFavoriteButtonClicked == true) {
+                        onFavoriteButtonClicked(viewData.id)
+                    } else {
+                        onRemoveFavButtonClickedUiEvent(viewData.id)
+                    }
+                }
+        )
         Column(
-            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.Start,
             modifier = Modifier
                 .padding(start = dimensionResource(R.dimen.double_padding))
                 .wrapContentSize()
         ) {
-            Image(
-                painter = painterResource(
-                    if (isFavoriteButtonClicked == true) {
-                        R.drawable.added_to_favorites
-                    } else {
-                        R.drawable.not_added_to_favorites
-                    }
-                ),
-                contentDescription = stringResource(R.string.add_to_favorites) + " " + viewData.id,
-                modifier = Modifier
-                    .size(dimensionResource(R.dimen.favorite_icon_size))
-                    .align(Alignment.End)
-                    .padding(top = dimensionResource(R.dimen.double_padding))
-                    .clickable {
-                        isFavoriteButtonClicked = isFavoriteButtonClicked.not()
-                        if (isFavoriteButtonClicked == true) {
-                            onFavoriteButtonClicked(viewData.id)
-                        } else {
-                            onRemoveFavButtonClickedUiEvent(viewData.id)
-                        }
-                    }
-            )
             AsyncImage(
                 model = imageRequest,
                 fallback = painterResource(R.drawable.movie_icon),

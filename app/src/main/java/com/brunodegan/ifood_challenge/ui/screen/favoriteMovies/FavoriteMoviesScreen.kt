@@ -23,7 +23,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -186,7 +185,6 @@ fun FavoritesMoviesCard(
     ) {
         Column(
             horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .padding(start = dimensionResource(R.dimen.double_padding))
                 .wrapContentSize()
@@ -198,6 +196,7 @@ fun FavoritesMoviesCard(
                 contentDescription = stringResource(R.string.favorites_movies) + " " + viewData.id,
                 filterQuality = FilterQuality.Low,
                 modifier = Modifier
+                    .fillMaxWidth()
                     .size(
                         dimensionResource(R.dimen.movie_poster_size),
                         dimensionResource(R.dimen.movie_poster_size)
