@@ -289,7 +289,7 @@ private fun TopRatedMoviesCard(
                             dimensionResource(R.dimen.movie_poster_size),
                             dimensionResource(R.dimen.movie_poster_size)
                         )
-                        .clip(shape = PosterShape())
+                        .clip(PosterShape())
                         .fillMaxWidth()
                 )
             }
