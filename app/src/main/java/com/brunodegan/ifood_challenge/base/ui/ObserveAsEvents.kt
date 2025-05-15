@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun <T> ObserveAsEvent(
-    events: Flow<T>,
+    flow: Flow<T>,
     onEvent: (T) -> Unit,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -18,7 +18,7 @@ fun <T> ObserveAsEvent(
     LaunchedEffect(lifecycleOwner.lifecycle) {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
             with(Dispatchers.Main) {
-                events.collect(onEvent)
+                flow.collect(onEvent)
             }
         }
     }

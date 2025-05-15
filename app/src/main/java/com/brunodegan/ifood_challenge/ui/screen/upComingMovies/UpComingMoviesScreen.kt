@@ -1,9 +1,15 @@
 package com.brunodegan.ifood_challenge.ui.screen.upComingMovies
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -11,6 +17,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -76,9 +83,10 @@ import org.koin.androidx.compose.koinViewModel
 
 private const val SCREEN_NAME = "UpComingMoviesScreen"
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
-fun UpComingMoviesScreen(
+fun SharedTransitionScope.UpComingMoviesScreen(
+    animatedVisibilityScope: AnimatedVisibilityScope,
     scrollBehavior: TopAppBarScrollBehavior,
     listState: LazyListState,
     onShowSnackbar: (String) -> Unit,
@@ -92,7 +100,7 @@ fun UpComingMoviesScreen(
         onNavigateUp()
     }
 
-    ObserveAsEvent(events = viewModel.snackbarState) { event ->
+    ObserveAsEvent(flow = viewModel.snackbarState) { event ->
         when (event) {
             is SnackbarUiStateHolder.SnackbarUi -> {
                 onShowSnackbar(event.msg)
@@ -104,11 +112,16 @@ fun UpComingMoviesScreen(
         scrollBehavior = scrollBehavior,
         listState = listState,
         state = uiState,
-        onEvent = {
-            viewModel.onUiEvent(event = it)
-        },
-        modifier = modifier
-    )
+        modifier = modifier.sharedBounds(
+            sharedContentState = rememberSharedContentState(key = uiState),
+            animatedVisibilityScope = animatedVisibilityScope,
+            enter = slideInVertically(animationSpec = tween(800)),
+            exit = slideOutVertically(),
+            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds()
+        )
+    ) {
+        viewModel.onUiEvent(event = it)
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -117,8 +130,8 @@ internal fun UpComingMoviesScreenContent(
     scrollBehavior: TopAppBarScrollBehavior,
     state: UpComingMoviesUiState,
     listState: LazyListState,
-    onEvent: (UpcomingMoviesUiEvent) -> Unit,
     modifier: Modifier,
+    onEvent: (UpcomingMoviesUiEvent) -> Unit,
 ) {
     when (state) {
         is UpComingMoviesUiState.Initial -> {
@@ -223,7 +236,6 @@ private fun UpComingMovesCard(
             .wrapContentHeight()
             .padding(all = dimensionResource(R.dimen.card_padding))
             .background(color = MaterialTheme.colorScheme.primaryContainer)
-            .clip(PosterShape())
             .testTag(stringResource(R.string.upcoming_movies_card_tag) + " " + viewData.id)
     ) {
         Image(
@@ -255,24 +267,31 @@ private fun UpComingMovesCard(
                 .wrapContentSize()
         ) {
 
-            AsyncImage(
-                model = imageRequest,
-                fallback = painterResource(R.drawable.movie_icon),
-                error = painterResource(R.drawable.error_img),
-                contentDescription = stringResource(R.string.upcoming_movies) + " " + viewData.id,
-                filterQuality = FilterQuality.Low,
+            Row(
+                horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
-                    .clip(PosterShape())
-                    .size(
-                        dimensionResource(R.dimen.movie_poster_size),
-                        dimensionResource(R.dimen.movie_poster_size)
-                    )
-                    .align(Alignment.CenterHorizontally)
+                    .wrapContentHeight()
+                    .fillMaxWidth()
                     .padding(
                         top = dimensionResource(R.dimen.double_padding),
                         bottom = dimensionResource(R.dimen.base_padding)
                     )
-            )
+            ) {
+                AsyncImage(
+                    model = imageRequest,
+                    fallback = painterResource(R.drawable.movie_icon),
+                    error = painterResource(R.drawable.error_img),
+                    contentDescription = stringResource(R.string.upcoming_movies) + " " + viewData.id,
+                    filterQuality = FilterQuality.Low,
+                    modifier = Modifier
+                        .size(
+                            dimensionResource(R.dimen.movie_poster_size),
+                            dimensionResource(R.dimen.movie_poster_size)
+                        )
+                        .clip(PosterShape())
+                        .fillMaxWidth()
+                )
+            }
             Text(
                 text = viewData.title,
                 fontWeight = FontWeight.W600,

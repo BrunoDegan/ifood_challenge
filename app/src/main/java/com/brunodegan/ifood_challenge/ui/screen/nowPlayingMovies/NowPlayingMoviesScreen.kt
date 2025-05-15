@@ -8,6 +8,8 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,6 +17,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -89,7 +92,7 @@ fun SharedTransitionScope.NowPlayingMoviesScreen(
     onShowSnackbar: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: NowPlayingMoviesViewModel = koinViewModel(),
-    animatedVisibilityScope: AnimatedVisibilityScope
+    animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -97,7 +100,7 @@ fun SharedTransitionScope.NowPlayingMoviesScreen(
         onNavigateUp()
     }
 
-    ObserveAsEvent(events = viewModel.snackbarState) { event ->
+    ObserveAsEvent(flow = viewModel.snackbarState) { event ->
         when (event) {
             is SnackbarUiStateHolder.SnackbarUi -> {
                 onShowSnackbar(event.msg)
@@ -109,17 +112,16 @@ fun SharedTransitionScope.NowPlayingMoviesScreen(
         state = uiState,
         listState = listState,
         scrollBehavior = scrollBehavior,
-        onEvent = {
-            viewModel.onUiEvent(event = it)
-        },
-        modifier = modifier.sharedElement(
-            sharedContentState = rememberSharedContentState(uiState),
+        modifier = modifier.sharedBounds(
+            sharedContentState = rememberSharedContentState(key = uiState),
             animatedVisibilityScope = animatedVisibilityScope,
-            boundsTransform = { _, _ ->
-                tween(durationMillis = 1000)
-            }
+            enter = slideInVertically(animationSpec = tween(800)),
+            exit = slideOutVertically(),
+            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds()
         )
-    )
+    ) {
+        viewModel.onUiEvent(event = it)
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -128,8 +130,8 @@ internal fun NowPlayingMoviesScreenContent(
     listState: LazyListState,
     scrollBehavior: TopAppBarScrollBehavior,
     state: NowPlayingMoviesUiState,
-    onEvent: (NowPlayingMoviesUiEvents) -> Unit,
     modifier: Modifier,
+    onEvent: (NowPlayingMoviesUiEvents) -> Unit,
 ) {
     when (state) {
         is NowPlayingMoviesUiState.Initial -> {
@@ -225,7 +227,6 @@ private fun NowPlayingMoviesCard(
     Card(
         colors = CardDefaults.elevatedCardColors(cardColor),
         shape = RectangleShape,
-
         elevation = CardDefaults.cardElevation(dimensionResource(R.dimen.card_elevation)),
         border = BorderStroke(
             dimensionResource(R.dimen.card_border_elevation), MaterialTheme.colorScheme.tertiary
@@ -265,24 +266,32 @@ private fun NowPlayingMoviesCard(
                 .padding(start = dimensionResource(R.dimen.double_padding))
                 .wrapContentSize()
         ) {
-            AsyncImage(
-                model = imageRequest,
-                fallback = painterResource(R.drawable.movie_icon),
-                error = painterResource(R.drawable.error_img),
-                contentDescription = stringResource(R.string.now_playing_movies) + " " + viewData.id,
-                filterQuality = FilterQuality.Low,
+            Row(
+                horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
-                    .size(
-                        dimensionResource(R.dimen.movie_poster_size),
-                        dimensionResource(R.dimen.movie_poster_size)
-                    )
-                    .align(Alignment.CenterHorizontally)
+                    .wrapContentHeight()
+                    .fillMaxWidth()
                     .padding(
                         top = dimensionResource(R.dimen.double_padding),
                         bottom = dimensionResource(R.dimen.base_padding)
                     )
-                    .clip(PosterShape())
-            )
+            ) {
+                AsyncImage(
+                    model = imageRequest,
+                    fallback = painterResource(R.drawable.movie_icon),
+                    error = painterResource(R.drawable.error_img),
+                    contentDescription = stringResource(R.string.now_playing_movies) + " " + viewData.id,
+                    filterQuality = FilterQuality.Low,
+                    modifier = Modifier
+                        .size(
+                            dimensionResource(R.dimen.movie_poster_size),
+                            dimensionResource(R.dimen.movie_poster_size)
+                        )
+                        .clip(PosterShape())
+                        .fillMaxWidth()
+                )
+            }
+
             Text(
                 text = viewData.title,
                 fontWeight = FontWeight.W600,

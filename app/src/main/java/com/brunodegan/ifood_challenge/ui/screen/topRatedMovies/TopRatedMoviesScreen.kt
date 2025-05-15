@@ -1,9 +1,15 @@
 package com.brunodegan.ifood_challenge.ui.screen.topRatedMovies
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -11,6 +17,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -76,9 +83,10 @@ import org.koin.androidx.compose.koinViewModel
 
 private const val SCREEN_NAME = "TopRelatedVideosScreen"
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
-fun TopRatedVideosScreen(
+fun SharedTransitionScope.TopRatedVideosScreen(
+    animatedVisibilityScope: AnimatedVisibilityScope,
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
     listState: LazyListState,
     onShowSnackbar: (String) -> Unit,
@@ -93,7 +101,7 @@ fun TopRatedVideosScreen(
     }
 
 
-    ObserveAsEvent(events = viewModel.snackbarState) { event ->
+    ObserveAsEvent(flow = viewModel.snackbarState) { event ->
         when (event) {
             is SnackbarUiStateHolder.SnackbarUi -> {
                 onShowSnackbar(event.msg)
@@ -105,13 +113,16 @@ fun TopRatedVideosScreen(
         scrollBehavior = scrollBehavior,
         state = uiState,
         listState = listState,
-        onEvent = {
-            viewModel.onUiEvent(
-                event = it
-            )
-        },
-        modifier = modifier
-    )
+        modifier = modifier.sharedBounds(
+            sharedContentState = rememberSharedContentState(key = uiState),
+            animatedVisibilityScope = animatedVisibilityScope,
+            enter = slideInVertically(animationSpec = tween(800)),
+            exit = slideOutVertically(),
+            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds()
+        )
+    ) {
+        viewModel.onUiEvent(event = it)
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -119,9 +130,9 @@ fun TopRatedVideosScreen(
 internal fun TopRatedVideosScreenContent(
     scrollBehavior: TopAppBarScrollBehavior,
     state: TopRatedMoviesUiState,
-    onEvent: (TopRatedMoviesUiEvents) -> Unit,
     modifier: Modifier,
     listState: LazyListState,
+    onEvent: (TopRatedMoviesUiEvents) -> Unit,
 ) {
     when (state) {
         is TopRatedMoviesUiState.Initial -> {
@@ -257,26 +268,31 @@ private fun TopRatedMoviesCard(
                 .padding(start = dimensionResource(R.dimen.double_padding))
                 .wrapContentSize()
         ) {
-            AsyncImage(
-                model = imageRequest,
-                fallback = painterResource(R.drawable.movie_icon),
-                error = painterResource(R.drawable.error_img),
-                contentDescription = stringResource(R.string.top_rated_movies) + " " + viewData.id,
-                filterQuality = FilterQuality.Low,
+            Row(
+                horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
-                    .size(
-                        dimensionResource(R.dimen.movie_poster_size),
-                        dimensionResource(R.dimen.movie_poster_size)
-                    )
-                    .align(Alignment.CenterHorizontally)
+                    .wrapContentHeight()
+                    .fillMaxWidth()
                     .padding(
                         top = dimensionResource(R.dimen.double_padding),
                         bottom = dimensionResource(R.dimen.base_padding)
                     )
-                    .clip(
-                        shape = PosterShape()
-                    )
-            )
+            ) {
+                AsyncImage(
+                    model = imageRequest,
+                    fallback = painterResource(R.drawable.movie_icon),
+                    error = painterResource(R.drawable.error_img),
+                    contentDescription = stringResource(R.string.top_rated_movies) + " " + viewData.id,
+                    filterQuality = FilterQuality.Low,
+                    modifier = Modifier
+                        .size(
+                            dimensionResource(R.dimen.movie_poster_size),
+                            dimensionResource(R.dimen.movie_poster_size)
+                        )
+                        .clip(shape = PosterShape())
+                        .fillMaxWidth()
+                )
+            }
             Text(
                 text = viewData.title,
                 fontWeight = FontWeight.W600,

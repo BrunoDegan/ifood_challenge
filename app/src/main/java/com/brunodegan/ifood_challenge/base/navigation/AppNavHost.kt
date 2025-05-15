@@ -3,12 +3,6 @@ package com.brunodegan.ifood_challenge.base.navigation
 import android.app.Activity
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
@@ -116,21 +110,6 @@ fun AppNavHost() {
                     navController = navController,
                     startDestination = ScreenRoutes.NowPlayingScreen.route,
                     modifier = modifier.padding(paddingValues),
-                    enterTransition = {
-                        fadeIn(animationSpec = tween(300)) + slideInVertically(
-                            initialOffsetY = { -it },
-                            animationSpec = tween(300)
-                        )
-                    },
-                    exitTransition = {
-                        fadeOut(animationSpec = tween(500))
-                    },
-                    popEnterTransition = {
-                        slideInHorizontally(animationSpec = tween(500)) { it }
-                    },
-                    popExitTransition = {
-                        slideOutHorizontally(animationSpec = tween(500)) { -it }
-                    }
                 ) {
                     composable(ScreenRoutes.NowPlayingScreen.route) {
                         NowPlayingMoviesScreen(
@@ -156,6 +135,7 @@ fun AppNavHost() {
                     }
                     composable(ScreenRoutes.PopularScreen.route) {
                         PopularMoviesScreen(
+                            animatedVisibilityScope = this,
                             listState = listState,
                             scrollBehavior = topbarScrollBehavior,
                             onNavigateUp = {
@@ -173,6 +153,7 @@ fun AppNavHost() {
                     }
                     composable(ScreenRoutes.TopRatedScreen.route) { _ ->
                         TopRatedVideosScreen(
+                            animatedVisibilityScope = this,
                             listState = listState,
                             scrollBehavior = topbarScrollBehavior,
                             onNavigateUp = {
@@ -190,6 +171,7 @@ fun AppNavHost() {
                     }
                     composable(ScreenRoutes.UpComingScreen.route) {
                         UpComingMoviesScreen(
+                            animatedVisibilityScope = this,
                             listState = listState,
                             scrollBehavior = topbarScrollBehavior,
                             onNavigateUp = {
@@ -207,6 +189,7 @@ fun AppNavHost() {
                     }
                     composable(ScreenRoutes.FavoritesScreen.route) {
                         FavoriteMoviesScreen(
+                            animatedVisibilityScope = this,
                             listState = listState,
                             scrollBehavior = topbarScrollBehavior,
                             onNavigateUp = {
