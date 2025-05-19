@@ -211,9 +211,16 @@ private fun PopularMoviesCard(
 ) {
     var isFavoriteButtonClicked by rememberSaveable { mutableStateOf(viewData.isFavorite) }
 
-    val imageRequest = ImageRequest.Builder(LocalContext.current).data(viewData.posterPath)
-        .decoderFactory(SvgDecoder.Factory()).scale(Scale.FIT).crossfade(true)
-        .placeholder(R.drawable.movie_icon).error(R.drawable.error_img).build()
+    val imageRequest = ImageRequest.Builder(LocalContext.current)
+        .data(viewData.posterPath)
+        .decoderFactory(SvgDecoder.Factory())
+        .scale(Scale.FIT)
+        .crossfade(true)
+        .placeholder(R.drawable.movie_icon)
+        .error(R.drawable.error_img)
+        .memoryCacheKey(viewData.posterPath)
+        .diskCacheKey(viewData.posterPath)
+        .build()
 
     val cardColor by animateColorAsState(
         targetValue = if (isFavoriteButtonClicked == true) {
