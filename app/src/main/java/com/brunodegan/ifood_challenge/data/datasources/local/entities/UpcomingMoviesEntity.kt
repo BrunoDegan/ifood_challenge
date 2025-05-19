@@ -31,7 +31,7 @@ fun List<UpcomingMoviesEntity>.update(
     favoritesMovies: List<FavoriteMoviesEntity>
 ): List<UpcomingMoviesEntity>? {
     return this.map { movie ->
-        val isFavorite = favoritesMovies.any { it.id == movie.id }
+        val isFavorite = favoritesMovies.any { it.id == movie.id  }
         movie.copy(isFavorite = isFavorite == true)
     }
 }

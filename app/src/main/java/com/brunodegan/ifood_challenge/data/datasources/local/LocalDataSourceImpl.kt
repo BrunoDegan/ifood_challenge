@@ -24,6 +24,8 @@ class LocalDataSourceImpl(
     override fun saveFavorites(favoriteMovie: List<FavoriteMoviesEntity>) =
         favoriteDao.insertFavorite(favoriteMovie)
 
+    override suspend fun removeFavoriteMovie(id: Int) = favoriteDao.deleteFavoriteById(id)
+
     override suspend fun getFavoriteMovies(): Flow<List<FavoriteMoviesEntity>> =
         favoriteDao.getFavoriteMovies()
 

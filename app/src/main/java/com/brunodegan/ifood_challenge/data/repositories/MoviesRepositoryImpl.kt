@@ -225,6 +225,7 @@ class MoviesRepositoryImpl(
     override fun removeFavorite(id: Int): Flow<Resource<AddToFavoriteMoviesData>> = flow {
         runCatching {
             val request = AddToFavoritesRequest(mediaId = id, favorite = false)
+            localDataSource.removeFavoriteMovie(id)
             remoteDataSource.addOrRemoveFromFavorites(request)
         }.onFailure { error ->
             emit(Resource.Error(ErrorType.Generic(error.message)))

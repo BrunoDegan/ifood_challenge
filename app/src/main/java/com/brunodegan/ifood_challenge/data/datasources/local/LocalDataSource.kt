@@ -8,6 +8,7 @@ import com.brunodegan.ifood_challenge.data.datasources.local.entities.UpcomingMo
 import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {
+    suspend fun removeFavoriteMovie(id: Int)
     suspend fun getFavoriteMovies(): Flow<List<FavoriteMoviesEntity>?>
     suspend fun getNowPlaying(): Flow<List<NowPlayingMoviesEntity>?>
     suspend fun getPopular(): Flow<List<PopularMoviesEntity>?>
