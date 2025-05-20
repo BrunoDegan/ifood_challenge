@@ -86,12 +86,12 @@ private const val SCREEN_NAME = "PopularMoviesScreen"
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionScope.PopularMoviesScreen(
+    modifier: Modifier = Modifier,
     animatedVisibilityScope: AnimatedVisibilityScope,
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
     listState: LazyListState,
     onNavigateUp: () -> Unit,
     onShowSnackbar: (String) -> Unit,
-    modifier: Modifier = Modifier,
     viewModel: PopularMoviesViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -188,7 +188,9 @@ private fun SuccessState(
             .nestedScroll(scrollBehavior.nestedScrollConnection)
             .fillMaxSize()
     ) {
-        items(viewData.size, key = { index -> viewData[index].title }) { position ->
+        items(viewData.size, key = { index ->
+            "${viewData[index].id} -  ${viewData[index].title}"
+        }) { position ->
             PopularMoviesCard(
                 viewData = viewData[position],
                 onFavoriteButtonClicked = {

@@ -86,12 +86,12 @@ private const val SCREEN_NAME = "UpComingMoviesScreen"
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionScope.UpComingMoviesScreen(
+    modifier: Modifier = Modifier,
     animatedVisibilityScope: AnimatedVisibilityScope,
     scrollBehavior: TopAppBarScrollBehavior,
     listState: LazyListState,
     onShowSnackbar: (String) -> Unit,
     onNavigateUp: () -> Unit,
-    modifier: Modifier = Modifier,
     viewModel: UpComingMoviesViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -187,7 +187,9 @@ private fun SuccessState(
             .nestedScroll(scrollBehavior.nestedScrollConnection)
             .fillMaxSize()
     ) {
-        items(viewData.size, key = { index -> viewData[index].title }) { position ->
+        items(viewData.size, key = { index ->
+            "${viewData[index].id} -  ${viewData[index].title}"
+        }) { position ->
             UpComingMovesCard(
                 viewData = viewData[position],
                 onFavoriteButtonClicked = {

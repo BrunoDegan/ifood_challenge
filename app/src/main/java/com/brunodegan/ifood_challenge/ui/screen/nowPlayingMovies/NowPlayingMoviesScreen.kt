@@ -86,11 +86,11 @@ private const val SCREEN_NAME = "NowPlayingScreen"
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionScope.NowPlayingMoviesScreen(
+    modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
     listState: LazyListState,
     onNavigateUp: () -> Unit,
     onShowSnackbar: (String) -> Unit,
-    modifier: Modifier = Modifier,
     viewModel: NowPlayingMoviesViewModel = koinViewModel(),
     animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
@@ -187,7 +187,9 @@ private fun SuccessState(
             .fillMaxSize()
     ) {
 
-        items(viewData.size, key = { index -> viewData[index].title }) { position ->
+        items(viewData.size,  key = { index ->
+            "${viewData[index].id} -  ${viewData[index].title}"
+        }) { position ->
             NowPlayingMoviesCard(
                 viewData = viewData[position],
                 onFavoriteButtonClicked = {
