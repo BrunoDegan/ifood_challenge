@@ -1,15 +1,9 @@
 package com.brunodegan.ifood_challenge.ui.screen.upComingMovies
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibilityScope
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -83,11 +77,10 @@ import org.koin.androidx.compose.koinViewModel
 
 private const val SCREEN_NAME = "UpComingMoviesScreen"
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SharedTransitionScope.UpComingMoviesScreen(
+fun UpComingMoviesScreen(
     modifier: Modifier = Modifier,
-    animatedVisibilityScope: AnimatedVisibilityScope,
     scrollBehavior: TopAppBarScrollBehavior,
     listState: LazyListState,
     onShowSnackbar: (String) -> Unit,
@@ -112,13 +105,7 @@ fun SharedTransitionScope.UpComingMoviesScreen(
         scrollBehavior = scrollBehavior,
         listState = listState,
         state = uiState,
-        modifier = modifier.sharedBounds(
-            sharedContentState = rememberSharedContentState(key = uiState),
-            animatedVisibilityScope = animatedVisibilityScope,
-            enter = slideInVertically(animationSpec = tween(800)),
-            exit = slideOutVertically(),
-            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds()
-        )
+        modifier = modifier
     ) {
         viewModel.onUiEvent(event = it)
     }

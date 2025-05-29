@@ -1,6 +1,5 @@
 package com.brunodegan.ifood_challenge.data.datasources.utils
 
-import com.brunodegan.ifood_challenge.base.dispatchers.DispatchersProvider
 import com.brunodegan.ifood_challenge.base.dispatchers.DispatchersProviderInterface
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

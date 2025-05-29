@@ -2,7 +2,6 @@ package com.brunodegan.ifood_challenge.base.navigation
 
 import android.app.Activity
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
@@ -30,9 +29,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
+import androidx.navigation3.runtime.entry
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
+import androidx.navigation3.ui.NavDisplay
+import androidx.navigation3.ui.SinglePaneSceneStrategy
+import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
 import com.brunodegan.ifood_challenge.R
 import com.brunodegan.ifood_challenge.base.routes.ScreenRoutes
 import com.brunodegan.ifood_challenge.base.ui.CustomAppBar
@@ -47,7 +51,6 @@ import org.koin.compose.KoinContext
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun AppNavHost() {
-    val navController = rememberNavController()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     val activity = LocalView.current.context as? Activity
@@ -58,6 +61,7 @@ fun AppNavHost() {
     val listState = rememberSaveable(saver = LazyListState.Saver) {
         LazyListState()
     }
+    val backStack = rememberNavBackStack(ScreenRoutes.NowPlayingScreen)
 
     KoinContext {
         Scaffold(
@@ -86,10 +90,7 @@ fun AppNavHost() {
                             selected = navItem.position == selectedItem.position,
                             onClick = {
                                 selectedItem = navItem
-                                navController.navigate(navItem.route) {
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
+                                backStack.add(ScreenRoutes.route(navItem.route))
                             },
                             icon = {
                                 Icon(
@@ -105,15 +106,22 @@ fun AppNavHost() {
                 }
             }
         ) { paddingValues ->
-            SharedTransitionScope { modifier ->
-                NavHost(
-                    navController = navController,
-                    startDestination = ScreenRoutes.NowPlayingScreen.route,
-                    modifier = modifier.padding(paddingValues),
-                ) {
-                    composable(ScreenRoutes.NowPlayingScreen.route) {
+
+            NavDisplay(
+                backStack = backStack,
+                onBack = {
+                    backStack.removeLastOrNull()
+                },
+                sceneStrategy = SinglePaneSceneStrategy(),
+                entryDecorators = listOf(
+                    rememberSceneSetupNavEntryDecorator(),
+                    rememberSavedStateNavEntryDecorator(),
+                    rememberViewModelStoreNavEntryDecorator(),
+                ),
+                modifier = Modifier.padding(paddingValues),
+                entryProvider = entryProvider {
+                    entry<ScreenRoutes.NowPlayingScreen> { entry ->
                         NowPlayingMoviesScreen(
-                            animatedVisibilityScope = this,
                             listState = listState,
                             scrollBehavior = topbarScrollBehavior,
                             onShowSnackbar = { msg ->
@@ -126,87 +134,76 @@ fun AppNavHost() {
                                 }
                             },
                             onNavigateUp = {
-                                val popped = navController.popBackStack()
-                                if (!popped) {
-                                    activity?.finish()
-                                }
+                                backStack.clear()
+                                activity?.finish()
                             }
                         )
                     }
-                    composable(ScreenRoutes.PopularScreen.route) {
+                    entry<ScreenRoutes.PopularScreen> {
                         PopularMoviesScreen(
-                            animatedVisibilityScope = this,
                             listState = listState,
                             scrollBehavior = topbarScrollBehavior,
-                            onNavigateUp = {
-                                val popped = navController.popBackStack()
-                                if (!popped) {
-                                    activity?.finish()
-                                }
-                            },
                             onShowSnackbar = { msg ->
                                 coroutineScope.launch {
                                     snackbarHostState.showSnackbar(message = msg)
                                 }
+                            },
+                            onNavigateUp = {
+                                backStack.clear()
+                                activity?.finish()
                             }
                         )
                     }
-                    composable(ScreenRoutes.TopRatedScreen.route) { _ ->
+
+                    entry<ScreenRoutes.TopRatedScreen> {
                         TopRatedVideosScreen(
-                            animatedVisibilityScope = this,
                             listState = listState,
                             scrollBehavior = topbarScrollBehavior,
-                            onNavigateUp = {
-                                val popped = navController.popBackStack()
-                                if (!popped) {
-                                    activity?.finish()
-                                }
-                            },
                             onShowSnackbar = { msg ->
                                 coroutineScope.launch {
                                     snackbarHostState.showSnackbar(message = msg)
                                 }
+                            },
+                            onNavigateUp = {
+                                backStack.clear()
+                                activity?.finish()
                             },
                         )
+
                     }
-                    composable(ScreenRoutes.UpComingScreen.route) {
+
+                    entry<ScreenRoutes.UpComingScreen> {
                         UpComingMoviesScreen(
-                            animatedVisibilityScope = this,
                             listState = listState,
                             scrollBehavior = topbarScrollBehavior,
-                            onNavigateUp = {
-                                val popped = navController.popBackStack()
-                                if (!popped) {
-                                    activity?.finish()
-                                }
-                            },
                             onShowSnackbar = { msg ->
                                 coroutineScope.launch {
                                     snackbarHostState.showSnackbar(message = msg)
                                 }
+                            },
+                            onNavigateUp = {
+                                backStack.clear()
+                                activity?.finish()
                             }
                         )
                     }
-                    composable(ScreenRoutes.FavoritesScreen.route) {
+                    entry<ScreenRoutes.FavoritesScreen> {
                         FavoriteMoviesScreen(
-                            animatedVisibilityScope = this,
                             listState = listState,
                             scrollBehavior = topbarScrollBehavior,
-                            onNavigateUp = {
-                                val popped = navController.popBackStack()
-                                if (!popped) {
-                                    activity?.finish()
-                                }
-                            },
                             onShowSnackbar = { msg ->
                                 coroutineScope.launch {
                                     snackbarHostState.showSnackbar(message = msg)
                                 }
+                            },
+                            onNavigateUp = {
+                                backStack.clear()
+                                activity?.finish()
                             }
                         )
                     }
                 }
-            }
+            )
         }
     }
 }

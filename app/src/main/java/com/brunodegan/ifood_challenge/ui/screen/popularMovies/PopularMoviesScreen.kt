@@ -83,11 +83,10 @@ import org.koin.compose.viewmodel.koinViewModel
 
 private const val SCREEN_NAME = "PopularMoviesScreen"
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SharedTransitionScope.PopularMoviesScreen(
+fun PopularMoviesScreen(
     modifier: Modifier = Modifier,
-    animatedVisibilityScope: AnimatedVisibilityScope,
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
     listState: LazyListState,
     onNavigateUp: () -> Unit,
@@ -112,13 +111,7 @@ fun SharedTransitionScope.PopularMoviesScreen(
         state = uiState,
         listState = listState,
         scrollBehavior = scrollBehavior,
-        modifier = modifier.sharedBounds(
-            sharedContentState = rememberSharedContentState(key = uiState),
-            animatedVisibilityScope = animatedVisibilityScope,
-            enter = slideInVertically(animationSpec = tween(800)),
-            exit = slideOutVertically(),
-            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds()
-        )
+        modifier = modifier
     ) {
         viewModel.onUiEvent(event = it)
     }

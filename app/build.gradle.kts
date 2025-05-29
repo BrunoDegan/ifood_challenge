@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.brunodegan.ifood_challenge"
-    compileSdk = 35
+    compileSdk = 36
 
     buildFeatures {
         compose = true
@@ -70,6 +70,7 @@ dependencies {
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.compose)
     implementation(libs.coil.kt.svg)
+    implementation(libs.androidx.lifecycle.viewmodel.navigation3.android)
 
     // Test dependencies
     testImplementation(libs.junit)
@@ -92,9 +93,11 @@ dependencies {
     implementation(libs.retrofit.gson.converter)
     implementation(libs.okhttp.logging)
 
-    // Navigation
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.navigation.testing)
+    // Navigation 3
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+    implementation(libs.androidx.navigation3.ui.android)
 
     // Koin
     ksp(libs.koin.ksp.compiler)

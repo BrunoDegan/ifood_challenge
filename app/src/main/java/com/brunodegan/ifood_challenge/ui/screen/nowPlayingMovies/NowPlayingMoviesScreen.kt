@@ -1,15 +1,9 @@
 package com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibilityScope
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -83,16 +77,15 @@ import org.koin.compose.viewmodel.koinViewModel
 
 private const val SCREEN_NAME = "NowPlayingScreen"
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SharedTransitionScope.NowPlayingMoviesScreen(
+fun NowPlayingMoviesScreen(
     modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
     listState: LazyListState,
     onNavigateUp: () -> Unit,
     onShowSnackbar: (String) -> Unit,
     viewModel: NowPlayingMoviesViewModel = koinViewModel(),
-    animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -112,13 +105,7 @@ fun SharedTransitionScope.NowPlayingMoviesScreen(
         state = uiState,
         listState = listState,
         scrollBehavior = scrollBehavior,
-        modifier = modifier.sharedBounds(
-            sharedContentState = rememberSharedContentState(key = uiState),
-            animatedVisibilityScope = animatedVisibilityScope,
-            enter = slideInVertically(animationSpec = tween(800)),
-            exit = slideOutVertically(),
-            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds()
-        )
+        modifier = modifier
     ) {
         viewModel.onUiEvent(event = it)
     }
@@ -187,7 +174,7 @@ private fun SuccessState(
             .fillMaxSize()
     ) {
 
-        items(viewData.size,  key = { index ->
+        items(viewData.size, key = { index ->
             "${viewData[index].id} -  ${viewData[index].title}"
         }) { position ->
             NowPlayingMoviesCard(

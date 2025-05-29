@@ -1,12 +1,7 @@
 package com.brunodegan.ifood_challenge.ui.screen.favoriteMovies
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.ScrollableDefaults
@@ -71,13 +66,12 @@ private const val SCREEN_NAME = "FavoriteMoviesScreen"
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
-fun SharedTransitionScope.FavoriteMoviesScreen(
+fun FavoriteMoviesScreen(
     listState: LazyListState,
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
     onNavigateUp: () -> Unit,
     onShowSnackbar: (String) -> Unit,
     modifier: Modifier = Modifier,
-    animatedVisibilityScope: AnimatedVisibilityScope,
     viewModel: FavoritesViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -98,13 +92,7 @@ fun SharedTransitionScope.FavoriteMoviesScreen(
         state = uiState,
         scrollBehavior = scrollBehavior,
         listState = listState,
-        modifier = modifier.sharedBounds(
-            sharedContentState = rememberSharedContentState(key = uiState),
-            animatedVisibilityScope = animatedVisibilityScope,
-            enter = slideInVertically(animationSpec = tween(800)),
-            exit = slideOutVertically(),
-            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds()
-        )
+        modifier = modifier
     ) {
         viewModel.onUiEvent(event = it)
     }
