@@ -10,6 +10,7 @@ import com.brunodegan.ifood_challenge.data.api.RestApiService.Companion.CONTENT_
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.annotation.ComponentScan
+import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
 import retrofit2.Retrofit
@@ -19,7 +20,8 @@ import java.util.concurrent.TimeUnit
 private inline fun <reified T : Any> Retrofit.createApi(): T = create(T::class.java)
 
 @Module
-@ComponentScan("com.brunodegan.ifood_challenge")
+@Configuration
+@ComponentScan("com.brunodegan.ifood_challenge.base.network")
 class NetworkModule {
 
     @Single

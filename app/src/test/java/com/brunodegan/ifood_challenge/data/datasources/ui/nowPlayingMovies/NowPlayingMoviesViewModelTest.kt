@@ -17,6 +17,7 @@ import com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.viewModel.NowPl
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.unmockkAll
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -66,7 +67,7 @@ class NowPlayingMoviesViewModelTest {
     fun `GIVEN view model collects view entity with error state propagated WEN getNowPlayingMovies is invoked THEN asserts business error occurs`() =
         runTest {
             val exception = Exception("Error retrieving upComing movies")
-            val resourceError = getResourceError<List<NowPlayingMoviesEntity>>(exception)
+            val resourceError = getResourceError<ImmutableList<NowPlayingMoviesEntity>>(exception)
 
             coEvery { getNowPlayingUseCase.invoke() } returns flow { emit(resourceError) }
 

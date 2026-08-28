@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -60,6 +61,8 @@ import com.brunodegan.ifood_challenge.data.metrics.TrackScreen
 import com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.events.FavoriteMoviesUiEvents
 import com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.state.FavoriteMoviesUiState
 import com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.viewModel.FavoritesViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import org.koin.compose.viewmodel.koinViewModel
 
 private const val SCREEN_NAME = "FavoriteMoviesScreen"
@@ -67,13 +70,13 @@ private const val SCREEN_NAME = "FavoriteMoviesScreen"
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun FavoriteMoviesScreen(
+    modifier: Modifier = Modifier,
     listState: LazyListState,
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
     onNavigateUp: () -> Unit,
     onShowSnackbar: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    viewModel: FavoritesViewModel = koinViewModel()
 ) {
+    val viewModel: FavoritesViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     BackHandler {
@@ -142,7 +145,7 @@ fun SuccessState(
     modifier: Modifier,
     listState: LazyListState,
     scrollBehavior: TopAppBarScrollBehavior,
-    viewData: List<FavoriteMoviesEntity>
+    viewData: ImmutableList<FavoriteMoviesEntity>
 ) {
     LazyColumn(
         state = listState,
@@ -166,9 +169,14 @@ fun FavoritesMoviesCard(
     viewData: FavoriteMoviesEntity,
     modifier: Modifier = Modifier
 ) {
-    val imageRequest = ImageRequest.Builder(LocalContext.current).data(viewData.posterPath)
-        .decoderFactory(SvgDecoder.Factory()).scale(Scale.FIT).crossfade(true)
-        .placeholder(R.drawable.movie_icon).error(R.drawable.error_img).build()
+    val imageRequest = ImageRequest.Builder(LocalContext.current)
+        .memoryCacheKey(viewData.title)
+        .diskCacheKey(viewData.title)
+        .data(viewData.posterPath)
+        .decoderFactory(SvgDecoder.Factory())
+        .scale(Scale.FIT).crossfade(true)
+        .placeholder(R.drawable.movie_icon)
+        .error(R.drawable.error_img).build()
 
     Card(
         colors = CardDefaults.elevatedCardColors(MaterialTheme.colorScheme.primaryContainer),
@@ -221,7 +229,7 @@ fun FavoritesMoviesCard(
                 fontWeight = FontWeight.W600,
                 fontSize = TextUnit(
                     value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources,
+                        LocalResources.current,
                         R.dimen.movie_title_font_size
                     ), type = TextUnitType.Sp
                 ),
@@ -239,7 +247,7 @@ fun FavoritesMoviesCard(
                 fontWeight = FontWeight.W400,
                 fontSize = TextUnit(
                     value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources,
+                        LocalResources.current,
                         R.dimen.movie_overview_font_size
                     ), type = TextUnitType.Sp
                 ),
@@ -257,7 +265,7 @@ fun FavoritesMoviesCard(
                 fontWeight = FontWeight.Medium,
                 fontSize = TextUnit(
                     value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources,
+                        LocalResources.current,
                         R.dimen.movie_overview_font_size
                     ), type = TextUnitType.Sp
                 ),
@@ -279,7 +287,7 @@ fun PopularMoviesScreenPreview() {
         scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
         listState = rememberLazyListState(),
         state = FavoriteMoviesUiState.Success(
-            viewData = listOf(
+            viewData = persistentListOf(
                 FavoriteMoviesEntity(
                     id = 0,
                     title = "title",

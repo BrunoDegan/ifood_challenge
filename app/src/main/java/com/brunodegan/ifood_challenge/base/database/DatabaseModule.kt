@@ -4,11 +4,14 @@ import android.content.Context
 import androidx.room.Room
 import com.brunodegan.ifood_challenge.base.database.AppDatabase.Companion.DATABASE_NAME
 import org.koin.core.annotation.ComponentScan
+import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
 
+
 @Module
-@ComponentScan("com.brunodegan.ifood_challenge")
+@Configuration
+@ComponentScan("com.brunodegan.ifood_challenge.base.database")
 object DatabaseModule {
 
     @Single

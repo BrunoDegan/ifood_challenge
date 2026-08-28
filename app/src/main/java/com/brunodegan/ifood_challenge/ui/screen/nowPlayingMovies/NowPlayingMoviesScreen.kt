@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -73,6 +74,8 @@ import com.brunodegan.ifood_challenge.data.metrics.TrackScreen
 import com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.events.NowPlayingMoviesUiEvents
 import com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.state.NowPlayingMoviesUiState
 import com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.viewModel.NowPlayingMoviesViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import org.koin.compose.viewmodel.koinViewModel
 
 private const val SCREEN_NAME = "NowPlayingScreen"
@@ -85,8 +88,8 @@ fun NowPlayingMoviesScreen(
     listState: LazyListState,
     onNavigateUp: () -> Unit,
     onShowSnackbar: (String) -> Unit,
-    viewModel: NowPlayingMoviesViewModel = koinViewModel(),
 ) {
+    val viewModel: NowPlayingMoviesViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     BackHandler {
@@ -157,10 +160,10 @@ internal fun NowPlayingMoviesScreenContent(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SuccessState(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior,
     listState: LazyListState,
-    viewData: List<NowPlayingMoviesEntity>,
+    viewData: ImmutableList<NowPlayingMoviesEntity>,
     onFavoriteButtonClicked: (Int) -> Unit,
     onRemoveFavButtonClickedUiEvent: (Int) -> Unit
 ) {
@@ -198,20 +201,20 @@ private fun NowPlayingMoviesCard(
     onRemoveFavButtonClickedUiEvent: (Int) -> Unit
 ) {
     var isFavoriteButtonClicked by rememberSaveable { mutableStateOf(viewData.isFavorite) }
-
     val imageRequest = ImageRequest.Builder(LocalContext.current)
+        .memoryCacheKey(viewData.title)
+        .diskCacheKey(viewData.title)
         .data(viewData.posterPath)
         .decoderFactory(SvgDecoder.Factory())
         .scale(Scale.FIT)
         .crossfade(true)
         .placeholder(R.drawable.movie_icon)
-        .memoryCacheKey(viewData.posterPath)
-        .diskCacheKey(viewData.posterPath)
         .error(R.drawable.error_img)
         .build()
 
+
     val cardColor by animateColorAsState(
-        targetValue = if (isFavoriteButtonClicked == true) {
+        targetValue = if (isFavoriteButtonClicked) {
             MaterialTheme.colorScheme.onSecondary
         } else {
             MaterialTheme.colorScheme.primaryContainer
@@ -236,7 +239,7 @@ private fun NowPlayingMoviesCard(
     ) {
         Image(
             painter = painterResource(
-                if (isFavoriteButtonClicked == true) {
+                if (isFavoriteButtonClicked) {
                     R.drawable.added_to_favorites
                 } else {
                     R.drawable.not_added_to_favorites
@@ -249,7 +252,7 @@ private fun NowPlayingMoviesCard(
                 .padding(top = dimensionResource(R.dimen.double_padding))
                 .clickable {
                     isFavoriteButtonClicked = isFavoriteButtonClicked.not()
-                    if (isFavoriteButtonClicked == true) {
+                    if (isFavoriteButtonClicked) {
                         onFavoriteButtonClicked(viewData.id)
                     } else {
                         onRemoveFavButtonClickedUiEvent(viewData.id)
@@ -361,7 +364,7 @@ private fun NowPlayingMoviesCard(
                 fontWeight = FontWeight.Medium,
                 fontSize = TextUnit(
                     value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources, R.dimen.movie_language_font_size
+                        LocalResources.current, R.dimen.movie_language_font_size
                     ), type = TextUnitType.Sp
                 ),
                 textAlign = TextAlign.Justify,
@@ -380,7 +383,7 @@ private fun NowPlayingMoviesCard(
                     fontWeight = FontWeight.Medium,
                     fontSize = TextUnit(
                         value = ResourcesCompat.getFloat(
-                            LocalContext.current.resources, R.dimen.movie_language_font_size
+                            LocalResources.current, R.dimen.movie_language_font_size
                         ), type = TextUnitType.Sp
                     ),
                     textAlign = TextAlign.Justify,
@@ -398,7 +401,7 @@ private fun NowPlayingMoviesCard(
                         bottom = dimensionResource(R.dimen.double_padding)
                     )
                 ) {
-                    items(viewData.voteAverage.toInt()) { _ ->
+                    items(viewData.voteAverage) { _ ->
                         Icon(
                             imageVector = Icons.Filled.Star,
                             contentDescription = stringResource(R.string.movie_vote_average),
@@ -422,7 +425,7 @@ fun NowPlayingScreenPreview() {
     NowPlayingMoviesScreenContent(
         listState = rememberLazyListState(),
         state = NowPlayingMoviesUiState.Success(
-            viewData = listOf(
+            viewData = persistentListOf(
                 NowPlayingMoviesEntity(
                     id = 0,
                     title = "title",
@@ -430,7 +433,7 @@ fun NowPlayingScreenPreview() {
                     overview = "overview",
                     originalLanguage = "originalLanguage",
                     popularity = 10.0,
-                    voteAverage = 7.5,
+                    voteAverage = 7,
                     releaseDate = "24/04/2025",
                     isFavorite = false
                 )

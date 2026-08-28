@@ -12,6 +12,8 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.unmockkAll
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
@@ -61,7 +63,7 @@ class GetTopRatedUseCaseTest {
     fun `GIVEN an exception WHEN invoke is called THEN emit ResourceError`() = runTest {
         // GIVEN
         val exception = Exception("Error fetching now top rated movies")
-        val resourceError = getResourceError<List<TopRatedMoviesEntity>>(exception)
+        val resourceError = getResourceError<ImmutableList<TopRatedMoviesEntity>>(exception)
 
         coEvery { repository.getTopRateMovies() } returns flow {
             emit(resourceError)
@@ -72,7 +74,7 @@ class GetTopRatedUseCaseTest {
 
         // THEN
         assertTrue {
-            result.first() is Resource.Error<List<TopRatedMoviesEntity>>
+            result.first() is Resource.Error<ImmutableList<TopRatedMoviesEntity>>
         }
         assertEquals(
             "Error fetching now top rated movies",
@@ -85,14 +87,14 @@ class GetTopRatedUseCaseTest {
         runTest {
             // GIVEN
             coEvery { repository.getTopRateMovies() } returns flow {
-                emit(Resource.Success(emptyList()))
+                emit(Resource.Success(persistentListOf()))
             }
 
             // WHEN
             val result = useCase.invoke()
 
             // THEN
-            assertEquals(Resource.Success(emptyList<TopRatedMoviesEntity>()), result.first())
+            assertEquals(Resource.Success(persistentListOf<TopRatedMoviesEntity>()), result.first())
         }
 
     @After

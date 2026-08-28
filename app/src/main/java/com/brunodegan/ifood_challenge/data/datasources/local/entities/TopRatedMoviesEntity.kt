@@ -20,7 +20,7 @@ data class TopRatedMoviesEntity(
     @ColumnInfo(name = "popularity")
     val popularity: Double,
     @ColumnInfo(name = "vote_average")
-    val voteAverage: Double,
+    val voteAverage: Int,
     @ColumnInfo(name = "release_date")
     val releaseDate: String,
     @ColumnInfo(name = "is_favorite")

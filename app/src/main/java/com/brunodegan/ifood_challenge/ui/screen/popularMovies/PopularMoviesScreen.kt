@@ -1,15 +1,9 @@
 package com.brunodegan.ifood_challenge.ui.screen.popularMovies
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibilityScope
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -80,6 +74,7 @@ import com.brunodegan.ifood_challenge.ui.screen.popularMovies.events.PopularMovi
 import com.brunodegan.ifood_challenge.ui.screen.popularMovies.state.PopularMoviesUiState
 import com.brunodegan.ifood_challenge.ui.screen.popularMovies.viewModel.PopularMoviesViewModel
 import org.koin.compose.viewmodel.koinViewModel
+import kotlinx.collections.immutable.persistentListOf
 
 private const val SCREEN_NAME = "PopularMoviesScreen"
 
@@ -91,8 +86,8 @@ fun PopularMoviesScreen(
     listState: LazyListState,
     onNavigateUp: () -> Unit,
     onShowSnackbar: (String) -> Unit,
-    viewModel: PopularMoviesViewModel = koinViewModel()
 ) {
+    val viewModel: PopularMoviesViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     BackHandler {
@@ -414,7 +409,7 @@ private fun PopularMoviesCard(
                         bottom = dimensionResource(R.dimen.double_padding)
                     )
                 ) {
-                    items(viewData.voteAverage.toInt()) { _ ->
+                    items(viewData.voteAverage) { _ ->
                         Icon(
                             imageVector = Icons.Filled.Star,
                             contentDescription = stringResource(R.string.movie_vote_average),
@@ -438,7 +433,7 @@ fun PopularMoviesScreenPreview() {
     PopularMoviesScreenContent(
         listState = rememberLazyListState(),
         state = PopularMoviesUiState.Success(
-            viewData = listOf(
+            viewData = persistentListOf(
                 PopularMoviesEntity(
                     id = 0,
                     title = "title",
@@ -446,7 +441,7 @@ fun PopularMoviesScreenPreview() {
                     overview = "overview",
                     originalLanguage = "originalLanguage",
                     popularity = 10.0,
-                    voteAverage = 7.5,
+                    voteAverage = 7,
                     releaseDate = "24/04/2025",
                     isFavorite = false
                 )

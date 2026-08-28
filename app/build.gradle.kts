@@ -1,15 +1,20 @@
+import com.android.build.api.dsl.ApplicationExtension
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
-    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.koin.compiler)
 }
 
-android {
+extensions.configure<ApplicationExtension> {
     namespace = "com.brunodegan.ifood_challenge"
-    compileSdk = 36
+    compileSdk = 37
 
     buildFeatures {
         compose = true
@@ -18,7 +23,7 @@ android {
     defaultConfig {
         applicationId = "com.brunodegan.ifood_challenge"
         minSdk = 30
-        targetSdk = 35
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
 
@@ -28,6 +33,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
@@ -37,25 +43,21 @@ android {
         sourceCompatibility = JavaVersion.VERSION_19
         targetCompatibility = JavaVersion.VERSION_19
     }
-
-    kotlinOptions {
-        jvmTarget = "19"
-    }
-
-    applicationVariants.forEach { variant ->
-        variant.sourceSets.forEach {
-            it.javaDirectories += files("build/generated/ksp/${variant.name}/kotlin")
-        }
-    }
 }
-
 // Compile time check
 ksp {
     arg("KOIN_CONFIG_CHECK", "true")
 }
 
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_19)
+    }
+}
+
 dependencies {
     // AndroidX dependencies
+    implementation(libs.kotlinx.immutable.list)
     implementation(libs.androidx.window.core)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -63,6 +65,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.material.icons.core)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
 
@@ -80,7 +83,6 @@ dependencies {
     testImplementation(libs.kotlinx.flow.test.tubine)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
@@ -100,7 +102,6 @@ dependencies {
     implementation(libs.androidx.navigation3.ui.android)
 
     // Koin
-    ksp(libs.koin.ksp.compiler)
     implementation(project.dependencies.platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.koin.android)

@@ -3,6 +3,7 @@ package com.brunodegan.ifood_challenge.domain.getTopRated
 import com.brunodegan.ifood_challenge.base.network.base.Resource
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.TopRatedMoviesEntity
 import com.brunodegan.ifood_challenge.data.repositories.MoviesRepository
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.annotation.Factory
 
@@ -10,6 +11,6 @@ import org.koin.core.annotation.Factory
 class GetTopRatedUseCaseImpl(
     private val repository: MoviesRepository,
 ) : GetTopRatedUseCase {
-    override suspend fun invoke(): Flow<Resource<List<TopRatedMoviesEntity>>> =
+    override suspend fun invoke(): Flow<Resource<ImmutableList<TopRatedMoviesEntity>>> =
         repository.getTopRateMovies()
 }

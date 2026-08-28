@@ -12,6 +12,8 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.unmockkAll
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
@@ -61,7 +63,7 @@ class GetUpComingUseCaseTest {
     fun `GIVEN an exception WHEN invoke is called THEN emit ResourceError`() = runTest {
         // GIVEN
         val exception = Exception("Error fetching upcoming movies")
-        val resourceError = getResourceError<List<UpcomingMoviesEntity>>(exception)
+        val resourceError = getResourceError<ImmutableList<UpcomingMoviesEntity>>(exception)
 
         coEvery { repository.getUpcomingMovies() } returns flow {
             emit(resourceError)
@@ -72,7 +74,7 @@ class GetUpComingUseCaseTest {
 
         // THEN
         assertTrue {
-            result.first() is Resource.Error<List<UpcomingMoviesEntity>>
+            result.first() is Resource.Error<ImmutableList<UpcomingMoviesEntity>>
         }
         assertEquals(
             "Error fetching upcoming movies",
@@ -85,14 +87,14 @@ class GetUpComingUseCaseTest {
         runTest {
             // GIVEN
             coEvery { repository.getUpcomingMovies() } returns flow {
-                emit(Resource.Success(emptyList()))
+                emit(Resource.Success(persistentListOf()))
             }
 
             // WHEN
             val result = useCase.invoke()
 
             // THEN
-            assertEquals(Resource.Success(emptyList<UpcomingMoviesEntity>()), result.first())
+            assertEquals(Resource.Success(persistentListOf<UpcomingMoviesEntity>()), result.first())
         }
 
     @After

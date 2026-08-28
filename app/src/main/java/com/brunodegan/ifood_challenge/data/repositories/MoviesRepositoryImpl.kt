@@ -19,6 +19,8 @@ import com.brunodegan.ifood_challenge.data.mappers.NowPlayingDataMapper
 import com.brunodegan.ifood_challenge.data.mappers.PopularDataMapper
 import com.brunodegan.ifood_challenge.data.mappers.TopRatedDataMapper
 import com.brunodegan.ifood_challenge.data.mappers.UpcomingDataMapper
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
@@ -40,32 +42,32 @@ class MoviesRepositoryImpl(
     private fun updateTopRatedMovies(
         movies: List<TopRatedMoviesEntity>,
         favorites: List<FavoriteMoviesEntity>?
-    ): List<TopRatedMoviesEntity> {
-        return favorites?.let { movies.update(it) } ?: movies
+    ): ImmutableList<TopRatedMoviesEntity> {
+        return (favorites?.let { movies.update(it) } ?: movies).toImmutableList()
     }
 
     private fun updatePopularMovies(
         movies: List<PopularMoviesEntity>,
         favorites: List<FavoriteMoviesEntity>?
-    ): List<PopularMoviesEntity> {
-        return favorites?.let { movies.update(it) } ?: movies
+    ): ImmutableList<PopularMoviesEntity> {
+        return (favorites?.let { movies.update(it) } ?: movies).toImmutableList()
     }
 
     private fun updateUpcomingMovies(
         movies: List<UpcomingMoviesEntity>,
         favorites: List<FavoriteMoviesEntity>?
-    ): List<UpcomingMoviesEntity> {
-        return favorites?.let { movies.update(it) } ?: movies
+    ): ImmutableList<UpcomingMoviesEntity> {
+        return (favorites?.let { movies.update(it) } ?: movies).toImmutableList()
     }
 
     private fun updateNowPlayingMovies(
         movies: List<NowPlayingMoviesEntity>,
         favorites: List<FavoriteMoviesEntity>?
-    ): List<NowPlayingMoviesEntity> {
-        return favorites?.let { movies.update(it) } ?: movies
+    ): ImmutableList<NowPlayingMoviesEntity> {
+        return (favorites?.let { movies.update(it) } ?: movies).toImmutableList()
     }
 
-    override fun getTopRateMovies(): Flow<Resource<List<TopRatedMoviesEntity>>> = flow {
+    override fun getTopRateMovies(): Flow<Resource<ImmutableList<TopRatedMoviesEntity>>> = flow {
 
         val localTopRatedMovies = localDataSource.getTopRated().firstOrNull()
         val savedFavoriteMovies = getSavedFavoriteMovies().firstOrNull()
@@ -102,7 +104,7 @@ class MoviesRepositoryImpl(
 
     }
 
-    override fun getPopularMovies(): Flow<Resource<List<PopularMoviesEntity>>> = flow {
+    override fun getPopularMovies(): Flow<Resource<ImmutableList<PopularMoviesEntity>>> = flow {
         val localPopularMovies = localDataSource.getPopular().firstOrNull()
         val savedFavoriteMovies = getSavedFavoriteMovies().firstOrNull()
 
@@ -137,7 +139,7 @@ class MoviesRepositoryImpl(
         }
     }
 
-    override fun getUpcomingMovies(): Flow<Resource<List<UpcomingMoviesEntity>>> = flow {
+    override fun getUpcomingMovies(): Flow<Resource<ImmutableList<UpcomingMoviesEntity>>> = flow {
         val localUpcomingMovies = localDataSource.getUpcoming().firstOrNull()
         val savedFavoriteMovies = getSavedFavoriteMovies().firstOrNull()
 
@@ -172,7 +174,8 @@ class MoviesRepositoryImpl(
         }
     }
 
-    override fun getNowPlayingMovies(): Flow<Resource<List<NowPlayingMoviesEntity>>> = flow {
+    override fun getNowPlayingMovies(): Flow<Resource<ImmutableList<NowPlayingMoviesEntity>>> =
+        flow {
         val nowPlayingMovies = localDataSource.getNowPlaying().firstOrNull()
         val savedFavoriteMovies = getSavedFavoriteMovies().firstOrNull()
 
@@ -237,11 +240,11 @@ class MoviesRepositoryImpl(
         }
     }
 
-    override fun getFavorites(): Flow<Resource<List<FavoriteMoviesEntity>>> = flow {
+    override fun getFavorites(): Flow<Resource<ImmutableList<FavoriteMoviesEntity>>> = flow {
         val favorites = localDataSource.getFavoriteMovies().first()
 
-        if (!favorites.isNullOrEmpty() && favorites.all { isCacheValid(it.lastUpdated) }) {
-            emit(Resource.Success(favorites))
+        if (favorites.isNullOrEmpty().not() && favorites.all { isCacheValid(it.lastUpdated) }) {
+            emit(Resource.Success(favorites.toImmutableList()))
             return@flow
         }
 
@@ -254,7 +257,7 @@ class MoviesRepositoryImpl(
             localDataSource.saveFavorites(mappedResult)
             mappedResult
         }.onSuccess { convertedData ->
-            emit(Resource.Success(convertedData))
+            emit(Resource.Success(convertedData.toImmutableList()))
         }
     }
 

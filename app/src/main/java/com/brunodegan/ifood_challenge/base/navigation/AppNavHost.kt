@@ -29,14 +29,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
-import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
-import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import androidx.navigation3.ui.SinglePaneSceneStrategy
-import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
 import com.brunodegan.ifood_challenge.R
 import com.brunodegan.ifood_challenge.base.routes.ScreenRoutes
 import com.brunodegan.ifood_challenge.base.ui.CustomAppBar
@@ -112,12 +107,6 @@ fun AppNavHost() {
                 onBack = {
                     backStack.removeLastOrNull()
                 },
-                sceneStrategy = SinglePaneSceneStrategy(),
-                entryDecorators = listOf(
-                    rememberSceneSetupNavEntryDecorator(),
-                    rememberSavedStateNavEntryDecorator(),
-                    rememberViewModelStoreNavEntryDecorator(),
-                ),
                 modifier = Modifier.padding(paddingValues),
                 entryProvider = entryProvider {
                     entry<ScreenRoutes.NowPlayingScreen> { entry ->

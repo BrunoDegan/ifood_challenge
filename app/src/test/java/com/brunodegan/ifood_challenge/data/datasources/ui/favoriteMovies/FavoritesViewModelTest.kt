@@ -14,6 +14,7 @@ import com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.viewModel.Favorit
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.unmockkAll
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -56,7 +57,7 @@ class FavoritesViewModelTest {
     fun `GIVEN view model collects view entity with error state propagated WEN getFavoriteMovies is invoked THEN asserts business error occurs`() =
         runTest {
             val exception = Exception("Error retrieving favorites movies")
-            val resourceError = getResourceError<List<FavoriteMoviesEntity>>(exception)
+            val resourceError = getResourceError<ImmutableList<FavoriteMoviesEntity>>(exception)
 
             coEvery { useCase.invoke() } returns flow { emit(resourceError) }
 

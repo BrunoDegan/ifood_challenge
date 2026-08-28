@@ -6,6 +6,7 @@ import com.brunodegan.ifood_challenge.base.utils.orZero
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.MoviesApiDataResponse
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.TopRatedMoviesEntity
 import org.koin.core.annotation.Factory
+import kotlin.math.roundToInt
 import kotlin.random.Random
 
 @Factory
@@ -21,7 +22,7 @@ class TopRatedDataMapper : BaseMapper<MoviesApiDataResponse, List<TopRatedMovies
                         overview = movie.overview.orEmpty(),
                         originalLanguage = movie.originalLanguage.orEmpty(),
                         popularity = movie.popularity.orZero(),
-                        voteAverage = movie.voteAverage.orZero(),
+                        voteAverage = (movie.voteAverage.orZero() / 2).roundToInt(),
                         releaseDate = movie.releaseDate.formatUsDateToBrDate(),
                         isFavorite = false
                     )

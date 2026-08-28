@@ -4,13 +4,10 @@ import android.app.Application
 import android.graphics.Bitmap
 import coil.Coil
 import coil.ImageLoader
-import com.brunodegan.ifood_challenge.base.database.DatabaseModule
-import com.brunodegan.ifood_challenge.base.network.NetworkModule
 import com.brunodegan.ifood_challenge.di.AppModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
-import org.koin.ksp.generated.module
+import org.koin.plugin.module.dsl.startKoin
 
 class MainApplication : Application() {
     override fun onCreate() {
@@ -21,14 +18,10 @@ class MainApplication : Application() {
                 .bitmapConfig(Bitmap.Config.ARGB_8888)
                 .build()
         )
-        startKoin {
+
+        startKoin<AppModule> {
             androidLogger()
             androidContext(this@MainApplication)
-            modules(
-                AppModule().module,
-                NetworkModule().module,
-                DatabaseModule.module,
-            )
         }
     }
 }

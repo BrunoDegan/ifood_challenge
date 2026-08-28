@@ -12,6 +12,8 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.unmockkAll
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
@@ -60,7 +62,7 @@ class GetFavoritesUseCaseTest {
     fun `GIVEN an exception WHEN invoke is called THEN emit ResourceError`() = runTest {
         // GIVEN
         val exception = Exception("Error fetching favorites")
-        val resourceError = getResourceError<List<FavoriteMoviesEntity>>(exception)
+        val resourceError = getResourceError<ImmutableList<FavoriteMoviesEntity>>(exception)
 
         coEvery { repository.getFavorites() } returns flow {
             emit(resourceError)
@@ -71,7 +73,7 @@ class GetFavoritesUseCaseTest {
 
         // THEN
         assertTrue {
-            result.first() is Resource.Error<List<FavoriteMoviesEntity>>
+            result.first() is Resource.Error<ImmutableList<FavoriteMoviesEntity>>
         }
         assertEquals("Error fetching favorites", (result.first() as Resource.Error).error.message)
     }
@@ -81,14 +83,14 @@ class GetFavoritesUseCaseTest {
         runTest {
             // GIVEN
             coEvery { repository.getFavorites() } returns flow {
-                emit(Resource.Success(emptyList()))
+                emit(Resource.Success(persistentListOf()))
             }
 
             // WHEN
             val result = useCase.invoke()
 
             // THEN
-            assertEquals(Resource.Success(emptyList<FavoriteMoviesEntity>()), result.first())
+            assertEquals(Resource.Success(persistentListOf<FavoriteMoviesEntity>()), result.first())
         }
 
     @After

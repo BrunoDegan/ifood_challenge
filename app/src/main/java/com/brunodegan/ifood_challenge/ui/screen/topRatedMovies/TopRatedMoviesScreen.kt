@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -73,6 +74,8 @@ import com.brunodegan.ifood_challenge.data.metrics.TrackScreen
 import com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.events.TopRatedMoviesUiEvents
 import com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.state.TopRatedMoviesUiState
 import com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.viewModel.TopRatedMoviesViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
 
 private const val SCREEN_NAME = "TopRelatedVideosScreen"
@@ -85,8 +88,8 @@ fun TopRatedVideosScreen(
     listState: LazyListState,
     onShowSnackbar: (String) -> Unit,
     onNavigateUp: () -> Unit,
-    viewModel: TopRatedMoviesViewModel = koinViewModel()
 ) {
+    val viewModel: TopRatedMoviesViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     BackHandler {
@@ -162,7 +165,7 @@ private fun SuccessState(
     scrollBehavior: TopAppBarScrollBehavior,
     listState: LazyListState,
     modifier: Modifier = Modifier,
-    viewData: List<TopRatedMoviesEntity>,
+    viewData: ImmutableList<TopRatedMoviesEntity>,
     onFavoriteButtonClicked: (Int) -> Unit,
     onRemoveFavButtonClickedUiEvent: (Int) -> Unit
 ) {
@@ -202,18 +205,18 @@ private fun TopRatedMoviesCard(
     var isFavoriteButtonClicked by rememberSaveable { mutableStateOf(viewData.isFavorite) }
 
     val imageRequest = ImageRequest.Builder(LocalContext.current)
+        .memoryCacheKey(viewData.title)
+        .diskCacheKey(viewData.title)
         .data(viewData.posterPath)
         .decoderFactory(SvgDecoder.Factory())
         .scale(Scale.FIT)
         .crossfade(true)
-        .memoryCacheKey(viewData.posterPath)
-        .diskCacheKey(viewData.posterPath)
         .placeholder(R.drawable.movie_icon)
         .error(R.drawable.error_img)
         .build()
 
     val cardColor by animateColorAsState(
-        targetValue = if (isFavoriteButtonClicked == true) {
+        targetValue = if (isFavoriteButtonClicked) {
             MaterialTheme.colorScheme.onSecondary
         } else {
             MaterialTheme.colorScheme.primaryContainer
@@ -238,7 +241,7 @@ private fun TopRatedMoviesCard(
     ) {
         Image(
             painter = painterResource(
-                if (isFavoriteButtonClicked == true) {
+                if (isFavoriteButtonClicked) {
                     R.drawable.added_to_favorites
                 } else {
                     R.drawable.not_added_to_favorites
@@ -251,7 +254,7 @@ private fun TopRatedMoviesCard(
                 .padding(top = dimensionResource(R.dimen.double_padding))
                 .clickable {
                     isFavoriteButtonClicked = isFavoriteButtonClicked.not()
-                    if (isFavoriteButtonClicked == true) {
+                    if (isFavoriteButtonClicked) {
                         onFavoriteButtonClicked(viewData.id)
                     } else {
                         onRemoveFavButtonClickedUiEvent(viewData.id)
@@ -294,7 +297,7 @@ private fun TopRatedMoviesCard(
                 fontWeight = FontWeight.W600,
                 fontSize = TextUnit(
                     value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources,
+                        LocalResources.current,
                         R.dimen.movie_title_font_size
                     ), type = TextUnitType.Sp
                 ),
@@ -309,7 +312,7 @@ private fun TopRatedMoviesCard(
                 fontWeight = FontWeight.W400,
                 fontSize = TextUnit(
                     value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources,
+                        LocalResources.current,
                         R.dimen.movie_overview_font_size
                     ), type = TextUnitType.Sp
                 ),
@@ -327,7 +330,7 @@ private fun TopRatedMoviesCard(
                 fontWeight = FontWeight.Medium,
                 fontSize = TextUnit(
                     value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources,
+                        LocalResources.current,
                         R.dimen.movie_language_font_size
                     ), type = TextUnitType.Sp
                 ),
@@ -345,7 +348,7 @@ private fun TopRatedMoviesCard(
                 fontWeight = FontWeight.Medium,
                 fontSize = TextUnit(
                     value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources,
+                        LocalResources.current,
                         R.dimen.movie_language_font_size
                     ), type = TextUnitType.Sp
                 ),
@@ -363,7 +366,7 @@ private fun TopRatedMoviesCard(
                 fontWeight = FontWeight.Medium,
                 fontSize = TextUnit(
                     value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources,
+                        LocalResources.current,
                         R.dimen.movie_language_font_size
                     ), type = TextUnitType.Sp
                 ),
@@ -384,7 +387,7 @@ private fun TopRatedMoviesCard(
                     fontWeight = FontWeight.Medium,
                     fontSize = TextUnit(
                         value = ResourcesCompat.getFloat(
-                            LocalContext.current.resources,
+                            LocalResources.current,
                             R.dimen.movie_language_font_size
                         ), type = TextUnitType.Sp
                     ),
@@ -403,7 +406,7 @@ private fun TopRatedMoviesCard(
                         bottom = dimensionResource(R.dimen.double_padding)
                     )
                 ) {
-                    items(viewData.voteAverage.toInt()) { _ ->
+                    items(viewData.voteAverage) { _ ->
                         Icon(
                             imageVector = Icons.Filled.Star,
                             contentDescription = stringResource(R.string.movie_vote_average),
@@ -426,7 +429,7 @@ fun TopRatedMoviesScreen() {
     TopRatedVideosScreenContent(
         listState = rememberLazyListState(),
         state = TopRatedMoviesUiState.Success(
-            viewData = listOf(
+            viewData = persistentListOf(
                 TopRatedMoviesEntity(
                     id = 0,
                     title = "title",
@@ -434,7 +437,7 @@ fun TopRatedMoviesScreen() {
                     overview = "overview",
                     originalLanguage = "originalLanguage",
                     popularity = 10.0,
-                    voteAverage = 7.5,
+                    voteAverage = 7,
                     releaseDate = "24/04/2025",
                     isFavorite = false
                 )
