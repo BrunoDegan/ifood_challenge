@@ -5,11 +5,13 @@ import com.brunodegan.ifood_challenge.data.datasources.local.entities.NowPlaying
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.PopularMoviesEntity
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.TopRatedMoviesEntity
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.UpcomingMoviesEntity
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 object AndroidTestUtils {
 
-    fun mockFavoriteMoviesEntity(): List<FavoriteMoviesEntity> {
-        return listOf(
+    fun mockFavoriteMoviesEntity(): ImmutableList<FavoriteMoviesEntity> {
+        return persistentListOf(
             FavoriteMoviesEntity(
                 id = 1,
                 title = "Favorite Movie 1",
@@ -29,8 +31,8 @@ object AndroidTestUtils {
         )
     }
 
-    fun mockTopRatedMoviesEntity(): List<TopRatedMoviesEntity> {
-        return listOf(
+    fun mockTopRatedMoviesEntity(): ImmutableList<TopRatedMoviesEntity> {
+        return persistentListOf(
             TopRatedMoviesEntity(
                 id = 1,
                 title = "Top Rated Movie 1",
@@ -38,7 +40,7 @@ object AndroidTestUtils {
                 overview = "Overview for Top Rated Movie 1",
                 originalLanguage = "en",
                 popularity = 9.5,
-                voteAverage = 8.9,
+                voteAverage = 8,
                 releaseDate = "2023-03-01",
                 isFavorite = true
             ),
@@ -49,15 +51,15 @@ object AndroidTestUtils {
                 overview = "Overview for Top Rated Movie 2",
                 originalLanguage = "fr",
                 popularity = 8.8,
-                voteAverage = 8.5,
+                voteAverage = 8,
                 releaseDate = "2023-04-01",
                 isFavorite = true
             )
         )
     }
 
-    fun mockNowPlayingMoviesEntity(): List<NowPlayingMoviesEntity> {
-        return listOf(
+    fun mockNowPlayingMoviesEntity(): ImmutableList<NowPlayingMoviesEntity> {
+        return persistentListOf(
             NowPlayingMoviesEntity(
                 id = 1,
                 title = "Now Playing Movie 1",
@@ -65,7 +67,7 @@ object AndroidTestUtils {
                 overview = "Overview for Now Playing Movie 1",
                 originalLanguage = "es",
                 popularity = 7.5,
-                voteAverage = 7.0,
+                voteAverage = 7,
                 releaseDate = "2023-05-01",
                 isFavorite = true
             ),
@@ -76,15 +78,15 @@ object AndroidTestUtils {
                 overview = "Overview for Now Playing Movie 2",
                 originalLanguage = "it",
                 popularity = 8.0,
-                voteAverage = 7.5,
+                voteAverage = 7,
                 releaseDate = "2023-06-01",
                 isFavorite = true
             )
         )
     }
 
-    fun mockUpcomingMoviesEntity(): List<UpcomingMoviesEntity> {
-        return listOf(
+    fun mockUpcomingMoviesEntity(): ImmutableList<UpcomingMoviesEntity> {
+        return persistentListOf(
             UpcomingMoviesEntity(
                 id = 1,
                 title = "Upcoming Movie 1",
@@ -92,7 +94,7 @@ object AndroidTestUtils {
                 overview = "Overview for Upcoming Movie 1",
                 originalLanguage = "de",
                 popularity = 6.5,
-                voteAverage = 6.8,
+                voteAverage = 8,
                 releaseDate = "2023-07-01",
                 isFavorite = true
             ),
@@ -103,15 +105,15 @@ object AndroidTestUtils {
                 overview = "Overview for Upcoming Movie 2",
                 originalLanguage = "ja",
                 popularity = 7.2,
-                voteAverage = 7.1,
+                voteAverage = 7,
                 releaseDate = "2023-08-01",
                 isFavorite = true
             )
         )
     }
 
-    fun mockPopularMoviesEntity(): List<PopularMoviesEntity> {
-        return listOf(
+    fun mockPopularMoviesEntity(): ImmutableList<PopularMoviesEntity> {
+        return persistentListOf(
             PopularMoviesEntity(
                 id = 1,
                 title = "Popular Movie 1",
@@ -119,7 +121,7 @@ object AndroidTestUtils {
                 overview = "Overview for Upcoming Movie 1",
                 originalLanguage = "de",
                 popularity = 6.5,
-                voteAverage = 6.8,
+                voteAverage = 8,
                 releaseDate = "2023-07-01",
                 isFavorite = true
             ),
@@ -130,7 +132,7 @@ object AndroidTestUtils {
                 overview = "Overview for Upcoming Movie 2",
                 originalLanguage = "ja",
                 popularity = 7.2,
-                voteAverage = 7.1,
+                voteAverage = 7,
                 releaseDate = "2023-08-01",
                 isFavorite = true
             )
