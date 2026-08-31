@@ -1,0 +1,83 @@
+name: Android Ifood Challenge CI configuration
+
+on:
+  push:
+    branches: [ main, master, release ]
+  pull_request:
+    branches: [ main, master, release ]
+
+jobs:
+  build:
+    name: gradle-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v5
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+
+  lint:
+    name: ktlint-check
+    needs: gradle-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v5
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Run KtLint Check
+        run: ./gradlew ktlintCheck
+
+  android-jvm-tests:
+    name: Android + JVM/common tests
+    needs: gradle-build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v5
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Run Unit tests
+        run: ./gradlew testDebugUnitTest --continue
+
+      - name: Upload test artifacts and reports
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: test-reports
+          path: '**/build/reports/tests/*.xml'
+
+      - name: Assemble debug APK
+        run: ./gradlew :app:assembleDebug
