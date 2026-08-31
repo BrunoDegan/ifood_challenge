@@ -15,10 +15,8 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import com.brunodegan.ifood_challenge.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,7 +24,7 @@ fun CustomAppBar(
     title: String,
     onBackButtonClicked: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     TopAppBar(
         title = {
@@ -38,26 +36,31 @@ fun CustomAppBar(
         },
         navigationIcon = {
             IconButton(
-                enabled = true, onClick = onBackButtonClicked, modifier = Modifier.testTag(
-                    "BackButton"
-                )
+                enabled = true,
+                onClick = onBackButtonClicked,
+                modifier =
+                    Modifier.testTag(
+                        "BackButton",
+                    ),
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
-                    tint = MaterialTheme.colorScheme.onPrimary
+                    tint = MaterialTheme.colorScheme.onPrimary,
                 )
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.secondary,
-            scrolledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-            navigationIconContentColor = MaterialTheme.colorScheme.primary,
-        ),
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                titleContentColor = MaterialTheme.colorScheme.secondary,
+                scrolledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                navigationIconContentColor = MaterialTheme.colorScheme.primary,
+            ),
         scrollBehavior = scrollBehavior,
-        modifier = modifier
-            .navigationBarsPadding()
-            .imePadding()
+        modifier =
+            modifier
+                .navigationBarsPadding()
+                .imePadding(),
     )
 }

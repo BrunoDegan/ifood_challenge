@@ -23,41 +23,38 @@ private inline fun <reified T : Any> Retrofit.createApi(): T = create(T::class.j
 @Configuration
 @ComponentScan("com.brunodegan.ifood_challenge.base.network")
 class NetworkModule {
-
     @Single
-    fun provideRestClient(): RestApiService {
-        return Retrofit.Builder()
+    fun provideRestClient(): RestApiService =
+        Retrofit
+            .Builder()
             .baseUrl(BASE_URL)
             .client(provideHttpClient())
             .addConverterFactory(provideConverterFactory())
             .build()
             .createApi<RestApiService>()
-    }
 
-    private fun provideHttpInterceptor(): HttpLoggingInterceptor =
-        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    private fun provideHttpInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
-    private fun provideHttpClient(): OkHttpClient {
-        return OkHttpClient
+    private fun provideHttpClient(): OkHttpClient =
+        OkHttpClient
             .Builder()
             .addNetworkInterceptor(provideHttpInterceptor())
             .addInterceptor { chain ->
                 with(chain) {
-                    val request = request().newBuilder()
-                        .addHeader(ACCEPT, APPLICATION_JSON)
-                        .addHeader(CONTENT_TYPE, APPLICATION_JSON)
-                        .addHeader(AUTHORIZATION_HEADER, BEARER_TOKEN)
-                        .build()
+                    val request =
+                        request()
+                            .newBuilder()
+                            .addHeader(ACCEPT, APPLICATION_JSON)
+                            .addHeader(CONTENT_TYPE, APPLICATION_JSON)
+                            .addHeader(AUTHORIZATION_HEADER, BEARER_TOKEN)
+                            .build()
                     proceed(request)
                 }
-            }
-            .readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
+            }.readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
             .connectTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
             .build()
-    }
 
-    private fun provideConverterFactory(): GsonConverterFactory =
-        GsonConverterFactory.create()
+    private fun provideConverterFactory(): GsonConverterFactory = GsonConverterFactory.create()
 
     companion object {
         private const val REQUEST_TIMEOUT = 60L

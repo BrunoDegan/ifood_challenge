@@ -73,8 +73,8 @@ import com.brunodegan.ifood_challenge.data.metrics.TrackScreen
 import com.brunodegan.ifood_challenge.ui.screen.popularMovies.events.PopularMoviesUiEvents
 import com.brunodegan.ifood_challenge.ui.screen.popularMovies.state.PopularMoviesUiState
 import com.brunodegan.ifood_challenge.ui.screen.popularMovies.viewModel.PopularMoviesViewModel
-import org.koin.compose.viewmodel.koinViewModel
 import kotlinx.collections.immutable.persistentListOf
+import org.koin.compose.viewmodel.koinViewModel
 
 private const val SCREEN_NAME = "PopularMoviesScreen"
 
@@ -106,7 +106,7 @@ fun PopularMoviesScreen(
         state = uiState,
         listState = listState,
         scrollBehavior = scrollBehavior,
-        modifier = modifier
+        modifier = modifier,
     ) {
         viewModel.onUiEvent(event = it)
     }
@@ -141,7 +141,7 @@ internal fun PopularMoviesScreenContent(
                 },
                 onRemoveFavButtonClickedUiEvent = {
                     onEvent(PopularMoviesUiEvents.OnRemoveFavButtonClickedUiEvent(it))
-                }
+                },
             )
         }
 
@@ -164,17 +164,17 @@ private fun SuccessState(
     scrollBehavior: TopAppBarScrollBehavior,
     viewData: List<PopularMoviesEntity>,
     onFavoriteButtonClicked: (Int) -> Unit,
-    onRemoveFavButtonClickedUiEvent: (Int) -> Unit
+    onRemoveFavButtonClickedUiEvent: (Int) -> Unit,
 ) {
-
     LazyColumn(
         state = listState,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         flingBehavior = ScrollableDefaults.flingBehavior(),
-        modifier = modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .fillMaxSize()
+        modifier =
+            modifier
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .fillMaxSize(),
     ) {
         items(viewData.size, key = { index ->
             "${viewData[index].id} -  ${viewData[index].title}"
@@ -186,7 +186,7 @@ private fun SuccessState(
                 },
                 onRemoveFavButtonClickedUiEvent = {
                     onRemoveFavButtonClickedUiEvent(it)
-                }
+                },
             )
         }
     }
@@ -197,83 +197,96 @@ private fun PopularMoviesCard(
     modifier: Modifier = Modifier,
     viewData: PopularMoviesEntity,
     onFavoriteButtonClicked: (Int) -> Unit,
-    onRemoveFavButtonClickedUiEvent: (Int) -> Unit
+    onRemoveFavButtonClickedUiEvent: (Int) -> Unit,
 ) {
     var isFavoriteButtonClicked by rememberSaveable { mutableStateOf(viewData.isFavorite) }
 
-    val imageRequest = ImageRequest.Builder(LocalContext.current)
-        .data(viewData.posterPath)
-        .decoderFactory(SvgDecoder.Factory())
-        .scale(Scale.FIT)
-        .crossfade(true)
-        .placeholder(R.drawable.movie_icon)
-        .error(R.drawable.error_img)
-        .memoryCacheKey(viewData.posterPath)
-        .diskCacheKey(viewData.posterPath)
-        .build()
+    val imageRequest =
+        ImageRequest
+            .Builder(LocalContext.current)
+            .data(viewData.posterPath)
+            .decoderFactory(SvgDecoder.Factory())
+            .scale(Scale.FIT)
+            .crossfade(true)
+            .placeholder(R.drawable.movie_icon)
+            .error(R.drawable.error_img)
+            .memoryCacheKey(viewData.posterPath)
+            .diskCacheKey(viewData.posterPath)
+            .build()
 
     val cardColor by animateColorAsState(
-        targetValue = if (isFavoriteButtonClicked == true) {
-            MaterialTheme.colorScheme.onSecondary
-        } else {
-            MaterialTheme.colorScheme.primaryContainer
-        }, animationSpec = spring(
-            stiffness = Spring.StiffnessLow,
-            dampingRatio = Spring.DampingRatioHighBouncy,
-        ), label = "animation"
+        targetValue =
+            if (isFavoriteButtonClicked == true) {
+                MaterialTheme.colorScheme.onSecondary
+            } else {
+                MaterialTheme.colorScheme.primaryContainer
+            },
+        animationSpec =
+            spring(
+                stiffness = Spring.StiffnessLow,
+                dampingRatio = Spring.DampingRatioHighBouncy,
+            ),
+        label = "animation",
     )
 
     Card(
         colors = CardDefaults.elevatedCardColors(cardColor),
         shape = RectangleShape,
         elevation = CardDefaults.cardElevation(dimensionResource(R.dimen.card_elevation)),
-        border = BorderStroke(
-            dimensionResource(R.dimen.card_border_elevation), MaterialTheme.colorScheme.tertiary
-        ),
-        modifier = modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(all = dimensionResource(R.dimen.card_padding))
-            .background(color = MaterialTheme.colorScheme.primaryContainer)
-            .testTag(stringResource(R.string.popular_movies_card_tag) + " " + viewData.id)
+        border =
+            BorderStroke(
+                dimensionResource(R.dimen.card_border_elevation),
+                MaterialTheme.colorScheme.tertiary,
+            ),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(all = dimensionResource(R.dimen.card_padding))
+                .background(color = MaterialTheme.colorScheme.primaryContainer)
+                .testTag(stringResource(R.string.popular_movies_card_tag) + " " + viewData.id),
     ) {
         Image(
-            painter = painterResource(
-                if (isFavoriteButtonClicked == true) {
-                    R.drawable.added_to_favorites
-                } else {
-                    R.drawable.not_added_to_favorites
-                }
-            ),
-            contentDescription = stringResource(R.string.add_to_favorites) + " " + viewData.id,
-            modifier = Modifier
-                .align(Alignment.End)
-                .size(dimensionResource(R.dimen.favorite_icon_size))
-                .padding(top = dimensionResource(R.dimen.double_padding))
-                .clickable {
-                    isFavoriteButtonClicked = isFavoriteButtonClicked.not()
+            painter =
+                painterResource(
                     if (isFavoriteButtonClicked == true) {
-                        onFavoriteButtonClicked(viewData.id)
+                        R.drawable.added_to_favorites
                     } else {
-                        onRemoveFavButtonClickedUiEvent(viewData.id)
-                    }
-                }
+                        R.drawable.not_added_to_favorites
+                    },
+                ),
+            contentDescription = stringResource(R.string.add_to_favorites) + " " + viewData.id,
+            modifier =
+                Modifier
+                    .align(Alignment.End)
+                    .size(dimensionResource(R.dimen.favorite_icon_size))
+                    .padding(top = dimensionResource(R.dimen.double_padding))
+                    .clickable {
+                        isFavoriteButtonClicked = isFavoriteButtonClicked.not()
+                        if (isFavoriteButtonClicked == true) {
+                            onFavoriteButtonClicked(viewData.id)
+                        } else {
+                            onRemoveFavButtonClickedUiEvent(viewData.id)
+                        }
+                    },
         )
         Column(
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .padding(start = dimensionResource(R.dimen.double_padding))
-                .wrapContentSize()
+            modifier =
+                Modifier
+                    .padding(start = dimensionResource(R.dimen.double_padding))
+                    .wrapContentSize(),
         ) {
             Row(
                 horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .wrapContentHeight()
-                    .fillMaxWidth()
-                    .padding(
-                        top = dimensionResource(R.dimen.double_padding),
-                        bottom = dimensionResource(R.dimen.base_padding)
-                    )
+                modifier =
+                    Modifier
+                        .wrapContentHeight()
+                        .fillMaxWidth()
+                        .padding(
+                            top = dimensionResource(R.dimen.double_padding),
+                            bottom = dimensionResource(R.dimen.base_padding),
+                        ),
             ) {
                 AsyncImage(
                     model = imageRequest,
@@ -281,142 +294,170 @@ private fun PopularMoviesCard(
                     error = painterResource(R.drawable.error_img),
                     contentDescription = stringResource(R.string.popular_movies) + " " + viewData.id,
                     filterQuality = FilterQuality.Low,
-                    modifier = Modifier
-                        .size(
-                            dimensionResource(R.dimen.movie_poster_size),
-                            dimensionResource(R.dimen.movie_poster_size)
-                        )
-
-                        .clip(PosterShape())
-                        .fillMaxWidth()
+                    modifier =
+                        Modifier
+                            .size(
+                                dimensionResource(R.dimen.movie_poster_size),
+                                dimensionResource(R.dimen.movie_poster_size),
+                            ).clip(PosterShape())
+                            .fillMaxWidth(),
                 )
             }
 
             Text(
                 text = viewData.title,
                 fontWeight = FontWeight.W600,
-                fontSize = TextUnit(
-                    value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources,
-                        R.dimen.movie_title_font_size
-                    ), type = TextUnitType.Sp
-                ),
+                fontSize =
+                    TextUnit(
+                        value =
+                            ResourcesCompat.getFloat(
+                                LocalContext.current.resources,
+                                R.dimen.movie_title_font_size,
+                            ),
+                        type = TextUnitType.Sp,
+                    ),
                 textAlign = TextAlign.Justify,
                 overflow = TextOverflow.Ellipsis,
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(
-                    top = dimensionResource(R.dimen.double_padding),
-                    start = dimensionResource(R.dimen.base_padding)
-                )
+                modifier =
+                    Modifier.padding(
+                        top = dimensionResource(R.dimen.double_padding),
+                        start = dimensionResource(R.dimen.base_padding),
+                    ),
             )
             Text(
                 text = viewData.overview,
                 color = MaterialTheme.colorScheme.tertiary,
                 fontWeight = FontWeight.W400,
-                fontSize = TextUnit(
-                    value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources,
-                        R.dimen.movie_overview_font_size
-                    ), type = TextUnitType.Sp
-                ),
+                fontSize =
+                    TextUnit(
+                        value =
+                            ResourcesCompat.getFloat(
+                                LocalContext.current.resources,
+                                R.dimen.movie_overview_font_size,
+                            ),
+                        type = TextUnitType.Sp,
+                    ),
                 textAlign = TextAlign.Justify,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(
-                    dimensionResource(R.dimen.base_padding),
-                )
+                modifier =
+                    Modifier.padding(
+                        dimensionResource(R.dimen.base_padding),
+                    ),
             )
             Text(
-                text = stringResource(R.string.movie_language).format(
-                    viewData.originalLanguage.toUpperCase(Locale.current)
-                ),
+                text =
+                    stringResource(R.string.movie_language).format(
+                        viewData.originalLanguage.toUpperCase(Locale.current),
+                    ),
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Medium,
-                fontSize = TextUnit(
-                    value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources,
-                        R.dimen.movie_language_font_size
-                    ), type = TextUnitType.Sp
-                ),
+                fontSize =
+                    TextUnit(
+                        value =
+                            ResourcesCompat.getFloat(
+                                LocalContext.current.resources,
+                                R.dimen.movie_language_font_size,
+                            ),
+                        type = TextUnitType.Sp,
+                    ),
                 textAlign = TextAlign.Justify,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(
-                    dimensionResource(R.dimen.base_padding)
-                )
+                modifier =
+                    Modifier.padding(
+                        dimensionResource(R.dimen.base_padding),
+                    ),
             )
             Text(
-                text = stringResource(R.string.movie_release_date).format(
-                    viewData.releaseDate
-                ),
+                text =
+                    stringResource(R.string.movie_release_date).format(
+                        viewData.releaseDate,
+                    ),
                 color = MaterialTheme.colorScheme.secondary,
                 fontWeight = FontWeight.Medium,
-                fontSize = TextUnit(
-                    value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources,
-                        R.dimen.movie_language_font_size
-                    ), type = TextUnitType.Sp
-                ),
+                fontSize =
+                    TextUnit(
+                        value =
+                            ResourcesCompat.getFloat(
+                                LocalContext.current.resources,
+                                R.dimen.movie_language_font_size,
+                            ),
+                        type = TextUnitType.Sp,
+                    ),
                 textAlign = TextAlign.Justify,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(
-                    dimensionResource(R.dimen.base_padding)
-                )
+                modifier =
+                    Modifier.padding(
+                        dimensionResource(R.dimen.base_padding),
+                    ),
             )
             Text(
-                text = stringResource(R.string.movie_popularity).format(
-                    viewData.popularity.toString()
-                ),
+                text =
+                    stringResource(R.string.movie_popularity).format(
+                        viewData.popularity.toString(),
+                    ),
                 color = MaterialTheme.colorScheme.secondary,
                 fontWeight = FontWeight.Medium,
-                fontSize = TextUnit(
-                    value = ResourcesCompat.getFloat(
-                        LocalContext.current.resources,
-                        R.dimen.movie_language_font_size
-                    ), type = TextUnitType.Sp
-                ),
+                fontSize =
+                    TextUnit(
+                        value =
+                            ResourcesCompat.getFloat(
+                                LocalContext.current.resources,
+                                R.dimen.movie_language_font_size,
+                            ),
+                        type = TextUnitType.Sp,
+                    ),
                 textAlign = TextAlign.Justify,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(
-                    dimensionResource(R.dimen.base_padding)
-                )
+                modifier =
+                    Modifier.padding(
+                        dimensionResource(R.dimen.base_padding),
+                    ),
             )
 
             Column(
                 verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.Start
+                horizontalAlignment = Alignment.Start,
             ) {
                 Text(
                     text = stringResource(R.string.movie_vote_average),
                     color = MaterialTheme.colorScheme.secondary,
                     fontWeight = FontWeight.Medium,
-                    fontSize = TextUnit(
-                        value = ResourcesCompat.getFloat(
-                            LocalContext.current.resources,
-                            R.dimen.movie_language_font_size
-                        ), type = TextUnitType.Sp
-                    ),
+                    fontSize =
+                        TextUnit(
+                            value =
+                                ResourcesCompat.getFloat(
+                                    LocalContext.current.resources,
+                                    R.dimen.movie_language_font_size,
+                                ),
+                            type = TextUnitType.Sp,
+                        ),
                     textAlign = TextAlign.Justify,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(
-                        dimensionResource(R.dimen.base_padding)
-                    )
+                    modifier =
+                        Modifier.padding(
+                            dimensionResource(R.dimen.base_padding),
+                        ),
                 )
 
                 LazyRow(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(
-                        top = dimensionResource(R.dimen.base_padding),
-                        bottom = dimensionResource(R.dimen.double_padding)
-                    )
+                    modifier =
+                        Modifier.padding(
+                            top = dimensionResource(R.dimen.base_padding),
+                            bottom = dimensionResource(R.dimen.double_padding),
+                        ),
                 ) {
                     items(viewData.voteAverage) { _ ->
                         Icon(
                             imageVector = Icons.Filled.Star,
                             contentDescription = stringResource(R.string.movie_vote_average),
                             tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.padding(
-                                start = dimensionResource(R.dimen.small_padding)
-                            )
+                            modifier =
+                                Modifier.padding(
+                                    start = dimensionResource(R.dimen.small_padding),
+                                ),
                         )
                     }
                 }
@@ -425,30 +466,31 @@ private fun PopularMoviesCard(
     }
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
 fun PopularMoviesScreenPreview() {
     PopularMoviesScreenContent(
         listState = rememberLazyListState(),
-        state = PopularMoviesUiState.Success(
-            viewData = persistentListOf(
-                PopularMoviesEntity(
-                    id = 0,
-                    title = "title",
-                    posterPath = "posterPath",
-                    overview = "overview",
-                    originalLanguage = "originalLanguage",
-                    popularity = 10.0,
-                    voteAverage = 7,
-                    releaseDate = "24/04/2025",
-                    isFavorite = false
-                )
-            )
-        ),
+        state =
+            PopularMoviesUiState.Success(
+                viewData =
+                    persistentListOf(
+                        PopularMoviesEntity(
+                            id = 0,
+                            title = "title",
+                            posterPath = "posterPath",
+                            overview = "overview",
+                            originalLanguage = "originalLanguage",
+                            popularity = 10.0,
+                            voteAverage = 7,
+                            releaseDate = "24/04/2025",
+                            isFavorite = false,
+                        ),
+                    ),
+            ),
         onEvent = {},
         modifier = Modifier,
-        scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+        scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
     )
 }

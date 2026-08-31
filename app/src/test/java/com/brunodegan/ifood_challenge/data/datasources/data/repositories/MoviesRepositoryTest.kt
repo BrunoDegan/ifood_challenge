@@ -61,17 +61,18 @@ class MoviesRepositoryTest {
 
     @Before
     fun setUp() {
-        repository = MoviesRepositoryImpl(
-            addOrRemoveToFavoritesResponseDataMapper = addOrRemoveToFavoritesResponseDataMapper,
-            favoritesDataMapper = favoritesDataMapper,
-            nowPlayingMoviesDataMapper = nowPlayingMoviesDataMapper,
-            popularMoviesDataMapper = popularMoviesDataMapper,
-            topRatedMoviesDataMapper = topRatedDataMapper,
-            upcomingMoviesDataMapper = upcomingMoviesDataMapper,
-            localDataSource = localDataSource,
-            remoteDataSource = remoteDataSource,
-            metricsEventsDispatcher = metricsEventDispatcher
-        )
+        repository =
+            MoviesRepositoryImpl(
+                addOrRemoveToFavoritesResponseDataMapper = addOrRemoveToFavoritesResponseDataMapper,
+                favoritesDataMapper = favoritesDataMapper,
+                nowPlayingMoviesDataMapper = nowPlayingMoviesDataMapper,
+                popularMoviesDataMapper = popularMoviesDataMapper,
+                topRatedMoviesDataMapper = topRatedDataMapper,
+                upcomingMoviesDataMapper = upcomingMoviesDataMapper,
+                localDataSource = localDataSource,
+                remoteDataSource = remoteDataSource,
+                metricsEventsDispatcher = metricsEventDispatcher,
+            )
     }
 
     @Test
@@ -159,7 +160,6 @@ class MoviesRepositoryTest {
             assertEquals(1, result.size)
             assertEquals(expectedViewData, (result.first() as Resource.Success).data)
         }
-
 
     @Test
     fun `GIVEN favorites local data WHEN getFavorites is called THEN emit Resource_Success`() =
@@ -389,18 +389,19 @@ class MoviesRepositoryTest {
         }
 
     @Test
-    fun `GIVEN favorite movie data WHEN addFavorite THEN `() = runTest {
-        val expectedViewData = mockAddToFavoriteMoviesData()
-        val requestData = mockAddToFavoritesRequest()
-        val mockAddToFavoritesApiResponse = mockAddToFavoritesApiResponse()
+    fun `GIVEN favorite movie data WHEN addFavorite THEN `() =
+        runTest {
+            val expectedViewData = mockAddToFavoriteMoviesData()
+            val requestData = mockAddToFavoritesRequest()
+            val mockAddToFavoritesApiResponse = mockAddToFavoritesApiResponse()
 
-        coEvery { remoteDataSource.addOrRemoveFromFavorites(requestData) } returns mockAddToFavoritesApiResponse
-        coEvery { addOrRemoveToFavoritesResponseDataMapper.map(mockAddToFavoritesApiResponse) } returns expectedViewData
+            coEvery { remoteDataSource.addOrRemoveFromFavorites(requestData) } returns mockAddToFavoritesApiResponse
+            coEvery { addOrRemoveToFavoritesResponseDataMapper.map(mockAddToFavoritesApiResponse) } returns expectedViewData
 
-        val result = repository.addFavorite(id = 1)
+            val result = repository.addFavorite(id = 1)
 
-        assertEquals(expectedViewData, (result.first() as Resource.Success).data)
-    }
+            assertEquals(expectedViewData, (result.first() as Resource.Success).data)
+        }
 
     @Test
     fun `GIVEN network error when fetching favorite movies WHEN addOrRemoveFromFavorites on remote data source THEN asserts Resource_Error result`() =
@@ -414,9 +415,10 @@ class MoviesRepositoryTest {
 
             coJustRun { metricsEventDispatcher.onEvent(any()) }
             coEvery { addOrRemoveToFavoritesResponseDataMapper.map(mockAddToFavoritesApiResponse) } returns expectedViewData
-            coEvery { remoteDataSource.addOrRemoveFromFavorites(requestData) } throws Exception(
-                errorMessage
-            )
+            coEvery { remoteDataSource.addOrRemoveFromFavorites(requestData) } throws
+                Exception(
+                    errorMessage,
+                )
 
             val result = repository.addFavorite(id = 1)
 

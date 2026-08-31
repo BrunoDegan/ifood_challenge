@@ -14,7 +14,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RestApiServiceTest {
-
     private lateinit var mockWebServer: MockWebServer
     private lateinit var apiService: RestApiService
 
@@ -23,85 +22,93 @@ class RestApiServiceTest {
         mockWebServer = MockWebServer()
         mockWebServer.start()
 
-        apiService = Retrofit.Builder()
-            .baseUrl(mockWebServer.url("/"))
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(RestApiService::class.java)
+        apiService =
+            Retrofit
+                .Builder()
+                .baseUrl(mockWebServer.url("/"))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(RestApiService::class.java)
     }
 
     @Test
-    fun `GIVEN mock response WHEN fetchNowPlaying is called THEN verify response`() = runBlocking {
-        val mockResponse = MockUtils.mockMoviesApiDataResponse()
-        val jsonResponse = MockUtils.toJsonString(mockResponse)
+    fun `GIVEN mock response WHEN fetchNowPlaying is called THEN verify response`() =
+        runBlocking {
+            val mockResponse = MockUtils.mockMoviesApiDataResponse()
+            val jsonResponse = MockUtils.toJsonString(mockResponse)
 
-        mockWebServer.enqueue(MockResponse().setBody(jsonResponse).setResponseCode(200))
+            mockWebServer.enqueue(MockResponse().setBody(jsonResponse).setResponseCode(200))
 
-        val result = apiService.fetchNowPlaying()
+            val result = apiService.fetchNowPlaying()
 
-        assertEquals(mockResponse, result)
-    }
-
-    @Test
-    fun `GIVEN mock response WHEN fetchTopRated is called THEN verify response`() = runBlocking {
-        val mockResponse = MockUtils.mockMoviesApiDataResponse()
-        val jsonResponse = MockUtils.toJsonString(mockResponse)
-
-        mockWebServer.enqueue(MockResponse().setBody(jsonResponse).setResponseCode(200))
-
-        val result = apiService.fetchTopRated()
-
-        assertEquals(mockResponse, result)
-    }
+            assertEquals(mockResponse, result)
+        }
 
     @Test
-    fun `GIVEN mock response WHEN fetchPopular is called THEN verify response`() = runBlocking {
-        val mockResponse = MockUtils.mockMoviesApiDataResponse()
-        val jsonResponse = MockUtils.toJsonString(mockResponse)
+    fun `GIVEN mock response WHEN fetchTopRated is called THEN verify response`() =
+        runBlocking {
+            val mockResponse = MockUtils.mockMoviesApiDataResponse()
+            val jsonResponse = MockUtils.toJsonString(mockResponse)
 
-        mockWebServer.enqueue(MockResponse().setBody(jsonResponse).setResponseCode(200))
+            mockWebServer.enqueue(MockResponse().setBody(jsonResponse).setResponseCode(200))
 
-        val result = apiService.fetchPopular()
+            val result = apiService.fetchTopRated()
 
-        assertEquals(mockResponse, result)
-    }
-
-    @Test
-    fun `GIVEN mock response WHEN fetchUpcoming is called THEN verify response`() = runBlocking {
-        val mockResponse = MockUtils.mockMoviesApiDataResponse()
-        val jsonResponse = MockUtils.toJsonString(mockResponse)
-
-        mockWebServer.enqueue(MockResponse().setBody(jsonResponse).setResponseCode(200))
-
-        val result = apiService.fetchUpcoming()
-
-        assertEquals(mockResponse, result)
-    }
+            assertEquals(mockResponse, result)
+        }
 
     @Test
-    fun `GIVEN mock response WHEN addToFavorites is called THEN verify response`() = runBlocking {
-        val mockResponse = MockUtils.mockAddToFavoritesApiResponse()
-        val mockRequest = MockUtils.mockAddToFavoritesRequest()
-        val jsonResponse = MockUtils.toJsonString(mockResponse)
+    fun `GIVEN mock response WHEN fetchPopular is called THEN verify response`() =
+        runBlocking {
+            val mockResponse = MockUtils.mockMoviesApiDataResponse()
+            val jsonResponse = MockUtils.toJsonString(mockResponse)
 
-        mockWebServer.enqueue(MockResponse().setBody(jsonResponse).setResponseCode(200))
+            mockWebServer.enqueue(MockResponse().setBody(jsonResponse).setResponseCode(200))
 
-        val result = apiService.addToFavorites(addToFavoritesRequest = mockRequest)
+            val result = apiService.fetchPopular()
 
-        assertEquals(mockResponse, result)
-    }
+            assertEquals(mockResponse, result)
+        }
 
     @Test
-    fun `GIVEN mock response WHEN getFavorites is called THEN verify response`() = runBlocking {
-        val mockResponse = MockUtils.mockMoviesApiDataResponse()
-        val jsonResponse = MockUtils.toJsonString(mockResponse)
+    fun `GIVEN mock response WHEN fetchUpcoming is called THEN verify response`() =
+        runBlocking {
+            val mockResponse = MockUtils.mockMoviesApiDataResponse()
+            val jsonResponse = MockUtils.toJsonString(mockResponse)
 
-        mockWebServer.enqueue(MockResponse().setBody(jsonResponse).setResponseCode(200))
+            mockWebServer.enqueue(MockResponse().setBody(jsonResponse).setResponseCode(200))
 
-        val result = apiService.getFavorites()
+            val result = apiService.fetchUpcoming()
 
-        assertEquals(mockResponse, result)
-    }
+            assertEquals(mockResponse, result)
+        }
+
+    @Test
+    fun `GIVEN mock response WHEN addToFavorites is called THEN verify response`() =
+        runBlocking {
+            val mockResponse = MockUtils.mockAddToFavoritesApiResponse()
+            val mockRequest = MockUtils.mockAddToFavoritesRequest()
+            val jsonResponse = MockUtils.toJsonString(mockResponse)
+
+            mockWebServer.enqueue(MockResponse().setBody(jsonResponse).setResponseCode(200))
+
+            val result = apiService.addToFavorites(addToFavoritesRequest = mockRequest)
+
+            assertEquals(mockResponse, result)
+        }
+
+    @Test
+    fun `GIVEN mock response WHEN getFavorites is called THEN verify response`() =
+        runBlocking {
+            val mockResponse = MockUtils.mockMoviesApiDataResponse()
+            val jsonResponse = MockUtils.toJsonString(mockResponse)
+
+            mockWebServer.enqueue(MockResponse().setBody(jsonResponse).setResponseCode(200))
+
+            val result = apiService.getFavorites()
+
+            assertEquals(mockResponse, result)
+        }
 
     @After
     fun tearDown() {

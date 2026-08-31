@@ -17,7 +17,6 @@ import org.junit.Rule
 import org.junit.Test
 
 class RemoteDataSourceImplTest {
-
     @get:Rule
     val mainDispatcher = TestDispatcherRule()
 

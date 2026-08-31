@@ -19,27 +19,21 @@ class LocalDataSourceImpl(
     private val nowPlayingDao: NowPlayingDao,
     private val topRatedDao: TopRatedDao,
     private val upComingDao: UpComingDao,
-    private val popularDao: PopularDao
+    private val popularDao: PopularDao,
 ) : LocalDataSource {
-    override fun saveFavorites(favoriteMovie: List<FavoriteMoviesEntity>) =
-        favoriteDao.insertFavorite(favoriteMovie)
+    override fun saveFavorites(favoriteMovie: List<FavoriteMoviesEntity>) = favoriteDao.insertFavorite(favoriteMovie)
 
     override suspend fun removeFavoriteMovie(id: Int) = favoriteDao.deleteFavoriteById(id)
 
-    override suspend fun getFavoriteMovies(): Flow<List<FavoriteMoviesEntity>> =
-        favoriteDao.getFavoriteMovies()
+    override suspend fun getFavoriteMovies(): Flow<List<FavoriteMoviesEntity>> = favoriteDao.getFavoriteMovies()
 
-    override suspend fun getNowPlaying(): Flow<List<NowPlayingMoviesEntity>> =
-        nowPlayingDao.getAllNowPlaying()
+    override suspend fun getNowPlaying(): Flow<List<NowPlayingMoviesEntity>> = nowPlayingDao.getAllNowPlaying()
 
-    override suspend fun getPopular(): Flow<List<PopularMoviesEntity>> =
-        popularDao.getAllPopular()
+    override suspend fun getPopular(): Flow<List<PopularMoviesEntity>> = popularDao.getAllPopular()
 
-    override suspend fun getTopRated(): Flow<List<TopRatedMoviesEntity>> =
-        topRatedDao.getAllTopRated()
+    override suspend fun getTopRated(): Flow<List<TopRatedMoviesEntity>> = topRatedDao.getAllTopRated()
 
-    override suspend fun getUpcoming(): Flow<List<UpcomingMoviesEntity>> =
-        upComingDao.getAllUpcoming()
+    override suspend fun getUpcoming(): Flow<List<UpcomingMoviesEntity>> = upComingDao.getAllUpcoming()
 
     override fun saveNowPlaying(nowPlayingData: List<NowPlayingMoviesEntity>) {
         nowPlayingDao.insertNowPlayingMovies(nowPlayingData)

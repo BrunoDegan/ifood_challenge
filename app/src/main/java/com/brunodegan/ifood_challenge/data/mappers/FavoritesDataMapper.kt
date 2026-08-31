@@ -9,8 +9,8 @@ import kotlin.random.Random
 
 @Factory
 class FavoritesDataMapper : BaseMapper<MoviesApiDataResponse, List<FavoriteMoviesEntity>> {
-    override fun map(input: MoviesApiDataResponse): List<FavoriteMoviesEntity> {
-        return buildList {
+    override fun map(input: MoviesApiDataResponse): List<FavoriteMoviesEntity> =
+        buildList {
             input.results.forEach { movie ->
                 add(
                     FavoriteMoviesEntity(
@@ -19,10 +19,9 @@ class FavoritesDataMapper : BaseMapper<MoviesApiDataResponse, List<FavoriteMovie
                         title = movie.title.orEmpty(),
                         posterPath = movie.posterPath.formatFullCDNUrl(),
                         overview = movie.overview.orEmpty(),
-                        releaseDate = movie.releaseDate.formatUsDateToBrDate()
-                    )
+                        releaseDate = movie.releaseDate.formatUsDateToBrDate(),
+                    ),
                 )
             }
         }
-    }
 }

@@ -29,23 +29,22 @@ class NowPlayingMoviesViewModel(
     private val useCase: GetNowPlayingUseCase,
     private val addToFavoritesUseCase: AddToFavoritesUseCase,
     private val removeFromFavoritesUseCase: RemoveFromFavoritesUseCase,
-    private val dispatcher: DispatchersProviderInterface
+    private val dispatcher: DispatchersProviderInterface,
 ) : ViewModel() {
-
     private val _snackbarState = Channel<SnackbarUiStateHolder>()
     val snackbarState = _snackbarState.receiveAsFlow()
 
     private val _uiState =
         MutableStateFlow<NowPlayingMoviesUiState>(NowPlayingMoviesUiState.Initial)
-    val uiState = _uiState
-        .onStart {
-            getNowPlayingMovies()
-        }
-        .stateIn(
-            viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = NowPlayingMoviesUiState.Initial,
-        )
+    val uiState =
+        _uiState
+            .onStart {
+                getNowPlayingMovies()
+            }.stateIn(
+                viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = NowPlayingMoviesUiState.Initial,
+            )
 
     fun onUiEvent(event: NowPlayingMoviesUiEvents) {
         when (event) {
@@ -57,23 +56,21 @@ class NowPlayingMoviesViewModel(
 
             is NowPlayingMoviesUiEvents.OnRemoveFavButtonClickedUiEvent ->
                 removeMovieFromFavorites(movieId = event.id)
-
         }
     }
 
     fun getNowPlayingMovies() {
         viewModelScope.launch {
-            useCase().flowOn(dispatcher.io)
+            useCase()
+                .flowOn(dispatcher.io)
                 .distinctUntilChanged()
                 .onStart {
                     _uiState.update { NowPlayingMoviesUiState.Loading }
-                }
-                .catch { error ->
+                }.catch { error ->
                     error.message?.let {
                         _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(it))
                     }
-                }
-                .collectLatest { result ->
+                }.collectLatest { result ->
                     when (result) {
                         is Resource.Success -> {
                             _uiState.value = NowPlayingMoviesUiState.Success(result.data)
@@ -89,15 +86,15 @@ class NowPlayingMoviesViewModel(
 
     private fun addMovieToFavorites(movieId: Int) {
         viewModelScope.launch {
-            addToFavoritesUseCase.invoke(movieId)
+            addToFavoritesUseCase
+                .invoke(movieId)
                 .flowOn(dispatcher.io)
                 .distinctUntilChanged()
                 .catch { error ->
                     error.message?.let {
                         _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(it))
                     }
-                }
-                .collectLatest { result ->
+                }.collectLatest { result ->
                     when (result) {
                         is Resource.Success -> {
                             _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(result.data.statusMessage))
@@ -113,15 +110,15 @@ class NowPlayingMoviesViewModel(
 
     private fun removeMovieFromFavorites(movieId: Int) {
         viewModelScope.launch {
-            removeFromFavoritesUseCase.invoke(movieId)
+            removeFromFavoritesUseCase
+                .invoke(movieId)
                 .flowOn(dispatcher.io)
                 .distinctUntilChanged()
                 .catch { error ->
                     error.message?.let {
                         _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(it))
                     }
-                }
-                .collectLatest { result ->
+                }.collectLatest { result ->
                     when (result) {
                         is Resource.Success -> {
                             if (result.data.success) {
@@ -138,5 +135,4 @@ class NowPlayingMoviesViewModel(
                 }
         }
     }
-
 }

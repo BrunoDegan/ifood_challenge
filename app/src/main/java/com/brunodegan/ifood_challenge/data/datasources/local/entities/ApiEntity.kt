@@ -5,8 +5,9 @@ import com.brunodegan.ifood_challenge.data.api.RestApiService.Companion.MEDIA_TY
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-data class MoviesApiDataResponse(@SerializedName("results") val results: List<Movies>) :
-    ApiData()
+data class MoviesApiDataResponse(
+    @SerializedName("results") val results: List<Movies>,
+) : ApiData()
 
 data class Movies(
     @SerializedName("id") val id: Int?,
@@ -34,11 +35,10 @@ data class AddToFavoritesRequest(
 data class AddToFavoriteMoviesData(
     val success: Boolean,
     val statusMessage: String,
-    val statusCode: String
+    val statusCode: String,
 ) : ApiData()
 
 @Parcelize
 open class BaseApiData : Parcelable
 
 typealias ApiData = BaseApiData
-

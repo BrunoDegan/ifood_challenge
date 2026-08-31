@@ -14,14 +14,14 @@ sealed class BottomNavRoutes(
     val position: Int,
     val route: String,
     val title: Int,
-    val imgResId: Int
+    val imgResId: Int,
 ) {
     data object NowPlaying :
         BottomNavRoutes(
             NOW_PLAYING,
             ScreenRoutes.NowPlayingScreen.route,
             R.string.now_playing_movies,
-            R.drawable.today_movies
+            R.drawable.today_movies,
         )
 
     data object UpComming :
@@ -29,7 +29,7 @@ sealed class BottomNavRoutes(
             UP_COMMING,
             ScreenRoutes.UpComingScreen.route,
             R.string.upcoming_movies,
-            R.drawable.upcoming_movies
+            R.drawable.upcoming_movies,
         )
 
     data object TopRated :
@@ -37,7 +37,7 @@ sealed class BottomNavRoutes(
             TOP_RATED,
             ScreenRoutes.TopRatedScreen.route,
             R.string.top_rated_movies,
-            R.drawable.top_rated_movies
+            R.drawable.top_rated_movies,
         )
 
     data object Popular :
@@ -45,7 +45,7 @@ sealed class BottomNavRoutes(
             POPULAR,
             ScreenRoutes.PopularScreen.route,
             R.string.popular_movies,
-            R.drawable.popular_movies
+            R.drawable.popular_movies,
         )
 
     data object Favorites :
@@ -53,12 +53,12 @@ sealed class BottomNavRoutes(
             FAVORITES,
             ScreenRoutes.FavoritesScreen.route,
             R.string.favorites_movies,
-            R.drawable.favorite
+            R.drawable.favorite,
         )
 }
 
-fun getBottomNavItems(): List<BottomNavItem> {
-    return listOf(
+fun getBottomNavItems(): List<BottomNavItem> =
+    listOf(
         BottomNavItem(
             position = BottomNavRoutes.NowPlaying.position,
             route = BottomNavRoutes.NowPlaying.route,
@@ -88,9 +88,8 @@ fun getBottomNavItems(): List<BottomNavItem> {
             route = BottomNavRoutes.Favorites.route,
             label = BottomNavRoutes.Favorites.title,
             iconResourceId = BottomNavRoutes.Favorites.imgResId,
-        )
+        ),
     )
-}
 
 private const val NOW_PLAYING = 0
 private const val UP_COMMING = 1

@@ -19,15 +19,20 @@ import com.brunodegan.ifood_challenge.data.datasources.local.entities.UpcomingMo
         PopularMoviesEntity::class,
         TopRatedMoviesEntity::class,
         UpcomingMoviesEntity::class,
-        FavoriteMoviesEntity::class],
+        FavoriteMoviesEntity::class,
+    ],
     version = 1,
-    exportSchema = false
+    exportSchema = false,
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun nowPlayingDao(): NowPlayingDao
+
     abstract fun popularDao(): PopularDao
+
     abstract fun topRatedDao(): TopRatedDao
+
     abstract fun upComingDao(): UpComingDao
+
     abstract fun favoritesDao(): FavoritesDao
 
     companion object {

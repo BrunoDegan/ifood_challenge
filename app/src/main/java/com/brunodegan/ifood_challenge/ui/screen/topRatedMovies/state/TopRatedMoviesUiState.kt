@@ -8,7 +8,14 @@ import kotlinx.collections.immutable.ImmutableList
 @Immutable
 sealed interface TopRatedMoviesUiState {
     data object Initial : TopRatedMoviesUiState
+
     data object Loading : TopRatedMoviesUiState
-    data class Success(val viewData: ImmutableList<TopRatedMoviesEntity>) : TopRatedMoviesUiState
-    data class Error(val error: ErrorType) : TopRatedMoviesUiState
+
+    data class Success(
+        val viewData: ImmutableList<TopRatedMoviesEntity>,
+    ) : TopRatedMoviesUiState
+
+    data class Error(
+        val error: ErrorType,
+    ) : TopRatedMoviesUiState
 }

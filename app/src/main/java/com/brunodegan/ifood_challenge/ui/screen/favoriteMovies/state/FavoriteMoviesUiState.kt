@@ -6,10 +6,16 @@ import com.brunodegan.ifood_challenge.data.datasources.local.entities.FavoriteMo
 import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
-
 sealed interface FavoriteMoviesUiState {
     data object Initial : FavoriteMoviesUiState
+
     data object Loading : FavoriteMoviesUiState
-    data class Success(val viewData: ImmutableList<FavoriteMoviesEntity>) : FavoriteMoviesUiState
-    data class Error(val error: ErrorType) : FavoriteMoviesUiState
+
+    data class Success(
+        val viewData: ImmutableList<FavoriteMoviesEntity>,
+    ) : FavoriteMoviesUiState
+
+    data class Error(
+        val error: ErrorType,
+    ) : FavoriteMoviesUiState
 }

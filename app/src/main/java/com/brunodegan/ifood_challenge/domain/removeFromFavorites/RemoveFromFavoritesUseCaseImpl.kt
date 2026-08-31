@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 import org.koin.core.annotation.Factory
 
 @Factory
-class RemoveFromFavoritesUseCaseImpl(private val repository: MoviesRepository) :
-    RemoveFromFavoritesUseCase {
-    override suspend fun invoke(id: Int): Flow<Resource<AddToFavoriteMoviesData>> =
-        repository.removeFavorite(id)
+class RemoveFromFavoritesUseCaseImpl(
+    private val repository: MoviesRepository,
+) : RemoveFromFavoritesUseCase {
+    override suspend fun invoke(id: Int): Flow<Resource<AddToFavoriteMoviesData>> = repository.removeFavorite(id)
 }

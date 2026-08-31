@@ -6,12 +6,16 @@ import org.koin.core.annotation.Single
 
 @Single
 class RemoteDataSourceImpl(
-    private val restApi: RestApiService
+    private val restApi: RestApiService,
 ) : RemoteDataSource {
     override suspend fun fetchNowPlaying() = restApi.fetchNowPlaying()
+
     override suspend fun fetchPopular() = restApi.fetchPopular()
+
     override suspend fun fetchTopRated() = restApi.fetchTopRated()
+
     override suspend fun fetchUpcoming() = restApi.fetchUpcoming()
+
     override suspend fun addOrRemoveFromFavorites(requestData: AddToFavoritesRequest) =
         restApi.addToFavorites(addToFavoritesRequest = requestData)
 

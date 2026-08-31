@@ -38,12 +38,13 @@ class NowPlayingMoviesViewModelTest {
 
     @Before
     fun setup() {
-        viewModel = NowPlayingMoviesViewModel(
-            useCase = getNowPlayingUseCase,
-            addToFavoritesUseCase = addToFavoritesUseCase,
-            removeFromFavoritesUseCase = removeFromFavoritesUseCase,
-            dispatcher = testDispatcher
-        )
+        viewModel =
+            NowPlayingMoviesViewModel(
+                useCase = getNowPlayingUseCase,
+                addToFavoritesUseCase = addToFavoritesUseCase,
+                removeFromFavoritesUseCase = removeFromFavoritesUseCase,
+                dispatcher = testDispatcher,
+            )
     }
 
     @Test
@@ -119,22 +120,24 @@ class NowPlayingMoviesViewModelTest {
             val successfullyResponse = Resource.Success(mockAddFavoriteData)
             val movieId = 1
 
-            coEvery { addToFavoritesUseCase.invoke(movieId) } returns flow {
-                emit(
-                    successfullyResponse
-                )
-            }
+            coEvery { addToFavoritesUseCase.invoke(movieId) } returns
+                flow {
+                    emit(
+                        successfullyResponse,
+                    )
+                }
 
             viewModel.onUiEvent(
-                event = NowPlayingMoviesUiEvents.OnAddFavButtonClickedUiEvent(
-                    movieId
-                )
+                event =
+                    NowPlayingMoviesUiEvents.OnAddFavButtonClickedUiEvent(
+                        movieId,
+                    ),
             )
 
             viewModel.snackbarState.test {
                 assertEquals(
                     SnackbarUiStateHolder.SnackbarUi(mockAddFavoriteData.statusMessage),
-                    awaitItem()
+                    awaitItem(),
                 )
             }
         }
@@ -146,26 +149,26 @@ class NowPlayingMoviesViewModelTest {
             val successfullyResponse = Resource.Success(mockAddFavoriteData)
             val movieId = 1
 
-            coEvery { removeFromFavoritesUseCase.invoke(movieId) } returns flow {
-                emit(successfullyResponse)
-            }
-
+            coEvery { removeFromFavoritesUseCase.invoke(movieId) } returns
+                flow {
+                    emit(successfullyResponse)
+                }
 
             viewModel.onUiEvent(
-                event = NowPlayingMoviesUiEvents.OnRemoveFavButtonClickedUiEvent(
-                    movieId
-                )
+                event =
+                    NowPlayingMoviesUiEvents.OnRemoveFavButtonClickedUiEvent(
+                        movieId,
+                    ),
             )
 
             viewModel.snackbarState.test {
                 assertEquals(
                     SnackbarUiStateHolder.SnackbarUi(mockAddFavoriteData.statusMessage),
-                    awaitItem()
+                    awaitItem(),
                 )
             }
         }
 
     @After
     fun tearDown() = unmockkAll()
-
 }

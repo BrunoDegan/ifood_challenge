@@ -36,46 +36,49 @@ class AddToFavoritesUseCaseTest {
     }
 
     @Test
-    fun `GIVEN favorite movies WHEN invoke is called THEN emit Resource_Success and call addFavorite once`() = runTest {
+    fun `GIVEN favorite movies WHEN invoke is called THEN emit Resource_Success and call addFavorite once`() =
+        runTest {
+            // Given
+            val expectedData = Resource.Success(MockUtils.mockAddToFavoriteMoviesData())
+            coEvery { repository.addFavorite(id = movieId) } returns
+                flow {
+                    emit(expectedData)
+                }
 
-        //Given
-        val expectedData = Resource.Success(MockUtils.mockAddToFavoriteMoviesData())
-        coEvery { repository.addFavorite(id = movieId) } returns flow {
-            emit(expectedData)
+            // When
+            val result = useCase.invoke(id = movieId)
+
+            // Then
+            coVerify(exactly = 1) {
+                repository.addFavorite(id = movieId)
+            }
+            assertEquals(
+                expectedData,
+                result.first(),
+            )
         }
-
-        // When
-        val result = useCase.invoke(id = movieId)
-
-        // Then
-        coVerify(exactly = 1) {
-            repository.addFavorite(id = movieId)
-        }
-        assertEquals(
-            expectedData,
-            result.first()
-        )
-    }
 
     @Test
-    fun `GIVEN an exception WHEN invoke is called THEN emit ResourceError`() = runTest {
-        // GIVEN
-        val exception = Exception("Error adding favorite movie")
-        val resourceError = getResourceError<AddToFavoriteMoviesData>(exception)
+    fun `GIVEN an exception WHEN invoke is called THEN emit ResourceError`() =
+        runTest {
+            // GIVEN
+            val exception = Exception("Error adding favorite movie")
+            val resourceError = getResourceError<AddToFavoriteMoviesData>(exception)
 
-        coEvery { repository.addFavorite(id = movieId) } returns flow {
-            emit(resourceError)
+            coEvery { repository.addFavorite(id = movieId) } returns
+                flow {
+                    emit(resourceError)
+                }
+
+            // WHEN
+            val result = useCase.invoke(id = movieId)
+
+            // THEN
+            assertTrue {
+                result.first() is Resource.Error<AddToFavoriteMoviesData>
+            }
+            assertEquals("Error adding favorite movie", (result.first() as Resource.Error).error.message)
         }
-
-        // WHEN
-        val result = useCase.invoke(id = movieId)
-
-        // THEN
-        assertTrue {
-            result.first() is Resource.Error<AddToFavoriteMoviesData>
-        }
-        assertEquals("Error adding favorite movie", (result.first() as Resource.Error).error.message)
-    }
 
     @After
     fun tearDown() {

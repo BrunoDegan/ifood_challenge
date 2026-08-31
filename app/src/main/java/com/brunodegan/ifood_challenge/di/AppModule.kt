@@ -12,6 +12,6 @@ import org.koin.core.annotation.Module
     "com.brunodegan.ifood_challenge.ui",
     "com.brunodegan.ifood_challenge.domain",
     "com.brunodegan.ifood_challenge.data",
-    "com.brunodegan.ifood_challenge.base.dispatchers"
+    "com.brunodegan.ifood_challenge.base.dispatchers",
 )
 class AppModule

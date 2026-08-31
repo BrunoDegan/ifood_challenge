@@ -10,31 +10,30 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RestApiService {
-
     @GET(NOW_PLAYING_URL)
     suspend fun fetchNowPlaying(
-        @Query(LANGUAGE) language: String = PT_BR
+        @Query(LANGUAGE) language: String = PT_BR,
     ): MoviesApiDataResponse
 
     @GET(POPULAR_URL)
     suspend fun fetchPopular(
-        @Query(LANGUAGE) language: String = PT_BR
+        @Query(LANGUAGE) language: String = PT_BR,
     ): MoviesApiDataResponse
 
     @GET(TOP_RATED_URL)
     suspend fun fetchTopRated(
-        @Query(LANGUAGE) language: String = PT_BR
+        @Query(LANGUAGE) language: String = PT_BR,
     ): MoviesApiDataResponse
 
     @GET(UPCOMING_URL)
     suspend fun fetchUpcoming(
-        @Query(LANGUAGE) language: String = PT_BR
+        @Query(LANGUAGE) language: String = PT_BR,
     ): MoviesApiDataResponse
 
     @POST(ADD_TO_FAVORITES_URL)
     suspend fun addToFavorites(
         @Path(ACCOUNT_ID) accountId: String = ID,
-        @Body addToFavoritesRequest: AddToFavoritesRequest
+        @Body addToFavoritesRequest: AddToFavoritesRequest,
     ): AddToFavoritesApiResponse
 
     @GET(GET_FAVORITES_URL)

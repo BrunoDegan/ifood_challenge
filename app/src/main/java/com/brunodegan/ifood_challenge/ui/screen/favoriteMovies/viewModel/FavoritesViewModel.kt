@@ -27,21 +27,20 @@ class FavoritesViewModel(
     private val useCase: GetFavoritesUseCase,
     private val dispatcher: DispatchersProviderInterface,
 ) : ViewModel() {
-
     private val _snackbarState = Channel<SnackbarUiStateHolder>()
     val snackbarState = _snackbarState.receiveAsFlow()
 
     private val _uiState =
         MutableStateFlow<FavoriteMoviesUiState>(FavoriteMoviesUiState.Initial)
-    val uiState = _uiState
-        .onStart {
-            getFavoriteMovies()
-        }
-        .stateIn(
-            viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = FavoriteMoviesUiState.Initial,
-        )
+    val uiState =
+        _uiState
+            .onStart {
+                getFavoriteMovies()
+            }.stateIn(
+                viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = FavoriteMoviesUiState.Initial,
+            )
 
     fun onUiEvent(event: FavoriteMoviesUiEvents) {
         when (event) {
@@ -52,17 +51,16 @@ class FavoritesViewModel(
 
     fun getFavoriteMovies() {
         viewModelScope.launch {
-            useCase().flowOn(dispatcher.io)
+            useCase()
+                .flowOn(dispatcher.io)
                 .distinctUntilChanged()
                 .onStart {
                     _uiState.update { FavoriteMoviesUiState.Loading }
-                }
-                .catch { error ->
+                }.catch { error ->
                     error.message?.let {
                         _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(it))
                     }
-                }
-                .collectLatest { result ->
+                }.collectLatest { result ->
                     when (result) {
                         is Resource.Success -> {
                             _uiState.value = FavoriteMoviesUiState.Success(result.data)

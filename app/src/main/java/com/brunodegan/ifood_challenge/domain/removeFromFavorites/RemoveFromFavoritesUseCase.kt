@@ -5,7 +5,5 @@ import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavor
 import kotlinx.coroutines.flow.Flow
 
 interface RemoveFromFavoritesUseCase {
-        suspend operator fun invoke(
-            id: Int,
-        ): Flow<Resource<AddToFavoriteMoviesData>>
+    suspend operator fun invoke(id: Int): Flow<Resource<AddToFavoriteMoviesData>>
 }

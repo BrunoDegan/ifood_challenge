@@ -24,14 +24,11 @@ data class UpcomingMoviesEntity(
     @ColumnInfo(name = "release_date")
     val releaseDate: String,
     @ColumnInfo(name = "is_favorite")
-    val isFavorite: Boolean
+    val isFavorite: Boolean,
 )
 
-fun List<UpcomingMoviesEntity>.update(
-    favoritesMovies: List<FavoriteMoviesEntity>
-): List<UpcomingMoviesEntity>? {
-    return this.map { movie ->
-        val isFavorite = favoritesMovies.any { it.id == movie.id  }
+fun List<UpcomingMoviesEntity>.update(favoritesMovies: List<FavoriteMoviesEntity>): List<UpcomingMoviesEntity>? =
+    this.map { movie ->
+        val isFavorite = favoritesMovies.any { it.id == movie.id }
         movie.copy(isFavorite = isFavorite)
     }
-}

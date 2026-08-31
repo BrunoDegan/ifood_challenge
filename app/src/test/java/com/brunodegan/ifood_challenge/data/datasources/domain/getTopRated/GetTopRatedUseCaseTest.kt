@@ -39,12 +39,12 @@ class GetTopRatedUseCaseTest {
     @Test
     fun `GIVEN top rated movies WHEN invoke is called THEN emit Resource Success`() =
         runTest {
-
-            //Given
+            // Given
             val expectedData = Resource.Success(MockUtils.mockTopRatedMoviesEntity())
-            coEvery { repository.getTopRateMovies() } returns flow {
-                emit(expectedData)
-            }
+            coEvery { repository.getTopRateMovies() } returns
+                flow {
+                    emit(expectedData)
+                }
 
             // When
             val result = useCase.invoke()
@@ -55,40 +55,43 @@ class GetTopRatedUseCaseTest {
             }
             assertEquals(
                 expectedData,
-                result.first()
+                result.first(),
             )
         }
 
     @Test
-    fun `GIVEN an exception WHEN invoke is called THEN emit ResourceError`() = runTest {
-        // GIVEN
-        val exception = Exception("Error fetching now top rated movies")
-        val resourceError = getResourceError<ImmutableList<TopRatedMoviesEntity>>(exception)
+    fun `GIVEN an exception WHEN invoke is called THEN emit ResourceError`() =
+        runTest {
+            // GIVEN
+            val exception = Exception("Error fetching now top rated movies")
+            val resourceError = getResourceError<ImmutableList<TopRatedMoviesEntity>>(exception)
 
-        coEvery { repository.getTopRateMovies() } returns flow {
-            emit(resourceError)
+            coEvery { repository.getTopRateMovies() } returns
+                flow {
+                    emit(resourceError)
+                }
+
+            // WHEN
+            val result = useCase.invoke()
+
+            // THEN
+            assertTrue {
+                result.first() is Resource.Error<ImmutableList<TopRatedMoviesEntity>>
+            }
+            assertEquals(
+                "Error fetching now top rated movies",
+                (result.first() as Resource.Error).error.message,
+            )
         }
-
-        // WHEN
-        val result = useCase.invoke()
-
-        // THEN
-        assertTrue {
-            result.first() is Resource.Error<ImmutableList<TopRatedMoviesEntity>>
-        }
-        assertEquals(
-            "Error fetching now top rated movies",
-            (result.first() as Resource.Error).error.message
-        )
-    }
 
     @Test
     fun `GIVEN no top rated movies WHEN invoke is called THEN emit Resource_Success with empty list`() =
         runTest {
             // GIVEN
-            coEvery { repository.getTopRateMovies() } returns flow {
-                emit(Resource.Success(persistentListOf()))
-            }
+            coEvery { repository.getTopRateMovies() } returns
+                flow {
+                    emit(Resource.Success(persistentListOf()))
+                }
 
             // WHEN
             val result = useCase.invoke()

@@ -31,44 +31,44 @@ class UpComingMoviesViewModel(
     private val removeFromFavoritesUseCase: RemoveFromFavoritesUseCase,
     private val dispatcher: DispatchersProviderInterface,
 ) : ViewModel() {
-
     private val _snackbarState = Channel<SnackbarUiStateHolder>()
     val snackbarState = _snackbarState.receiveAsFlow()
 
     private val _uiState =
         MutableStateFlow<UpComingMoviesUiState>(UpComingMoviesUiState.Initial)
-    val uiState = _uiState
-        .onStart {
-            getUpCommingMovies()
-        }.stateIn(
-            viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = UpComingMoviesUiState.Initial,
-        )
+    val uiState =
+        _uiState
+            .onStart {
+                getUpCommingMovies()
+            }.stateIn(
+                viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = UpComingMoviesUiState.Initial,
+            )
 
     fun onUiEvent(event: UpcomingMoviesUiEvent) {
         when (event) {
             is UpcomingMoviesUiEvent.OnRetryButtonClickedUiEvent -> getUpCommingMovies()
             is UpcomingMoviesUiEvent.OnAddFavButtonClickedUiEvent -> addMovieToFavorites(event.id)
-            is UpcomingMoviesUiEvent.OnRemoveFavButtonClickedUiEvent -> removeMovieFromFavorites(
-                event.id
-            )
+            is UpcomingMoviesUiEvent.OnRemoveFavButtonClickedUiEvent ->
+                removeMovieFromFavorites(
+                    event.id,
+                )
         }
     }
 
     fun getUpCommingMovies() {
         viewModelScope.launch {
-            useCase().flowOn(dispatcher.io)
+            useCase()
+                .flowOn(dispatcher.io)
                 .distinctUntilChanged()
                 .onStart {
                     _uiState.update { UpComingMoviesUiState.Loading }
-                }
-                .catch { error ->
+                }.catch { error ->
                     error.message?.let {
                         _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(it))
                     }
-                }
-                .collectLatest { result ->
+                }.collectLatest { result ->
                     when (result) {
                         is Resource.Success -> {
                             _uiState.value = UpComingMoviesUiState.Success(result.data)
@@ -84,15 +84,15 @@ class UpComingMoviesViewModel(
 
     private fun addMovieToFavorites(movieId: Int) {
         viewModelScope.launch {
-            addToFavoritesUseCase.invoke(movieId)
+            addToFavoritesUseCase
+                .invoke(movieId)
                 .flowOn(dispatcher.io)
                 .distinctUntilChanged()
                 .catch { error ->
                     error.message?.let {
                         _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(it))
                     }
-                }
-                .collectLatest { result ->
+                }.collectLatest { result ->
                     when (result) {
                         is Resource.Success -> {
                             _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(result.data.statusMessage))
@@ -108,15 +108,15 @@ class UpComingMoviesViewModel(
 
     private fun removeMovieFromFavorites(movieId: Int) {
         viewModelScope.launch {
-            removeFromFavoritesUseCase.invoke(movieId)
+            removeFromFavoritesUseCase
+                .invoke(movieId)
                 .flowOn(dispatcher.io)
                 .distinctUntilChanged()
                 .catch { error ->
                     error.message?.let {
                         _snackbarState.send(SnackbarUiStateHolder.SnackbarUi(it))
                     }
-                }
-                .collectLatest { result ->
+                }.collectLatest { result ->
                     when (result) {
                         is Resource.Success -> {
                             if (result.data.success) {
@@ -131,5 +131,4 @@ class UpComingMoviesViewModel(
                 }
         }
     }
-
 }

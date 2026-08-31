@@ -53,9 +53,10 @@ fun AppNavHost() {
     var selectedItem by remember {
         mutableStateOf(getBottomNavItems().first())
     }
-    val listState = rememberSaveable(saver = LazyListState.Saver) {
-        LazyListState()
-    }
+    val listState =
+        rememberSaveable(saver = LazyListState.Saver) {
+            LazyListState()
+        }
     val backStack = rememberNavBackStack(ScreenRoutes.NowPlayingScreen)
 
     KoinContext {
@@ -66,19 +67,20 @@ fun AppNavHost() {
                     title = stringResource(R.string.app_name),
                     onBackButtonClicked = {
                         activity?.finish()
-                    }
+                    },
                 )
             },
             snackbarHost = {
                 SnackbarHost(
                     hostState = snackbarHostState,
-                    modifier = Modifier.safeContentPadding()
+                    modifier = Modifier.safeContentPadding(),
                 )
             },
             bottomBar = {
                 NavigationBar(
-                    modifier = Modifier
-                        .background(color = MaterialTheme.colorScheme.primary)
+                    modifier =
+                        Modifier
+                            .background(color = MaterialTheme.colorScheme.primary),
                 ) {
                     getBottomNavItems().forEach { navItem ->
                         NavigationBarItem(
@@ -95,11 +97,11 @@ fun AppNavHost() {
                             },
                             label = {
                                 Text(stringResource(navItem.label))
-                            }
+                            },
                         )
                     }
                 }
-            }
+            },
         ) { paddingValues ->
 
             NavDisplay(
@@ -108,90 +110,90 @@ fun AppNavHost() {
                     backStack.removeLastOrNull()
                 },
                 modifier = Modifier.padding(paddingValues),
-                entryProvider = entryProvider {
-                    entry<ScreenRoutes.NowPlayingScreen> { entry ->
-                        NowPlayingMoviesScreen(
-                            listState = listState,
-                            scrollBehavior = topbarScrollBehavior,
-                            onShowSnackbar = { msg ->
-                                coroutineScope.launch {
-                                    snackbarHostState.showSnackbar(
-                                        message = msg,
-                                        withDismissAction = true,
-                                        duration = SnackbarDuration.Short
-                                    )
-                                }
-                            },
-                            onNavigateUp = {
-                                backStack.clear()
-                                activity?.finish()
-                            }
-                        )
-                    }
-                    entry<ScreenRoutes.PopularScreen> {
-                        PopularMoviesScreen(
-                            listState = listState,
-                            scrollBehavior = topbarScrollBehavior,
-                            onShowSnackbar = { msg ->
-                                coroutineScope.launch {
-                                    snackbarHostState.showSnackbar(message = msg)
-                                }
-                            },
-                            onNavigateUp = {
-                                backStack.clear()
-                                activity?.finish()
-                            }
-                        )
-                    }
+                entryProvider =
+                    entryProvider {
+                        entry<ScreenRoutes.NowPlayingScreen> { entry ->
+                            NowPlayingMoviesScreen(
+                                listState = listState,
+                                scrollBehavior = topbarScrollBehavior,
+                                onShowSnackbar = { msg ->
+                                    coroutineScope.launch {
+                                        snackbarHostState.showSnackbar(
+                                            message = msg,
+                                            withDismissAction = true,
+                                            duration = SnackbarDuration.Short,
+                                        )
+                                    }
+                                },
+                                onNavigateUp = {
+                                    backStack.clear()
+                                    activity?.finish()
+                                },
+                            )
+                        }
+                        entry<ScreenRoutes.PopularScreen> {
+                            PopularMoviesScreen(
+                                listState = listState,
+                                scrollBehavior = topbarScrollBehavior,
+                                onShowSnackbar = { msg ->
+                                    coroutineScope.launch {
+                                        snackbarHostState.showSnackbar(message = msg)
+                                    }
+                                },
+                                onNavigateUp = {
+                                    backStack.clear()
+                                    activity?.finish()
+                                },
+                            )
+                        }
 
-                    entry<ScreenRoutes.TopRatedScreen> {
-                        TopRatedVideosScreen(
-                            listState = listState,
-                            scrollBehavior = topbarScrollBehavior,
-                            onShowSnackbar = { msg ->
-                                coroutineScope.launch {
-                                    snackbarHostState.showSnackbar(message = msg)
-                                }
-                            },
-                            onNavigateUp = {
-                                backStack.clear()
-                                activity?.finish()
-                            },
-                        )
+                        entry<ScreenRoutes.TopRatedScreen> {
+                            TopRatedVideosScreen(
+                                listState = listState,
+                                scrollBehavior = topbarScrollBehavior,
+                                onShowSnackbar = { msg ->
+                                    coroutineScope.launch {
+                                        snackbarHostState.showSnackbar(message = msg)
+                                    }
+                                },
+                                onNavigateUp = {
+                                    backStack.clear()
+                                    activity?.finish()
+                                },
+                            )
+                        }
 
-                    }
-
-                    entry<ScreenRoutes.UpComingScreen> {
-                        UpComingMoviesScreen(
-                            listState = listState,
-                            scrollBehavior = topbarScrollBehavior,
-                            onShowSnackbar = { msg ->
-                                coroutineScope.launch {
-                                    snackbarHostState.showSnackbar(message = msg)
-                                }
-                            },
-                            onNavigateUp = {
-                                backStack.clear()
-                                activity?.finish()
-                            }
-                        )
-                    }
-                    entry<ScreenRoutes.FavoritesScreen> {
-                        FavoriteMoviesScreen(
-                            listState = listState,
-                            scrollBehavior = topbarScrollBehavior,
-                            onShowSnackbar = { msg ->
-                                coroutineScope.launch {
-                                    snackbarHostState.showSnackbar(message = msg)
-                                }
-                            },
-                            onNavigateUp = {
-                                backStack.clear()
-                                activity?.finish()
-                            }
-                        )
-                    }
-                }
+                        entry<ScreenRoutes.UpComingScreen> {
+                            UpComingMoviesScreen(
+                                listState = listState,
+                                scrollBehavior = topbarScrollBehavior,
+                                onShowSnackbar = { msg ->
+                                    coroutineScope.launch {
+                                        snackbarHostState.showSnackbar(message = msg)
+                                    }
+                                },
+                                onNavigateUp = {
+                                    backStack.clear()
+                                    activity?.finish()
+                                },
+                            )
+                        }
+                        entry<ScreenRoutes.FavoritesScreen> {
+                            FavoriteMoviesScreen(
+                                listState = listState,
+                                scrollBehavior = topbarScrollBehavior,
+                                onShowSnackbar = { msg ->
+                                    coroutineScope.launch {
+                                        snackbarHostState.showSnackbar(message = msg)
+                                    }
+                                },
+                                onNavigateUp = {
+                                    backStack.clear()
+                                    activity?.finish()
+                                },
+                            )
+                        }
+                    },
             )
         }
     }

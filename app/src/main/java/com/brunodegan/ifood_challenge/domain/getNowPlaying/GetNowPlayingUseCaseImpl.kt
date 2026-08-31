@@ -11,7 +11,5 @@ import org.koin.core.annotation.Factory
 class GetNowPlayingUseCaseImpl(
     private val repository: MoviesRepository,
 ) : GetNowPlayingUseCase {
-    override suspend fun invoke(): Flow<Resource<ImmutableList<NowPlayingMoviesEntity>>> =
-        repository.getNowPlayingMovies()
-
+    override suspend fun invoke(): Flow<Resource<ImmutableList<NowPlayingMoviesEntity>>> = repository.getNowPlayingMovies()
 }

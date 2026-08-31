@@ -38,12 +38,13 @@ class UpComingMoviesViewModelTest {
 
     @Before
     fun setup() {
-        viewModel = UpComingMoviesViewModel(
-            useCase = getUpComingUseCase,
-            addToFavoritesUseCase = addToFavoritesUseCase,
-            removeFromFavoritesUseCase = removeFromFavoritesUseCase,
-            dispatcher = testDispatcher
-        )
+        viewModel =
+            UpComingMoviesViewModel(
+                useCase = getUpComingUseCase,
+                addToFavoritesUseCase = addToFavoritesUseCase,
+                removeFromFavoritesUseCase = removeFromFavoritesUseCase,
+                dispatcher = testDispatcher,
+            )
     }
 
     @Test
@@ -119,11 +120,12 @@ class UpComingMoviesViewModelTest {
             val successfullyResponse = Resource.Success(mockData)
             val movieId = 1
 
-            coEvery { addToFavoritesUseCase.invoke(id = movieId) } returns flow {
-                emit(
-                    successfullyResponse
-                )
-            }
+            coEvery { addToFavoritesUseCase.invoke(id = movieId) } returns
+                flow {
+                    emit(
+                        successfullyResponse,
+                    )
+                }
 
             viewModel.onUiEvent(event = UpcomingMoviesUiEvent.OnAddFavButtonClickedUiEvent(movieId))
 
@@ -139,16 +141,18 @@ class UpComingMoviesViewModelTest {
             val successfullyResponse = Resource.Success(mockData)
             val movieId = 1
 
-            coEvery { removeFromFavoritesUseCase.invoke(id = movieId) } returns flow {
-                emit(
-                    successfullyResponse
-                )
-            }
+            coEvery { removeFromFavoritesUseCase.invoke(id = movieId) } returns
+                flow {
+                    emit(
+                        successfullyResponse,
+                    )
+                }
 
             viewModel.onUiEvent(
-                event = UpcomingMoviesUiEvent.OnRemoveFavButtonClickedUiEvent(
-                    movieId
-                )
+                event =
+                    UpcomingMoviesUiEvent.OnRemoveFavButtonClickedUiEvent(
+                        movieId,
+                    ),
             )
 
             viewModel.snackbarState.test {
@@ -158,6 +162,4 @@ class UpComingMoviesViewModelTest {
 
     @After
     fun tearDown() = unmockkAll()
-
 }
-

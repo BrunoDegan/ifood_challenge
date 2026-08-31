@@ -11,6 +11,5 @@ import org.koin.core.annotation.Factory
 class GetUpComingUseCaseImpl(
     private val repository: MoviesRepository,
 ) : GetUpComingUseCase {
-    override suspend fun invoke(): Flow<Resource<ImmutableList<UpcomingMoviesEntity>>> =
-        repository.getUpcomingMovies()
+    override suspend fun invoke(): Flow<Resource<ImmutableList<UpcomingMoviesEntity>>> = repository.getUpcomingMovies()
 }

@@ -11,7 +11,6 @@ import org.junit.Test
 import kotlin.test.assertEquals
 
 class FavoritesDataMapperTest {
-
     private lateinit var mapper: FavoritesDataMapper
 
     @Before
@@ -28,12 +27,16 @@ class FavoritesDataMapperTest {
         assertEquals(expected = response.results.first().title, actual = result.first().title)
         assertEquals(expected = response.results.first().overview, actual = result.first().overview)
         assertEquals(
-            expected = response.results.first().releaseDate.formatUsDateToBrDate(),
-            actual = result.first().releaseDate
+            expected =
+                response.results
+                    .first()
+                    .releaseDate
+                    .formatUsDateToBrDate(),
+            actual = result.first().releaseDate,
         )
         assertEquals(
             expected = MOVIES_POSTER_CDN_URL + response.results.first().posterPath,
-            actual = result.first().posterPath
+            actual = result.first().posterPath,
         )
     }
 

@@ -13,10 +13,11 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         Coil.setImageLoader(
-            ImageLoader.Builder(this)
+            ImageLoader
+                .Builder(this)
                 .crossfade(true)
                 .bitmapConfig(Bitmap.Config.ARGB_8888)
-                .build()
+                .build(),
         )
 
         startKoin<AppModule> {

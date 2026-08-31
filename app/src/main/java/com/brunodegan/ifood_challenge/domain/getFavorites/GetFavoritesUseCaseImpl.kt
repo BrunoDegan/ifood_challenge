@@ -11,6 +11,5 @@ import org.koin.core.annotation.Factory
 class GetFavoritesUseCaseImpl(
     private val repository: MoviesRepository,
 ) : GetFavoritesUseCase {
-    override suspend fun invoke(): Flow<Resource<ImmutableList<FavoriteMoviesEntity>>> =
-        repository.getFavorites()
+    override suspend fun invoke(): Flow<Resource<ImmutableList<FavoriteMoviesEntity>>> = repository.getFavorites()
 }

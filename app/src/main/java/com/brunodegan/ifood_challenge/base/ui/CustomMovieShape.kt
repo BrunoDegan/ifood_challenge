@@ -18,17 +18,17 @@ import androidx.compose.ui.unit.dp
 
 class PosterShape(
     private val cutOutHeight: Float = 20f,
-    private val topCutOutHeight: Float = 0.0f
+    private val topCutOutHeight: Float = 0.0f,
 ) : Shape {
     override fun createOutline(
         size: Size,
         layoutDirection: LayoutDirection,
-        density: Density
+        density: Density,
     ): Outline {
-            val halfImgWidth = size.width / 2
-            val cornerLineWidth = 10f
-            val path = Path().apply {
-
+        val halfImgWidth = size.width / 2
+        val cornerLineWidth = 10f
+        val path =
+            Path().apply {
                 moveTo(0f, topCutOutHeight)
                 lineTo(halfImgWidth - cornerLineWidth, 0f)
                 lineTo(halfImgWidth + cornerLineWidth, 0f)
@@ -40,7 +40,7 @@ class PosterShape(
                 lineTo(0f, size.height - cutOutHeight)
                 close()
             }
-            return Outline.Generic(path)
+        return Outline.Generic(path)
     }
 }
 
@@ -48,9 +48,10 @@ class PosterShape(
 @Preview
 fun CustomMovieShapePreview() {
     Box(
-        modifier = Modifier
-            .size(200.dp, 300.dp)
-            .clip(PosterShape(cutOutHeight = 80f))
-            .background(Color.Gray)
+        modifier =
+            Modifier
+                .size(200.dp, 300.dp)
+                .clip(PosterShape(cutOutHeight = 80f))
+                .background(Color.Gray),
     )
 }

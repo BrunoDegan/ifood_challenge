@@ -34,13 +34,14 @@ class LocalDataSourceTest {
 
     @Before
     fun setup() {
-        localDataSource = LocalDataSourceImpl(
-            favoriteDao = favoritesDao,
-            nowPlayingDao = nowPlayingDao,
-            topRatedDao = topRatedDao,
-            upComingDao = upComingDao,
-            popularDao = popularDao
-        )
+        localDataSource =
+            LocalDataSourceImpl(
+                favoriteDao = favoritesDao,
+                nowPlayingDao = nowPlayingDao,
+                topRatedDao = topRatedDao,
+                upComingDao = upComingDao,
+                popularDao = popularDao,
+            )
     }
 
     @Test

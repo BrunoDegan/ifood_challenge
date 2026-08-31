@@ -10,9 +10,9 @@ import kotlin.math.roundToInt
 import kotlin.random.Random
 
 @Factory
-class PopularDataMapper: BaseMapper<MoviesApiDataResponse, List<PopularMoviesEntity>> {
-    override fun map(input: MoviesApiDataResponse): List<PopularMoviesEntity> {
-        return buildList {
+class PopularDataMapper : BaseMapper<MoviesApiDataResponse, List<PopularMoviesEntity>> {
+    override fun map(input: MoviesApiDataResponse): List<PopularMoviesEntity> =
+        buildList {
             input.results.forEach { movie ->
                 add(
                     PopularMoviesEntity(
@@ -24,10 +24,9 @@ class PopularDataMapper: BaseMapper<MoviesApiDataResponse, List<PopularMoviesEnt
                         popularity = movie.popularity.orZero(),
                         voteAverage = (movie.voteAverage.orZero() / 2).roundToInt(),
                         releaseDate = movie.releaseDate.formatUsDateToBrDate(),
-                        isFavorite = false
-                    )
+                        isFavorite = false,
+                    ),
                 )
             }
         }
-    }
 }

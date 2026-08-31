@@ -28,7 +28,6 @@ import org.junit.Test
 import utils.AndroidTestUtils
 
 class AppNavHostScreenTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -70,9 +69,10 @@ class AppNavHostScreenTest {
                     UpComingMoviesScreenContent(
                         listState = rememberLazyListState(),
                         scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
-                        state = UpComingMoviesUiState.Success(
-                            viewData = AndroidTestUtils.mockUpcomingMoviesEntity()
-                        ),
+                        state =
+                            UpComingMoviesUiState.Success(
+                                viewData = AndroidTestUtils.mockUpcomingMoviesEntity(),
+                            ),
                         onEvent = {},
                         modifier = Modifier,
                     )
@@ -88,19 +88,23 @@ class AppNavHostScreenTest {
             .onNodeWithText("Upcoming Movie 2")
             .assertExists()
 
-        composeTestRule.onNodeWithTag("upcoming movies card tag 1")
+        composeTestRule
+            .onNodeWithTag("upcoming movies card tag 1")
             .assertExists()
 
-        composeTestRule.onNodeWithTag("upcoming movies card tag 2")
+        composeTestRule
+            .onNodeWithTag("upcoming movies card tag 2")
             .assertExists()
 
-        composeTestRule.onNodeWithContentDescription(
-            "Adicionar aos favoritos 1"
-        ).assertExists()
+        composeTestRule
+            .onNodeWithContentDescription(
+                "Adicionar aos favoritos 1",
+            ).assertExists()
 
-        composeTestRule.onNodeWithContentDescription(
-            "Adicionar aos favoritos 2"
-        ).assertExists()
+        composeTestRule
+            .onNodeWithContentDescription(
+                "Adicionar aos favoritos 2",
+            ).assertExists()
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -112,9 +116,10 @@ class AppNavHostScreenTest {
                     NowPlayingMoviesScreenContent(
                         listState = rememberLazyListState(),
                         scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
-                        state = NowPlayingMoviesUiState.Success(
-                            viewData = AndroidTestUtils.mockNowPlayingMoviesEntity()
-                        ),
+                        state =
+                            NowPlayingMoviesUiState.Success(
+                                viewData = AndroidTestUtils.mockNowPlayingMoviesEntity(),
+                            ),
                         onEvent = {},
                         modifier = Modifier,
                     )
@@ -126,24 +131,27 @@ class AppNavHostScreenTest {
             .onNodeWithText("Now Playing Movie 1")
             .assertExists()
 
-
         composeTestRule
             .onNodeWithText("Now Playing Movie 2")
             .assertExists()
 
-        composeTestRule.onNodeWithTag("now playing movies card tag 1")
+        composeTestRule
+            .onNodeWithTag("now playing movies card tag 1")
             .assertExists()
 
-        composeTestRule.onNodeWithTag("now playing movies card tag 2")
+        composeTestRule
+            .onNodeWithTag("now playing movies card tag 2")
             .assertExists()
 
-        composeTestRule.onNodeWithContentDescription(
-            "Adicionar aos favoritos 1"
-        ).assertExists()
+        composeTestRule
+            .onNodeWithContentDescription(
+                "Adicionar aos favoritos 1",
+            ).assertExists()
 
-        composeTestRule.onNodeWithContentDescription(
-            "Adicionar aos favoritos 2"
-        ).assertExists()
+        composeTestRule
+            .onNodeWithContentDescription(
+                "Adicionar aos favoritos 2",
+            ).assertExists()
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -155,11 +163,12 @@ class AppNavHostScreenTest {
                     FavoritesMoviesScreenContent(
                         listState = rememberLazyListState(),
                         scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
-                        state = FavoriteMoviesUiState.Success(
-                            viewData = AndroidTestUtils.mockFavoriteMoviesEntity()
-                        ),
+                        state =
+                            FavoriteMoviesUiState.Success(
+                                viewData = AndroidTestUtils.mockFavoriteMoviesEntity(),
+                            ),
                         onEvent = {},
-                        modifier = Modifier
+                        modifier = Modifier,
                     )
                 }
             }
@@ -173,10 +182,12 @@ class AppNavHostScreenTest {
             .onNodeWithText("Favorite Movie 2")
             .assertExists()
 
-        composeTestRule.onNodeWithTag("favorites movies card tag 1")
+        composeTestRule
+            .onNodeWithTag("favorites movies card tag 1")
             .assertExists()
 
-        composeTestRule.onNodeWithTag("favorites movies card tag 2")
+        composeTestRule
+            .onNodeWithTag("favorites movies card tag 2")
             .assertExists()
     }
 
@@ -189,11 +200,12 @@ class AppNavHostScreenTest {
                     PopularMoviesScreenContent(
                         listState = rememberLazyListState(),
                         scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
-                        state = PopularMoviesUiState.Success(
-                            viewData = AndroidTestUtils.mockPopularMoviesEntity()
-                        ),
+                        state =
+                            PopularMoviesUiState.Success(
+                                viewData = AndroidTestUtils.mockPopularMoviesEntity(),
+                            ),
                         onEvent = {},
-                        modifier = Modifier
+                        modifier = Modifier,
                     )
                 }
             }
@@ -203,25 +215,27 @@ class AppNavHostScreenTest {
             .onNodeWithText("Popular Movie 1")
             .assertExists()
 
-
         composeTestRule
             .onNodeWithText("Popular Movie 2")
             .assertExists()
 
-        composeTestRule.onNodeWithTag("popular movies card tag 1")
+        composeTestRule
+            .onNodeWithTag("popular movies card tag 1")
             .assertExists()
 
-        composeTestRule.onNodeWithTag("popular movies card tag 2")
+        composeTestRule
+            .onNodeWithTag("popular movies card tag 2")
             .assertExists()
 
-        composeTestRule.onNodeWithContentDescription(
-            "Adicionar aos favoritos 1"
-        ).assertExists()
+        composeTestRule
+            .onNodeWithContentDescription(
+                "Adicionar aos favoritos 1",
+            ).assertExists()
 
-        composeTestRule.onNodeWithContentDescription(
-            "Adicionar aos favoritos 2"
-        ).assertExists()
-
+        composeTestRule
+            .onNodeWithContentDescription(
+                "Adicionar aos favoritos 2",
+            ).assertExists()
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -233,11 +247,12 @@ class AppNavHostScreenTest {
                     TopRatedVideosScreenContent(
                         listState = rememberLazyListState(),
                         scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
-                        state = TopRatedMoviesUiState.Success(
-                            viewData = AndroidTestUtils.mockTopRatedMoviesEntity()
-                        ),
+                        state =
+                            TopRatedMoviesUiState.Success(
+                                viewData = AndroidTestUtils.mockTopRatedMoviesEntity(),
+                            ),
                         onEvent = {},
-                        modifier = Modifier
+                        modifier = Modifier,
                     )
                 }
             }
@@ -251,18 +266,22 @@ class AppNavHostScreenTest {
             .onNodeWithText("Top Rated Movie 2")
             .assertExists()
 
-        composeTestRule.onNodeWithTag("top rated movies card tag 1")
+        composeTestRule
+            .onNodeWithTag("top rated movies card tag 1")
             .assertExists()
 
-        composeTestRule.onNodeWithTag("top rated movies card tag 2")
+        composeTestRule
+            .onNodeWithTag("top rated movies card tag 2")
             .assertExists()
 
-        composeTestRule.onNodeWithContentDescription(
-            "Adicionar aos favoritos 1"
-        ).assertExists()
+        composeTestRule
+            .onNodeWithContentDescription(
+                "Adicionar aos favoritos 1",
+            ).assertExists()
 
-        composeTestRule.onNodeWithContentDescription(
-            "Adicionar aos favoritos 2"
-        ).assertExists()
+        composeTestRule
+            .onNodeWithContentDescription(
+                "Adicionar aos favoritos 2",
+            ).assertExists()
     }
 }

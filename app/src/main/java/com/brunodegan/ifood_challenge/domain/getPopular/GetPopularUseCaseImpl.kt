@@ -11,6 +11,5 @@ import org.koin.core.annotation.Factory
 class GetPopularUseCaseImpl(
     private val repository: MoviesRepository,
 ) : GetPopularUseCase {
-    override suspend fun invoke(): Flow<Resource<ImmutableList<PopularMoviesEntity>>> =
-        repository.getPopularMovies()
+    override suspend fun invoke(): Flow<Resource<ImmutableList<PopularMoviesEntity>>> = repository.getPopularMovies()
 }

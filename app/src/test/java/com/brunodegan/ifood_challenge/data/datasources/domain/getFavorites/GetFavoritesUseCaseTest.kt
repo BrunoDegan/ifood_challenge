@@ -37,54 +37,58 @@ class GetFavoritesUseCaseTest {
     }
 
     @Test
-    fun `GIVEN favorite movies WHEN invoke is called THEN emit Resource_Success`() = runTest {
+    fun `GIVEN favorite movies WHEN invoke is called THEN emit Resource_Success`() =
+        runTest {
+            // Given
+            val expectedData = Resource.Success(MockUtils.mockFavoriteMoviesEntity())
+            coEvery { repository.getFavorites() } returns
+                flow {
+                    emit(expectedData)
+                }
 
-        //Given
-        val expectedData = Resource.Success(MockUtils.mockFavoriteMoviesEntity())
-        coEvery { repository.getFavorites() } returns flow {
-            emit(expectedData)
+            // When
+            val result = useCase.invoke()
+
+            // Then
+            coVerify(exactly = 1) {
+                repository.getFavorites()
+            }
+            assertEquals(
+                expectedData,
+                result.first(),
+            )
         }
-
-        // When
-        val result = useCase.invoke()
-
-        // Then
-        coVerify(exactly = 1) {
-            repository.getFavorites()
-        }
-        assertEquals(
-            expectedData,
-            result.first()
-        )
-    }
 
     @Test
-    fun `GIVEN an exception WHEN invoke is called THEN emit ResourceError`() = runTest {
-        // GIVEN
-        val exception = Exception("Error fetching favorites")
-        val resourceError = getResourceError<ImmutableList<FavoriteMoviesEntity>>(exception)
+    fun `GIVEN an exception WHEN invoke is called THEN emit ResourceError`() =
+        runTest {
+            // GIVEN
+            val exception = Exception("Error fetching favorites")
+            val resourceError = getResourceError<ImmutableList<FavoriteMoviesEntity>>(exception)
 
-        coEvery { repository.getFavorites() } returns flow {
-            emit(resourceError)
+            coEvery { repository.getFavorites() } returns
+                flow {
+                    emit(resourceError)
+                }
+
+            // WHEN
+            val result = useCase.invoke()
+
+            // THEN
+            assertTrue {
+                result.first() is Resource.Error<ImmutableList<FavoriteMoviesEntity>>
+            }
+            assertEquals("Error fetching favorites", (result.first() as Resource.Error).error.message)
         }
-
-        // WHEN
-        val result = useCase.invoke()
-
-        // THEN
-        assertTrue {
-            result.first() is Resource.Error<ImmutableList<FavoriteMoviesEntity>>
-        }
-        assertEquals("Error fetching favorites", (result.first() as Resource.Error).error.message)
-    }
 
     @Test
     fun `GIVEN no favorite movies WHEN invoke is called THEN emit Resource_Success with empty list`() =
         runTest {
             // GIVEN
-            coEvery { repository.getFavorites() } returns flow {
-                emit(Resource.Success(persistentListOf()))
-            }
+            coEvery { repository.getFavorites() } returns
+                flow {
+                    emit(Resource.Success(persistentListOf()))
+                }
 
             // WHEN
             val result = useCase.invoke()

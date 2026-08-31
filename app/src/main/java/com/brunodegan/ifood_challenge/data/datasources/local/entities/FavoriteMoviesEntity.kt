@@ -18,5 +18,5 @@ data class FavoriteMoviesEntity(
     @ColumnInfo(name = "overview")
     val overview: String,
     @ColumnInfo(name = "release_date")
-    val releaseDate: String
+    val releaseDate: String,
 )

@@ -11,8 +11,8 @@ import kotlin.random.Random
 
 @Factory
 class TopRatedDataMapper : BaseMapper<MoviesApiDataResponse, List<TopRatedMoviesEntity>> {
-    override fun map(input: MoviesApiDataResponse): List<TopRatedMoviesEntity> {
-        return buildList {
+    override fun map(input: MoviesApiDataResponse): List<TopRatedMoviesEntity> =
+        buildList {
             input.results.forEach { movie ->
                 add(
                     TopRatedMoviesEntity(
@@ -24,10 +24,9 @@ class TopRatedDataMapper : BaseMapper<MoviesApiDataResponse, List<TopRatedMovies
                         popularity = movie.popularity.orZero(),
                         voteAverage = (movie.voteAverage.orZero() / 2).roundToInt(),
                         releaseDate = movie.releaseDate.formatUsDateToBrDate(),
-                        isFavorite = false
-                    )
+                        isFavorite = false,
+                    ),
                 )
             }
         }
-    }
 }

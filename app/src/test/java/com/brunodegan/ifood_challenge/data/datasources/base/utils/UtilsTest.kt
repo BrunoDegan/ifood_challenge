@@ -7,7 +7,6 @@ import org.junit.After
 import org.junit.Test
 
 class UtilsTest {
-
     @Test
     fun `Test CDN URL formatter`() {
         val mockUrl = "/path/to/image.jpg"

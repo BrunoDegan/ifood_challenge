@@ -9,16 +9,15 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 object AndroidTestUtils {
-
-    fun mockFavoriteMoviesEntity(): ImmutableList<FavoriteMoviesEntity> {
-        return persistentListOf(
+    fun mockFavoriteMoviesEntity(): ImmutableList<FavoriteMoviesEntity> =
+        persistentListOf(
             FavoriteMoviesEntity(
                 id = 1,
                 title = "Favorite Movie 1",
                 posterPath = "/mock/favorite1.jpg",
                 overview = "Overview for Favorite Movie 1",
                 releaseDate = "2023-01-01",
-                lastUpdated = System.currentTimeMillis()
+                lastUpdated = System.currentTimeMillis(),
             ),
             FavoriteMoviesEntity(
                 id = 2,
@@ -26,13 +25,12 @@ object AndroidTestUtils {
                 posterPath = "/mock/favorite2.jpg",
                 overview = "Overview for Favorite Movie 2",
                 releaseDate = "2023-02-01",
-                lastUpdated = System.currentTimeMillis()
-            )
+                lastUpdated = System.currentTimeMillis(),
+            ),
         )
-    }
 
-    fun mockTopRatedMoviesEntity(): ImmutableList<TopRatedMoviesEntity> {
-        return persistentListOf(
+    fun mockTopRatedMoviesEntity(): ImmutableList<TopRatedMoviesEntity> =
+        persistentListOf(
             TopRatedMoviesEntity(
                 id = 1,
                 title = "Top Rated Movie 1",
@@ -42,7 +40,7 @@ object AndroidTestUtils {
                 popularity = 9.5,
                 voteAverage = 8,
                 releaseDate = "2023-03-01",
-                isFavorite = true
+                isFavorite = true,
             ),
             TopRatedMoviesEntity(
                 id = 2,
@@ -53,13 +51,12 @@ object AndroidTestUtils {
                 popularity = 8.8,
                 voteAverage = 8,
                 releaseDate = "2023-04-01",
-                isFavorite = true
-            )
+                isFavorite = true,
+            ),
         )
-    }
 
-    fun mockNowPlayingMoviesEntity(): ImmutableList<NowPlayingMoviesEntity> {
-        return persistentListOf(
+    fun mockNowPlayingMoviesEntity(): ImmutableList<NowPlayingMoviesEntity> =
+        persistentListOf(
             NowPlayingMoviesEntity(
                 id = 1,
                 title = "Now Playing Movie 1",
@@ -69,7 +66,7 @@ object AndroidTestUtils {
                 popularity = 7.5,
                 voteAverage = 7,
                 releaseDate = "2023-05-01",
-                isFavorite = true
+                isFavorite = true,
             ),
             NowPlayingMoviesEntity(
                 id = 2,
@@ -80,13 +77,12 @@ object AndroidTestUtils {
                 popularity = 8.0,
                 voteAverage = 7,
                 releaseDate = "2023-06-01",
-                isFavorite = true
-            )
+                isFavorite = true,
+            ),
         )
-    }
 
-    fun mockUpcomingMoviesEntity(): ImmutableList<UpcomingMoviesEntity> {
-        return persistentListOf(
+    fun mockUpcomingMoviesEntity(): ImmutableList<UpcomingMoviesEntity> =
+        persistentListOf(
             UpcomingMoviesEntity(
                 id = 1,
                 title = "Upcoming Movie 1",
@@ -96,7 +92,7 @@ object AndroidTestUtils {
                 popularity = 6.5,
                 voteAverage = 8,
                 releaseDate = "2023-07-01",
-                isFavorite = true
+                isFavorite = true,
             ),
             UpcomingMoviesEntity(
                 id = 2,
@@ -107,13 +103,12 @@ object AndroidTestUtils {
                 popularity = 7.2,
                 voteAverage = 7,
                 releaseDate = "2023-08-01",
-                isFavorite = true
-            )
+                isFavorite = true,
+            ),
         )
-    }
 
-    fun mockPopularMoviesEntity(): ImmutableList<PopularMoviesEntity> {
-        return persistentListOf(
+    fun mockPopularMoviesEntity(): ImmutableList<PopularMoviesEntity> =
+        persistentListOf(
             PopularMoviesEntity(
                 id = 1,
                 title = "Popular Movie 1",
@@ -123,7 +118,7 @@ object AndroidTestUtils {
                 popularity = 6.5,
                 voteAverage = 8,
                 releaseDate = "2023-07-01",
-                isFavorite = true
+                isFavorite = true,
             ),
             PopularMoviesEntity(
                 id = 2,
@@ -134,8 +129,7 @@ object AndroidTestUtils {
                 popularity = 7.2,
                 voteAverage = 7,
                 releaseDate = "2023-08-01",
-                isFavorite = true
-            )
+                isFavorite = true,
+            ),
         )
-    }
 }

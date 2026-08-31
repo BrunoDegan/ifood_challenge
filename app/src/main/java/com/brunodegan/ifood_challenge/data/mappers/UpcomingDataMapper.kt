@@ -11,23 +11,22 @@ import kotlin.random.Random
 
 @Factory
 class UpcomingDataMapper : BaseMapper<MoviesApiDataResponse, List<UpcomingMoviesEntity>> {
-    override fun map(input: MoviesApiDataResponse): List<UpcomingMoviesEntity> {
-        return buildList {
+    override fun map(input: MoviesApiDataResponse): List<UpcomingMoviesEntity> =
+        buildList {
             input.results.forEach { movie ->
                 add(
                     UpcomingMoviesEntity(
                         id = movie.id ?: Random.nextInt(),
                         title = movie.title.orEmpty(),
-                        posterPath =  movie.posterPath.formatFullCDNUrl(),
+                        posterPath = movie.posterPath.formatFullCDNUrl(),
                         overview = movie.overview.orEmpty(),
                         originalLanguage = movie.originalLanguage.orEmpty(),
                         popularity = movie.popularity.orZero(),
                         voteAverage = (movie.voteAverage.orZero() / 2).roundToInt(),
                         releaseDate = movie.releaseDate.formatUsDateToBrDate(),
-                        isFavorite = false
-                    )
+                        isFavorite = false,
+                    ),
                 )
             }
         }
-    }
 }

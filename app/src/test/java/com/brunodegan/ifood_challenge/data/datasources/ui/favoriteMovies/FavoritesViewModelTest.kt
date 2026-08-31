@@ -88,7 +88,6 @@ class FavoritesViewModelTest {
     @Test
     fun `GIVEN previous error happens and users clicks onRetry button WHEN viewModel receives OnRetryButtonClickedUiEvent THEN asserts successfully state occurs`() =
         runTest {
-
             val mockData = mockFavoriteMoviesEntity()
             val successfullyResponse = Resource.Success(mockData)
 
@@ -101,7 +100,6 @@ class FavoritesViewModelTest {
                 assertEquals(FavoriteMoviesUiState.Loading, awaitItem())
                 assertEquals(FavoriteMoviesUiState.Success(mockData), awaitItem())
             }
-
         }
 
     @After

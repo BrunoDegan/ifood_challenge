@@ -27,7 +27,6 @@ import org.junit.Test
 import kotlin.test.assertEquals
 
 class PopularMoviesViewModelTest {
-
     @get:Rule
     val testDispatcher = TestDispatcherRule()
 
@@ -39,12 +38,13 @@ class PopularMoviesViewModelTest {
 
     @Before
     fun setup() {
-        viewModel = PopularMoviesViewModel(
-            useCase = getPopularUseCase,
-            addToFavoritesUseCase = addToFavoritesUseCase,
-            removeFromFavoritesUseCase = removeFromFavoritesUseCase,
-            dispatcher = testDispatcher
-        )
+        viewModel =
+            PopularMoviesViewModel(
+                useCase = getPopularUseCase,
+                addToFavoritesUseCase = addToFavoritesUseCase,
+                removeFromFavoritesUseCase = removeFromFavoritesUseCase,
+                dispatcher = testDispatcher,
+            )
     }
 
     @Test
@@ -120,22 +120,24 @@ class PopularMoviesViewModelTest {
             val successfullyResponse = Resource.Success(mockAddFavoriteData)
             val movieId = 1
 
-            coEvery { addToFavoritesUseCase.invoke(movieId) } returns flow {
-                emit(
-                    successfullyResponse
-                )
-            }
+            coEvery { addToFavoritesUseCase.invoke(movieId) } returns
+                flow {
+                    emit(
+                        successfullyResponse,
+                    )
+                }
 
             viewModel.onUiEvent(
-                event = PopularMoviesUiEvents.OnAddFavButtonClickedUiEvent(
-                    movieId
-                )
+                event =
+                    PopularMoviesUiEvents.OnAddFavButtonClickedUiEvent(
+                        movieId,
+                    ),
             )
 
             viewModel.snackbarState.test {
                 assertEquals(
                     SnackbarUiStateHolder.SnackbarUi(mockAddFavoriteData.statusMessage),
-                    awaitItem()
+                    awaitItem(),
                 )
             }
         }
@@ -147,21 +149,22 @@ class PopularMoviesViewModelTest {
             val successfullyResponse = Resource.Success(mockAddFavoriteData)
             val movieId = 1
 
-            coEvery { removeFromFavoritesUseCase.invoke(movieId) } returns flow {
-                emit(successfullyResponse)
-            }
-
+            coEvery { removeFromFavoritesUseCase.invoke(movieId) } returns
+                flow {
+                    emit(successfullyResponse)
+                }
 
             viewModel.onUiEvent(
-                event = PopularMoviesUiEvents.OnRemoveFavButtonClickedUiEvent(
-                    movieId
-                )
+                event =
+                    PopularMoviesUiEvents.OnRemoveFavButtonClickedUiEvent(
+                        movieId,
+                    ),
             )
 
             viewModel.snackbarState.test {
                 assertEquals(
                     SnackbarUiStateHolder.SnackbarUi(mockAddFavoriteData.statusMessage),
-                    awaitItem()
+                    awaitItem(),
                 )
             }
         }

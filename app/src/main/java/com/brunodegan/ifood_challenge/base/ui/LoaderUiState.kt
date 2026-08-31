@@ -18,24 +18,28 @@ import com.brunodegan.ifood_challenge.R
 @Composable
 fun LoaderUiState(modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(
-                color = Color.Black.copy(
-                    alpha = ResourcesCompat.getFloat(
-                        LocalContext.current.resources, R.dimen.progress_circular_indicator_alpha
-                    )
-                )
-            ),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(
+                    color =
+                        Color.Black.copy(
+                            alpha =
+                                ResourcesCompat.getFloat(
+                                    LocalContext.current.resources,
+                                    R.dimen.progress_circular_indicator_alpha,
+                                ),
+                        ),
+                ),
         contentAlignment = Alignment.Center,
     ) {
         CircularProgressIndicator(
-            modifier = Modifier
-                .background(Color.Transparent)
-                .align(Alignment.Center)
-                .size(dimensionResource(R.dimen.circular_progress_indicator_size)),
+            modifier =
+                Modifier
+                    .background(Color.Transparent)
+                    .align(Alignment.Center)
+                    .size(dimensionResource(R.dimen.circular_progress_indicator_size)),
             color = MaterialTheme.colorScheme.tertiary,
         )
     }
 }
-

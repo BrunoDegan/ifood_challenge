@@ -95,7 +95,7 @@ fun FavoriteMoviesScreen(
         state = uiState,
         scrollBehavior = scrollBehavior,
         listState = listState,
-        modifier = modifier
+        modifier = modifier,
     ) {
         viewModel.onUiEvent(event = it)
     }
@@ -108,7 +108,7 @@ internal fun FavoritesMoviesScreenContent(
     listState: LazyListState,
     state: FavoriteMoviesUiState,
     modifier: Modifier,
-    onEvent: (FavoriteMoviesUiEvents) -> Unit
+    onEvent: (FavoriteMoviesUiEvents) -> Unit,
 ) {
     when (state) {
         is FavoriteMoviesUiState.Initial -> {
@@ -145,16 +145,17 @@ fun SuccessState(
     modifier: Modifier,
     listState: LazyListState,
     scrollBehavior: TopAppBarScrollBehavior,
-    viewData: ImmutableList<FavoriteMoviesEntity>
+    viewData: ImmutableList<FavoriteMoviesEntity>,
 ) {
     LazyColumn(
         state = listState,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         flingBehavior = ScrollableDefaults.flingBehavior(),
-        modifier = modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .fillMaxSize()
+        modifier =
+            modifier
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .fillMaxSize(),
     ) {
         items(viewData.size, key = { index -> viewData[index].title }) { position ->
             FavoritesMoviesCard(
@@ -167,47 +168,55 @@ fun SuccessState(
 @Composable
 fun FavoritesMoviesCard(
     viewData: FavoriteMoviesEntity,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val imageRequest = ImageRequest.Builder(LocalContext.current)
-        .memoryCacheKey(viewData.title)
-        .diskCacheKey(viewData.title)
-        .data(viewData.posterPath)
-        .decoderFactory(SvgDecoder.Factory())
-        .scale(Scale.FIT).crossfade(true)
-        .placeholder(R.drawable.movie_icon)
-        .error(R.drawable.error_img).build()
+    val imageRequest =
+        ImageRequest
+            .Builder(LocalContext.current)
+            .memoryCacheKey(viewData.title)
+            .diskCacheKey(viewData.title)
+            .data(viewData.posterPath)
+            .decoderFactory(SvgDecoder.Factory())
+            .scale(Scale.FIT)
+            .crossfade(true)
+            .placeholder(R.drawable.movie_icon)
+            .error(R.drawable.error_img)
+            .build()
 
     Card(
         colors = CardDefaults.elevatedCardColors(MaterialTheme.colorScheme.primaryContainer),
         shape = RectangleShape,
         elevation = CardDefaults.cardElevation(dimensionResource(R.dimen.card_elevation)),
-        border = BorderStroke(
-            dimensionResource(R.dimen.card_border_elevation), MaterialTheme.colorScheme.tertiary
-        ),
-        modifier = modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(all = dimensionResource(R.dimen.card_padding))
-            .background(color = MaterialTheme.colorScheme.primaryContainer)
-            .testTag(stringResource(R.string.favorites_movies_card_tag) + " " + viewData.id)
+        border =
+            BorderStroke(
+                dimensionResource(R.dimen.card_border_elevation),
+                MaterialTheme.colorScheme.tertiary,
+            ),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(all = dimensionResource(R.dimen.card_padding))
+                .background(color = MaterialTheme.colorScheme.primaryContainer)
+                .testTag(stringResource(R.string.favorites_movies_card_tag) + " " + viewData.id),
     ) {
         Column(
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .padding(start = dimensionResource(R.dimen.double_padding))
-                .wrapContentSize()
-
+            modifier =
+                Modifier
+                    .padding(start = dimensionResource(R.dimen.double_padding))
+                    .wrapContentSize(),
         ) {
             Row(
                 horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .wrapContentHeight()
-                    .fillMaxWidth()
-                    .padding(
-                        top = dimensionResource(R.dimen.double_padding),
-                        bottom = dimensionResource(R.dimen.base_padding)
-                    )
+                modifier =
+                    Modifier
+                        .wrapContentHeight()
+                        .fillMaxWidth()
+                        .padding(
+                            top = dimensionResource(R.dimen.double_padding),
+                            bottom = dimensionResource(R.dimen.base_padding),
+                        ),
             ) {
                 AsyncImage(
                     model = imageRequest,
@@ -215,65 +224,78 @@ fun FavoritesMoviesCard(
                     error = painterResource(R.drawable.error_img),
                     contentDescription = stringResource(R.string.favorites_movies) + " " + viewData.id,
                     filterQuality = FilterQuality.Low,
-                    modifier = Modifier
-                        .size(
-                            dimensionResource(R.dimen.movie_poster_size),
-                            dimensionResource(R.dimen.movie_poster_size)
-                        )
-                        .clip(PosterShape())
-                        .fillMaxWidth()
+                    modifier =
+                        Modifier
+                            .size(
+                                dimensionResource(R.dimen.movie_poster_size),
+                                dimensionResource(R.dimen.movie_poster_size),
+                            ).clip(PosterShape())
+                            .fillMaxWidth(),
                 )
             }
             Text(
                 text = viewData.title,
                 fontWeight = FontWeight.W600,
-                fontSize = TextUnit(
-                    value = ResourcesCompat.getFloat(
-                        LocalResources.current,
-                        R.dimen.movie_title_font_size
-                    ), type = TextUnitType.Sp
-                ),
+                fontSize =
+                    TextUnit(
+                        value =
+                            ResourcesCompat.getFloat(
+                                LocalResources.current,
+                                R.dimen.movie_title_font_size,
+                            ),
+                        type = TextUnitType.Sp,
+                    ),
                 textAlign = TextAlign.Justify,
                 overflow = TextOverflow.Ellipsis,
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(
-                    top = dimensionResource(R.dimen.double_padding),
-                    start = dimensionResource(R.dimen.base_padding)
-                )
+                modifier =
+                    Modifier.padding(
+                        top = dimensionResource(R.dimen.double_padding),
+                        start = dimensionResource(R.dimen.base_padding),
+                    ),
             )
             Text(
                 text = viewData.overview,
                 color = MaterialTheme.colorScheme.tertiary,
                 fontWeight = FontWeight.W400,
-                fontSize = TextUnit(
-                    value = ResourcesCompat.getFloat(
-                        LocalResources.current,
-                        R.dimen.movie_overview_font_size
-                    ), type = TextUnitType.Sp
-                ),
+                fontSize =
+                    TextUnit(
+                        value =
+                            ResourcesCompat.getFloat(
+                                LocalResources.current,
+                                R.dimen.movie_overview_font_size,
+                            ),
+                        type = TextUnitType.Sp,
+                    ),
                 textAlign = TextAlign.Justify,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(
-                    dimensionResource(R.dimen.base_padding),
-                )
+                modifier =
+                    Modifier.padding(
+                        dimensionResource(R.dimen.base_padding),
+                    ),
             )
             Text(
-                text = stringResource(R.string.movie_release_date).format(
-                    viewData.releaseDate
-                ),
+                text =
+                    stringResource(R.string.movie_release_date).format(
+                        viewData.releaseDate,
+                    ),
                 color = MaterialTheme.colorScheme.secondary,
                 fontWeight = FontWeight.Medium,
-                fontSize = TextUnit(
-                    value = ResourcesCompat.getFloat(
-                        LocalResources.current,
-                        R.dimen.movie_overview_font_size
-                    ), type = TextUnitType.Sp
-                ),
+                fontSize =
+                    TextUnit(
+                        value =
+                            ResourcesCompat.getFloat(
+                                LocalResources.current,
+                                R.dimen.movie_overview_font_size,
+                            ),
+                        type = TextUnitType.Sp,
+                    ),
                 textAlign = TextAlign.Justify,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(
-                    dimensionResource(R.dimen.base_padding)
-                )
+                modifier =
+                    Modifier.padding(
+                        dimensionResource(R.dimen.base_padding),
+                    ),
             )
         }
     }
@@ -286,21 +308,21 @@ fun PopularMoviesScreenPreview() {
     FavoritesMoviesScreenContent(
         scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
         listState = rememberLazyListState(),
-        state = FavoriteMoviesUiState.Success(
-            viewData = persistentListOf(
-                FavoriteMoviesEntity(
-                    id = 0,
-                    title = "title",
-                    posterPath = "posterPath",
-                    overview = "overview",
-                    lastUpdated = 1212,
-                    releaseDate = "29/04/2025"
-                )
-            )
-        ),
+        state =
+            FavoriteMoviesUiState.Success(
+                viewData =
+                    persistentListOf(
+                        FavoriteMoviesEntity(
+                            id = 0,
+                            title = "title",
+                            posterPath = "posterPath",
+                            overview = "overview",
+                            lastUpdated = 1212,
+                            releaseDate = "29/04/2025",
+                        ),
+                    ),
+            ),
         onEvent = {},
         modifier = Modifier,
     )
 }
-
-

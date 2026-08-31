@@ -11,6 +11,5 @@ import org.koin.core.annotation.Factory
 class GetTopRatedUseCaseImpl(
     private val repository: MoviesRepository,
 ) : GetTopRatedUseCase {
-    override suspend fun invoke(): Flow<Resource<ImmutableList<TopRatedMoviesEntity>>> =
-        repository.getTopRateMovies()
+    override suspend fun invoke(): Flow<Resource<ImmutableList<TopRatedMoviesEntity>>> = repository.getTopRateMovies()
 }

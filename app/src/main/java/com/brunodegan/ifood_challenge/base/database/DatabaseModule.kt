@@ -8,12 +8,10 @@ import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
 
-
 @Module
 @Configuration
 @ComponentScan("com.brunodegan.ifood_challenge.base.database")
 object DatabaseModule {
-
     @Single
     fun provideNowPlayingDao(database: AppDatabase) = database.nowPlayingDao()
 
@@ -30,9 +28,11 @@ object DatabaseModule {
     fun provideFavoriteDao(database: AppDatabase) = database.favoritesDao()
 
     @Single
-    fun initializeDb(context: Context) = Room.databaseBuilder(
-        context,
-        AppDatabase::class.java,
-        DATABASE_NAME
-    ).build()
+    fun initializeDb(context: Context) =
+        Room
+            .databaseBuilder(
+                context,
+                AppDatabase::class.java,
+                DATABASE_NAME,
+            ).build()
 }

@@ -31,18 +31,24 @@ import com.brunodegan.ifood_challenge.base.network.base.ErrorType
 
 @Composable
 fun ErrorUiState(
-    modifier: Modifier = Modifier, errorData: ErrorType, onRetryButtonClicked: () -> Unit
+    modifier: Modifier = Modifier,
+    errorData: ErrorType,
+    onRetryButtonClicked: () -> Unit,
 ) {
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(
-                color = Color.Black.copy(
-                    alpha = ResourcesCompat.getFloat(
-                        LocalResources.current, R.dimen.progress_circular_indicator_alpha
-                    )
-                )
-            ),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(
+                    color =
+                        Color.Black.copy(
+                            alpha =
+                                ResourcesCompat.getFloat(
+                                    LocalResources.current,
+                                    R.dimen.progress_circular_indicator_alpha,
+                                ),
+                        ),
+                ),
     ) {
         Text(
             text = errorData.message ?: stringResource(R.string.http_response_generic_error_message),
@@ -51,45 +57,52 @@ fun ErrorUiState(
             maxLines = integerResource(R.integer.card_lines),
             textAlign = TextAlign.Center,
             color = Color.White,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(dimensionResource(R.dimen.double_padding))
-                .align(Alignment.Center)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(dimensionResource(R.dimen.double_padding))
+                    .align(Alignment.Center),
         )
         Spacer(
-            modifier = Modifier
-                .padding(
-                    top = dimensionResource(R.dimen.double_padding),
-                    bottom = dimensionResource(R.dimen.double_padding)
-                )
-                .wrapContentSize()
+            modifier =
+                Modifier
+                    .padding(
+                        top = dimensionResource(R.dimen.double_padding),
+                        bottom = dimensionResource(R.dimen.double_padding),
+                    ).wrapContentSize(),
         )
         Button(
             contentPadding = PaddingValues(dimensionResource(R.dimen.base_padding)),
-            elevation = ButtonDefaults.elevatedButtonElevation(
-                pressedElevation = dimensionResource(
-                    R.dimen.card_elevation
-                )
-            ),
+            elevation =
+                ButtonDefaults.elevatedButtonElevation(
+                    pressedElevation =
+                        dimensionResource(
+                            R.dimen.card_elevation,
+                        ),
+                ),
             shape = ButtonDefaults.elevatedShape,
-            border = BorderStroke(
-                dimensionResource(R.dimen.tiny_padding), color = colorResource(R.color.teal_700)
-            ),
-            modifier = Modifier
-                .background(Color.Transparent)
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(dimensionResource(R.dimen.double_padding))
-                .align(Alignment.BottomCenter),
+            border =
+                BorderStroke(
+                    dimensionResource(R.dimen.tiny_padding),
+                    color = colorResource(R.color.teal_700),
+                ),
+            modifier =
+                Modifier
+                    .background(Color.Transparent)
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(dimensionResource(R.dimen.double_padding))
+                    .align(Alignment.BottomCenter),
             onClick = {
                 onRetryButtonClicked()
-            }) {
+            },
+        ) {
             Text(
                 text = stringResource(R.string.try_again_label),
-                modifier = Modifier
-                    .wrapContentSize()
-                    .padding(dimensionResource(R.dimen.card_padding))
-
+                modifier =
+                    Modifier
+                        .wrapContentSize()
+                        .padding(dimensionResource(R.dimen.card_padding)),
             )
         }
     }

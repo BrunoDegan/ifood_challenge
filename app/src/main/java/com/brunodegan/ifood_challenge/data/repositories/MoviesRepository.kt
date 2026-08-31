@@ -12,10 +12,16 @@ import kotlinx.coroutines.flow.Flow
 
 interface MoviesRepository {
     fun getTopRateMovies(): Flow<Resource<ImmutableList<TopRatedMoviesEntity>>>
+
     fun getPopularMovies(): Flow<Resource<ImmutableList<PopularMoviesEntity>>>
+
     fun getUpcomingMovies(): Flow<Resource<ImmutableList<UpcomingMoviesEntity>>>
+
     fun getNowPlayingMovies(): Flow<Resource<ImmutableList<NowPlayingMoviesEntity>>>
+
     fun addFavorite(id: Int): Flow<Resource<AddToFavoriteMoviesData>>
+
     fun removeFavorite(id: Int): Flow<Resource<AddToFavoriteMoviesData>>
+
     fun getFavorites(): Flow<Resource<ImmutableList<FavoriteMoviesEntity>>>
 }
