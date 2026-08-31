@@ -1,7 +1,9 @@
 package com.brunodegan.ifood_challenge.data.metrics
 
 import android.util.Log
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.staticCompositionLocalOf
+import org.koin.core.annotation.Single
 
 private const val SCREEN_NAME = "ScreenName"
 private const val EVENT_TYPE = "EventType"
@@ -25,30 +27,34 @@ fun Metrics.onEnteredScreen(
     logEvent(eventData)
 }
 
-fun Metrics.onEvent(
-    event: String
-) {
-    val eventData = AnalyticsData(
-        eventType = AnalyticsData.EventType.EVENT_TYPE,
-        extras = listOf(
-            AnalyticsData.Param(
-                key = EVENT_TYPE,
-                value = event
-            )
-        )
-    )
-    logEvent(eventData)
-}
 
+@Stable
 interface Metrics {
     fun logEvent(event: AnalyticsData)
+    fun onEvent(event: String)
 }
 
+@Single
 class MetricsImpl : Metrics {
-    override fun logEvent(analyticsData: AnalyticsData) {
+    override fun onEvent(
+        event: String
+    ) {
+        val eventData = AnalyticsData(
+            eventType = AnalyticsData.EventType.EVENT_TYPE,
+            extras = listOf(
+                AnalyticsData.Param(
+                    key = EVENT_TYPE,
+                    value = event
+                )
+            )
+        )
+        this.logEvent(eventData)
+    }
+
+    override fun logEvent(event: AnalyticsData) {
         Log.d(
-            analyticsData.eventType.name,
-            "${analyticsData.extras.first().key} - ${analyticsData.extras.first().value}"
+            event.eventType.name,
+            "${event.extras.first().key} - ${event.extras.first().value}"
         )
     }
 }

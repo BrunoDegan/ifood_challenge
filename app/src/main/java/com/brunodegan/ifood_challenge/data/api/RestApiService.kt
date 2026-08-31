@@ -1,7 +1,7 @@
 package com.brunodegan.ifood_challenge.data.api
 
-import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoritesRequest
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoritesApiResponse
+import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoritesRequest
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.MoviesApiDataResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -44,6 +44,8 @@ interface RestApiService {
 
     companion object {
         const val ID = "21965972"
+
+        // Bad approach, just for supporting reviewers testers
         const val BEARER_TOKEN =
             "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OTljYTc2YjkyNDkxMzE5YWFmMWE3OWI4MzExMDE1MSIsIm5iZiI6MTc0NTM1NTY3NC4zOTEsInN1YiI6IjY4MDgwMzlhMTQyYjA5Y2VjZjg5YjFiMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KN5rAk6UlsJJy2bEvjm8uJmLNE7_0ctTG9EbKjTuGP8"
 

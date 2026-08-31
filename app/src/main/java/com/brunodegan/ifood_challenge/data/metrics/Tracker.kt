@@ -13,14 +13,3 @@ fun TrackScreen(
         // No-op
     }
 }
-
-@Composable
-fun TrackingEvent(
-    event: String,
-    analyticsHelper: Metrics = LocalMetrics.current,
-) = DisposableEffect(event) {
-    analyticsHelper.onEvent(event = event)
-    onDispose {
-        // No-op
-    }
-}

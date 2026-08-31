@@ -22,11 +22,15 @@ import com.brunodegan.ifood_challenge.data.mappers.NowPlayingDataMapper
 import com.brunodegan.ifood_challenge.data.mappers.PopularDataMapper
 import com.brunodegan.ifood_challenge.data.mappers.TopRatedDataMapper
 import com.brunodegan.ifood_challenge.data.mappers.UpcomingDataMapper
+import com.brunodegan.ifood_challenge.data.metrics.Metrics
 import com.brunodegan.ifood_challenge.data.repositories.MoviesRepositoryImpl
 import io.mockk.coEvery
+import io.mockk.coJustRun
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
@@ -37,19 +41,21 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class MoviesRepositoryTest {
     @get:Rule
     val mainDispatcher = TestDispatcherRule()
 
-    private val localDataSource: LocalDataSource = mockk(relaxed = true)
-    private val remoteDataSource: RemoteDataSource = mockk(relaxed = true)
-    private val topRatedDataMapper: TopRatedDataMapper = mockk(relaxed = true)
-    private val upcomingMoviesDataMapper: UpcomingDataMapper = mockk(relaxed = true)
-    private val popularMoviesDataMapper: PopularDataMapper = mockk(relaxed = true)
-    private val nowPlayingMoviesDataMapper: NowPlayingDataMapper = mockk(relaxed = true)
+    private val localDataSource: LocalDataSource = mockk()
+    private val remoteDataSource: RemoteDataSource = mockk()
+    private val topRatedDataMapper: TopRatedDataMapper = mockk()
+    private val upcomingMoviesDataMapper: UpcomingDataMapper = mockk()
+    private val popularMoviesDataMapper: PopularDataMapper = mockk()
+    private val nowPlayingMoviesDataMapper: NowPlayingDataMapper = mockk()
     private val addOrRemoveToFavoritesResponseDataMapper: AddOrRemoveToFavoritesResponseDataMapper =
-        mockk(relaxed = true)
-    private val favoritesDataMapper: FavoritesDataMapper = mockk(relaxed = true)
+        mockk()
+    private val favoritesDataMapper: FavoritesDataMapper = mockk()
+    private val metricsEventDispatcher: Metrics = mockk()
 
     private lateinit var repository: MoviesRepositoryImpl
 
@@ -63,7 +69,8 @@ class MoviesRepositoryTest {
             topRatedMoviesDataMapper = topRatedDataMapper,
             upcomingMoviesDataMapper = upcomingMoviesDataMapper,
             localDataSource = localDataSource,
-            remoteDataSource = remoteDataSource
+            remoteDataSource = remoteDataSource,
+            metricsEventsDispatcher = metricsEventDispatcher
         )
     }
 
@@ -91,6 +98,8 @@ class MoviesRepositoryTest {
             val apiData = mockMoviesApiDataResponse()
             val favoritesMovies = mockFavoriteMoviesEntity()
 
+            coJustRun { localDataSource.saveTopRated(topRatedMovies) }
+            coJustRun { localDataSource.saveFavorites(favoritesMovies) }
             coEvery { localDataSource.getFavoriteMovies() } returns flow { emit(favoritesMovies) }
             coEvery { localDataSource.getTopRated() } returns flow { emit(emptyList()) }
             coEvery { remoteDataSource.fetchTopRated() } returns apiData
@@ -98,6 +107,7 @@ class MoviesRepositoryTest {
 
             // WHEN
             val result = repository.getTopRateMovies().toList()
+//            advanceUntilIdle()
 
             // THEN
             assertEquals(Resource.Success(topRatedMovies), result.first())
@@ -113,6 +123,7 @@ class MoviesRepositoryTest {
                 Resource.Error<TopRatedMoviesEntity>(genericError)
             val favoritesMovies = mockFavoriteMoviesEntity()
 
+            coJustRun { metricsEventDispatcher.onEvent(any()) }
             coEvery { localDataSource.getFavoriteMovies() } returns flow { emit(favoritesMovies) }
             coEvery { localDataSource.getTopRated() } returns flow { emit(null) }
             coEvery { remoteDataSource.fetchTopRated() } throws Exception(errorMessage)
@@ -123,6 +134,7 @@ class MoviesRepositoryTest {
             // THEN
             assertEquals(1, result.size)
             assertEquals(expectedError, result.first())
+            coVerify { metricsEventDispatcher.onEvent(errorMessage) }
         }
 
     @Test
@@ -133,6 +145,8 @@ class MoviesRepositoryTest {
             val expectedViewData = mockTopRatedMoviesEntity()
             val favoritesMovies = mockFavoriteMoviesEntity()
 
+            coJustRun { localDataSource.saveTopRated(expectedViewData) }
+            coJustRun { localDataSource.saveFavorites(favoritesMovies) }
             coEvery { localDataSource.getFavoriteMovies() } returns flow { emit(favoritesMovies) }
             coEvery { localDataSource.getTopRated() } returns flow { emit(null) }
             coEvery { remoteDataSource.fetchTopRated() } returns topRatedMoviesApiResponse
@@ -168,6 +182,7 @@ class MoviesRepositoryTest {
             val favoriteMoviesApiResponse = mockFavoriteMoviesEntity()
             val apiData = mockMoviesApiDataResponse()
 
+            coJustRun { localDataSource.saveFavorites(favoriteMoviesApiResponse) }
             coEvery { localDataSource.getFavoriteMovies() } returns flow { emit(emptyList()) }
             coEvery { remoteDataSource.fetchFavorites() } returns apiData
             coEvery { favoritesDataMapper.map(any()) } returns favoriteMoviesApiResponse
@@ -188,6 +203,7 @@ class MoviesRepositoryTest {
             val expectedError =
                 Resource.Error<FavoriteMoviesEntity>(genericError)
 
+            coJustRun { metricsEventDispatcher.onEvent(any()) }
             coEvery { localDataSource.getFavoriteMovies() } returns flow { emit(null) }
             coEvery { remoteDataSource.fetchFavorites() } throws Exception(errorMessage)
 
@@ -197,6 +213,7 @@ class MoviesRepositoryTest {
             // THEN
             assertEquals(1, result.size)
             assertEquals(expectedError, result.first())
+            coVerify { metricsEventDispatcher.onEvent(errorMessage) }
         }
 
     @Test
@@ -206,6 +223,7 @@ class MoviesRepositoryTest {
             val favoriteMoviesApiResponse = mockMoviesApiDataResponse()
             val expectedViewData = mockFavoriteMoviesEntity()
 
+            coJustRun { localDataSource.saveFavorites(expectedViewData) }
             coEvery { localDataSource.getFavoriteMovies() } returns flow { emit(null) }
             coEvery { remoteDataSource.fetchFavorites() } returns favoriteMoviesApiResponse
             every { favoritesDataMapper.map(any()) } returns expectedViewData
@@ -243,6 +261,7 @@ class MoviesRepositoryTest {
             val apiData = mockMoviesApiDataResponse()
             val favoritesMovies = mockFavoriteMoviesEntity()
 
+            coJustRun { localDataSource.savePopular(popularMovies) }
             coEvery { localDataSource.getFavoriteMovies() } returns flow { emit(favoritesMovies) }
             coEvery { localDataSource.getPopular() } returns flow { emit(emptyList()) }
             coEvery { remoteDataSource.fetchPopular() } returns apiData
@@ -256,7 +275,7 @@ class MoviesRepositoryTest {
         }
 
     @Test
-    fun `GIVEN NULL popular local data and fetchs remote data with error WHEN getPopularMovies is called THEN emit Resource_Error`() =
+    fun `GIVEN NULL popular local data and fetch remote data with error WHEN getPopularMovies is called THEN emit Resource_Error`() =
         runTest {
             // GIVEN
             val errorMessage = "Network error"
@@ -265,6 +284,7 @@ class MoviesRepositoryTest {
                 Resource.Error<PopularMoviesEntity>(genericError)
             val favoritesMovies = mockFavoriteMoviesEntity()
 
+            coJustRun { metricsEventDispatcher.onEvent(any()) }
             coEvery { localDataSource.getFavoriteMovies() } returns flow { emit(favoritesMovies) }
             coEvery { localDataSource.getPopular() } returns flow { emit(null) }
             coEvery { remoteDataSource.fetchPopular() } throws Exception(errorMessage)
@@ -275,6 +295,7 @@ class MoviesRepositoryTest {
             // THEN
             assertEquals(1, result.size)
             assertEquals(expectedError, result.first())
+            coVerify { metricsEventDispatcher.onEvent(errorMessage) }
         }
 
     @Test
@@ -285,6 +306,7 @@ class MoviesRepositoryTest {
             val expectedViewData = mockPopularMoviesEntity()
             val favoritesMovies = mockFavoriteMoviesEntity()
 
+            coJustRun { localDataSource.savePopular(expectedViewData) }
             coEvery { localDataSource.getFavoriteMovies() } returns flow { emit(favoritesMovies) }
             coEvery { localDataSource.getPopular() } returns flow { emit(null) }
             coEvery { remoteDataSource.fetchPopular() } returns popularMoviesApiResponse
@@ -306,6 +328,7 @@ class MoviesRepositoryTest {
             val apiData = mockMoviesApiDataResponse()
             val favoritesMovies = mockFavoriteMoviesEntity()
 
+            coJustRun { localDataSource.saveNowPlaying(nowPlaying) }
             coEvery { localDataSource.getFavoriteMovies() } returns flow { emit(favoritesMovies) }
             coEvery { localDataSource.getNowPlaying() } returns flow { emit(emptyList()) }
             coEvery { remoteDataSource.fetchNowPlaying() } returns apiData
@@ -328,6 +351,7 @@ class MoviesRepositoryTest {
                 Resource.Error<PopularMoviesEntity>(genericError)
             val favoritesMovies = mockFavoriteMoviesEntity()
 
+            coJustRun { metricsEventDispatcher.onEvent(any()) }
             coEvery { localDataSource.getFavoriteMovies() } returns flow { emit(favoritesMovies) }
             coEvery { localDataSource.getNowPlaying() } returns flow { emit(null) }
             coEvery { remoteDataSource.fetchNowPlaying() } throws Exception(errorMessage)
@@ -338,6 +362,7 @@ class MoviesRepositoryTest {
             // THEN
             assertEquals(1, result.size)
             assertEquals(expectedError, result.first())
+            coVerify { metricsEventDispatcher.onEvent(errorMessage) }
         }
 
     @Test
@@ -348,6 +373,8 @@ class MoviesRepositoryTest {
             val expectedViewData = mockNowPlayingMoviesEntity()
             val favoritesMovies = mockFavoriteMoviesEntity()
 
+            coJustRun { localDataSource.saveNowPlaying(expectedViewData) }
+            coJustRun { localDataSource.saveFavorites(favoritesMovies) }
             coEvery { localDataSource.getFavoriteMovies() } returns flow { emit(favoritesMovies) }
             coEvery { localDataSource.getNowPlaying() } returns flow { emit(null) }
             coEvery { remoteDataSource.fetchNowPlaying() } returns nowPlayingMoviesApiResponse
@@ -385,6 +412,7 @@ class MoviesRepositoryTest {
             val genericError = ErrorType.Generic(errorMessage)
             val expectedError = Resource.Error<FavoriteMoviesEntity>(genericError)
 
+            coJustRun { metricsEventDispatcher.onEvent(any()) }
             coEvery { addOrRemoveToFavoritesResponseDataMapper.map(mockAddToFavoritesApiResponse) } returns expectedViewData
             coEvery { remoteDataSource.addOrRemoveFromFavorites(requestData) } throws Exception(
                 errorMessage
@@ -393,6 +421,7 @@ class MoviesRepositoryTest {
             val result = repository.addFavorite(id = 1)
 
             assertEquals(expectedError, result.first())
+            coVerify { metricsEventDispatcher.onEvent(errorMessage) }
         }
 
     @After

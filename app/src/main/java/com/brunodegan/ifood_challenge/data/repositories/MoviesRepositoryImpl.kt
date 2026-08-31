@@ -19,6 +19,7 @@ import com.brunodegan.ifood_challenge.data.mappers.NowPlayingDataMapper
 import com.brunodegan.ifood_challenge.data.mappers.PopularDataMapper
 import com.brunodegan.ifood_challenge.data.mappers.TopRatedDataMapper
 import com.brunodegan.ifood_challenge.data.mappers.UpcomingDataMapper
+import com.brunodegan.ifood_challenge.data.metrics.Metrics
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
@@ -37,6 +38,7 @@ class MoviesRepositoryImpl(
     private val upcomingMoviesDataMapper: UpcomingDataMapper,
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource,
+    private val metricsEventsDispatcher: Metrics
 ) : MoviesRepository {
 
     private fun updateTopRatedMovies(
@@ -84,8 +86,9 @@ class MoviesRepositoryImpl(
         } else {
             runCatching {
                 remoteDataSource.fetchTopRated()
-            }.onFailure { error ->
-                emit(Resource.Error(ErrorType.Generic(error.message)))
+            }.onFailure { failure ->
+                failure.message.takeIf { it.isNullOrEmpty().not() }
+                    ?.let { metricsEventsDispatcher.onEvent(it) }
             }.map { apiDataModel ->
                 val mappedResult = topRatedMoviesDataMapper.map(apiDataModel)
                 localDataSource.saveTopRated(mappedResult)
@@ -99,6 +102,8 @@ class MoviesRepositoryImpl(
                         )
                     )
                 )
+            }.recoverCatching { error ->
+                emit(Resource.Error(ErrorType.Generic(error.message)))
             }
         }
 
@@ -120,8 +125,9 @@ class MoviesRepositoryImpl(
         } else {
             runCatching {
                 remoteDataSource.fetchPopular()
-            }.onFailure { error ->
-                emit(Resource.Error(ErrorType.Generic(error.message)))
+            }.onFailure { failure ->
+                failure.message.takeIf { it.isNullOrEmpty().not() }
+                    ?.let { metricsEventsDispatcher.onEvent(it) }
             }.map { apiDataModel ->
                 val mappedResult = popularMoviesDataMapper.map(apiDataModel)
                 localDataSource.savePopular(mappedResult)
@@ -135,6 +141,8 @@ class MoviesRepositoryImpl(
                         )
                     )
                 )
+            }.recoverCatching { error ->
+                emit(Resource.Error(ErrorType.Generic(error.message)))
             }
         }
     }
@@ -155,8 +163,9 @@ class MoviesRepositoryImpl(
         } else {
             runCatching {
                 remoteDataSource.fetchUpcoming()
-            }.onFailure { error ->
-                emit(Resource.Error(ErrorType.Generic(error.message)))
+            }.onFailure { failure ->
+                failure.message.takeIf { it.isNullOrEmpty().not() }
+                    ?.let { metricsEventsDispatcher.onEvent(it) }
             }.map { apiDataModel ->
                 val mappedResult = upcomingMoviesDataMapper.map(apiDataModel)
                 localDataSource.saveUpcoming(mappedResult)
@@ -170,58 +179,64 @@ class MoviesRepositoryImpl(
                         )
                     )
                 )
+            }.recoverCatching { error ->
+                emit(Resource.Error(ErrorType.Generic(error.message)))
             }
         }
     }
 
     override fun getNowPlayingMovies(): Flow<Resource<ImmutableList<NowPlayingMoviesEntity>>> =
         flow {
-        val nowPlayingMovies = localDataSource.getNowPlaying().firstOrNull()
-        val savedFavoriteMovies = getSavedFavoriteMovies().firstOrNull()
+            val nowPlayingMovies = localDataSource.getNowPlaying().firstOrNull()
+            val savedFavoriteMovies = getSavedFavoriteMovies().firstOrNull()
 
-        if (!nowPlayingMovies.isNullOrEmpty()) {
-            emit(
-                Resource.Success(
-                    updateNowPlayingMovies(
-                        nowPlayingMovies,
-                        savedFavoriteMovies
-                    )
-                )
-            )
-        } else {
-            runCatching {
-                remoteDataSource.fetchNowPlaying()
-            }.onFailure { error ->
-                emit(Resource.Error(ErrorType.Generic(error.message)))
-            }.map { apiDataModel ->
-                val mappedResult = nowPlayingMoviesDataMapper.map(apiDataModel)
-                localDataSource.saveNowPlaying(mappedResult)
-                mappedResult
-            }.onSuccess { convertedData ->
+            if (!nowPlayingMovies.isNullOrEmpty()) {
                 emit(
                     Resource.Success(
                         updateNowPlayingMovies(
-                            convertedData,
-                            savedFavoriteMovies
+                            nowPlayingMovies, savedFavoriteMovies
                         )
                     )
                 )
+            } else {
+                runCatching {
+                    remoteDataSource.fetchNowPlaying()
+                }.onFailure { failure ->
+                    failure.message.takeIf { it.isNullOrEmpty().not() }
+                        ?.let { metricsEventsDispatcher.onEvent(it) }
+                }.map { apiDataModel ->
+                    val mappedResult = nowPlayingMoviesDataMapper.map(apiDataModel)
+                    localDataSource.saveNowPlaying(mappedResult)
+                    mappedResult
+                }.onSuccess { convertedData ->
+                    emit(
+                        Resource.Success(
+                            updateNowPlayingMovies(
+                                convertedData, savedFavoriteMovies
+                            )
+                        )
+                    )
+                }.recoverCatching { error ->
+                    emit(Resource.Error(ErrorType.Generic(error.message)))
+                }
             }
         }
-    }
 
     override fun addFavorite(id: Int): Flow<Resource<AddToFavoriteMoviesData>> =
         flow {
             runCatching {
                 val request = AddToFavoritesRequest(mediaId = id, favorite = true)
                 remoteDataSource.addOrRemoveFromFavorites(request)
-            }.onFailure { error ->
-                emit(Resource.Error(ErrorType.Generic(error.message)))
+            }.onFailure { failure ->
+                failure.message.takeIf { it.isNullOrEmpty().not() }
+                    ?.let { metricsEventsDispatcher.onEvent(it) }
             }.map { apiDataModel ->
                 val mappedResult = addOrRemoveToFavoritesResponseDataMapper.map(apiDataModel)
                 mappedResult
             }.onSuccess { convertedData ->
                 emit(Resource.Success(convertedData))
+            }.recoverCatching { error ->
+                emit(Resource.Error(ErrorType.Generic(error.message)))
             }
         }
 
@@ -230,13 +245,16 @@ class MoviesRepositoryImpl(
             val request = AddToFavoritesRequest(mediaId = id, favorite = false)
             localDataSource.removeFavoriteMovie(id)
             remoteDataSource.addOrRemoveFromFavorites(request)
-        }.onFailure { error ->
-            emit(Resource.Error(ErrorType.Generic(error.message)))
+        }.onFailure { failure ->
+            failure.message.takeIf { it.isNullOrEmpty().not() }
+                ?.let { metricsEventsDispatcher.onEvent(it) }
         }.map { apiDataModel ->
             val mappedResult = addOrRemoveToFavoritesResponseDataMapper.map(apiDataModel)
             mappedResult
         }.onSuccess { convertedData ->
             emit(Resource.Success(convertedData))
+        }.recoverCatching { error ->
+            emit(Resource.Error(ErrorType.Generic(error.message)))
         }
     }
 
@@ -250,14 +268,17 @@ class MoviesRepositoryImpl(
 
         runCatching {
             remoteDataSource.fetchFavorites()
-        }.onFailure { error ->
-            emit(Resource.Error(ErrorType.Generic(error.message)))
+        }.onFailure { failure ->
+            failure.message.takeIf { it.isNullOrEmpty().not() }
+                ?.let { metricsEventsDispatcher.onEvent(it) }
         }.map { apiDataModel ->
             val mappedResult = favoritesDataMapper.map(apiDataModel)
             localDataSource.saveFavorites(mappedResult)
             mappedResult
         }.onSuccess { convertedData ->
             emit(Resource.Success(convertedData.toImmutableList()))
+        }.recoverCatching { error ->
+            emit(Resource.Error(ErrorType.Generic(error.message)))
         }
     }
 
@@ -271,14 +292,17 @@ class MoviesRepositoryImpl(
 
         runCatching {
             remoteDataSource.fetchFavorites()
-        }.onFailure {
-            emit(null)
+        }.onFailure { failure ->
+            failure.message.takeIf { it.isNullOrEmpty().not() }
+                ?.let { metricsEventsDispatcher.onEvent(it) }
         }.map { apiDataModel ->
             val mappedResult = favoritesDataMapper.map(apiDataModel)
             localDataSource.saveFavorites(mappedResult)
             mappedResult
         }.onSuccess { convertedData ->
             emit(convertedData)
+        }.recoverCatching { _ ->
+            emit(null)
         }
     }
 }
