@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.koin.compiler)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.kotlin.stability.analyzer)
 }
 
 extensions.configure<ApplicationExtension> {
@@ -53,6 +54,17 @@ ksp {
 tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_19)
+    }
+}
+
+composeStabilityAnalyzer {
+    traceAll {
+        enabled.set(true)
+        threshold.set(2) // default: 2 — skips the initial-composition burst
+    }
+    stabilityValidation {
+        // Log stability changes as warnings instead of failing the build
+        failOnStabilityChange.set(false)
     }
 }
 

@@ -74,6 +74,8 @@ import com.brunodegan.ifood_challenge.data.metrics.TrackScreen
 import com.brunodegan.ifood_challenge.ui.screen.upComingMovies.events.UpcomingMoviesUiEvent
 import com.brunodegan.ifood_challenge.ui.screen.upComingMovies.state.UpComingMoviesUiState
 import com.brunodegan.ifood_challenge.ui.screen.upComingMovies.viewModel.UpComingMoviesViewModel
+import com.skydoves.compose.stability.runtime.TraceRecomposition
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
 
@@ -114,6 +116,7 @@ fun UpComingMoviesScreen(
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
+@TraceRecomposition(SCREEN_NAME)
 @Composable
 internal fun UpComingMoviesScreenContent(
     scrollBehavior: TopAppBarScrollBehavior,
@@ -163,7 +166,7 @@ private fun SuccessState(
     scrollBehavior: TopAppBarScrollBehavior,
     modifier: Modifier = Modifier,
     listState: LazyListState,
-    viewData: List<UpcomingMoviesEntity>,
+    viewData: ImmutableList<UpcomingMoviesEntity>,
     onFavoriteButtonClicked: (Int) -> Unit,
     onRemoveFavButtonClickedUiEvent: (Int) -> Unit,
 ) {

@@ -61,6 +61,7 @@ import com.brunodegan.ifood_challenge.data.metrics.TrackScreen
 import com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.events.FavoriteMoviesUiEvents
 import com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.state.FavoriteMoviesUiState
 import com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.viewModel.FavoritesViewModel
+import com.skydoves.compose.stability.runtime.TraceRecomposition
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.koin.compose.viewmodel.koinViewModel
@@ -102,6 +103,7 @@ fun FavoriteMoviesScreen(
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
+@TraceRecomposition(SCREEN_NAME)
 @Composable
 internal fun FavoritesMoviesScreenContent(
     scrollBehavior: TopAppBarScrollBehavior,

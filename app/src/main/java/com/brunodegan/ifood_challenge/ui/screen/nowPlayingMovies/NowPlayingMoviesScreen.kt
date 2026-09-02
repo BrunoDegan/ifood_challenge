@@ -74,6 +74,7 @@ import com.brunodegan.ifood_challenge.data.metrics.TrackScreen
 import com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.events.NowPlayingMoviesUiEvents
 import com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.state.NowPlayingMoviesUiState
 import com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.viewModel.NowPlayingMoviesViewModel
+import com.skydoves.compose.stability.runtime.TraceRecomposition
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.koin.compose.viewmodel.koinViewModel
@@ -115,6 +116,7 @@ fun NowPlayingMoviesScreen(
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
+@TraceRecomposition(SCREEN_NAME)
 @Composable
 internal fun NowPlayingMoviesScreenContent(
     listState: LazyListState,
