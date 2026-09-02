@@ -50,6 +50,23 @@ jobs:
       - name: Run KtLint Check
         run: ./gradlew ktlintCheck
 
+  stability_check:
+    name: Compose Stability Check
+    runs-on: ubuntu-latest
+    needs: gradle-build
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: compose stability check
+        run: ./gradlew stabilityCheck
+  
   android-jvm-tests:
     name: android-jvm-tests
     needs: ktlint-check
