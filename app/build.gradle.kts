@@ -64,7 +64,9 @@ composeStabilityAnalyzer {
     }
     stabilityValidation {
         // Log stability changes as warnings instead of failing the build
-        failOnStabilityChange.set(false)
+        failOnStabilityChange.set(true)
+        includeTests.set(false)
+        ignoreNonRegressiveChanges.set(false)
     }
 }
 
