@@ -6,8 +6,6 @@ plugins {
     id("ifood.android.application")
 }
 
-// Secrets live only in the machine-local, gitignored local.properties file —
-// never committed, never hardcoded in source.
 val localProperties =
     Properties().apply {
         val localPropertiesFile = rootProject.file("local.properties")
