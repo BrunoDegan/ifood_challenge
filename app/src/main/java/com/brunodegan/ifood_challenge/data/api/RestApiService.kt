@@ -1,5 +1,6 @@
 package com.brunodegan.ifood_challenge.data.api
 
+import com.brunodegan.ifood_challenge.BuildConfig
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoritesApiResponse
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoritesRequest
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.MoviesApiDataResponse
@@ -32,22 +33,16 @@ interface RestApiService {
 
     @POST(ADD_TO_FAVORITES_URL)
     suspend fun addToFavorites(
-        @Path(ACCOUNT_ID) accountId: String = ID,
+        @Path(ACCOUNT_ID) accountId: String = BuildConfig.TMDB_ACCOUNT_ID,
         @Body addToFavoritesRequest: AddToFavoritesRequest,
     ): AddToFavoritesApiResponse
 
     @GET(GET_FAVORITES_URL)
     suspend fun getFavorites(
-        @Path(ACCOUNT_ID) accountId: String = ID,
+        @Path(ACCOUNT_ID) accountId: String = BuildConfig.TMDB_ACCOUNT_ID,
     ): MoviesApiDataResponse
 
     companion object {
-        const val ID = "21965972"
-
-        // Bad approach, just for supporting reviewers testers
-        const val BEARER_TOKEN =
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OTljYTc2YjkyNDkxMzE5YWFmMWE3OWI4MzExMDE1MSIsIm5iZiI6MTc0NTM1NTY3NC4zOTEsInN1YiI6IjY4MDgwMzlhMTQyYjA5Y2VjZjg5YjFiMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KN5rAk6UlsJJy2bEvjm8uJmLNE7_0ctTG9EbKjTuGP8"
-
         const val AUTHORIZATION_HEADER = "Authorization"
         const val APPLICATION_JSON = "application/json"
         const val CONTENT_TYPE = "content-type"

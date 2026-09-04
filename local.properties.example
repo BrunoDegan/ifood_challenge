@@ -1,0 +1,6 @@
+# Copy this file to local.properties (gitignored) and fill in real values.
+# local.properties is never committed — it is the machine-local secrets vault.
+sdk.dir=/path/to/Android/Sdk
+
+TMDB_ACCOUNT_ID=your-tmdb-account-id
+TMDB_BEARER_TOKEN=Bearer your-tmdb-v4-read-access-token

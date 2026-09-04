@@ -1,11 +1,11 @@
 package com.brunodegan.ifood_challenge.base.network
 
+import com.brunodegan.ifood_challenge.BuildConfig
 import com.brunodegan.ifood_challenge.data.api.RestApiService
 import com.brunodegan.ifood_challenge.data.api.RestApiService.Companion.ACCEPT
 import com.brunodegan.ifood_challenge.data.api.RestApiService.Companion.APPLICATION_JSON
 import com.brunodegan.ifood_challenge.data.api.RestApiService.Companion.AUTHORIZATION_HEADER
 import com.brunodegan.ifood_challenge.data.api.RestApiService.Companion.BASE_URL
-import com.brunodegan.ifood_challenge.data.api.RestApiService.Companion.BEARER_TOKEN
 import com.brunodegan.ifood_challenge.data.api.RestApiService.Companion.CONTENT_TYPE
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -46,7 +46,7 @@ class NetworkModule {
                             .newBuilder()
                             .addHeader(ACCEPT, APPLICATION_JSON)
                             .addHeader(CONTENT_TYPE, APPLICATION_JSON)
-                            .addHeader(AUTHORIZATION_HEADER, BEARER_TOKEN)
+                            .addHeader(AUTHORIZATION_HEADER, BuildConfig.TMDB_BEARER_TOKEN)
                             .build()
                     proceed(request)
                 }
