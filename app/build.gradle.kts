@@ -1,72 +1,16 @@
 import com.android.build.api.dsl.ApplicationExtension
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.kotlin.parcelize)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.koin.compiler)
-    alias(libs.plugins.ktlint)
-    alias(libs.plugins.kotlin.stability.analyzer)
+    id("ifood.android.application")
 }
 
 extensions.configure<ApplicationExtension> {
     namespace = "com.brunodegan.ifood_challenge"
-    compileSdk = 37
-
-    buildFeatures {
-        compose = true
-    }
 
     defaultConfig {
         applicationId = "com.brunodegan.ifood_challenge"
-        minSdk = 30
-        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_19
-        targetCompatibility = JavaVersion.VERSION_19
-    }
-}
-// Compile time check
-ksp {
-    arg("KOIN_CONFIG_CHECK", "true")
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_19)
-    }
-}
-
-composeStabilityAnalyzer {
-    traceAll {
-        enabled.set(true)
-        threshold.set(2) // default: 2 — skips the initial-composition burst
-    }
-    stabilityValidation {
-        // Log stability changes as warnings instead of failing the build
-        failOnStabilityChange.set(true)
-        includeTests.set(false)
-        ignoreNonRegressiveChanges.set(false)
     }
 }
 

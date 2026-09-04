@@ -79,6 +79,16 @@ androidx-navigation3-ui-android = { group = "androidx.navigation3", name = "navi
 androidx-lifecycle-viewmodel-navigation3 = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodelNavigation3Android" }
 androidx-lifecycle-viewmodel-navigation3-android = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-navigation3-android", version.ref = "lifecycleViewmodelNavigation3Android" }
 
+# build-logic plugin markers (used only by the build-logic included build)
+android-gradlePlugin = { group = "com.android.application", name = "com.android.application.gradle.plugin", version.ref = "agp" }
+kotlin-compose-gradlePlugin = { group = "org.jetbrains.kotlin.plugin.compose", name = "org.jetbrains.kotlin.plugin.compose.gradle.plugin", version.ref = "kotlin" }
+kotlin-serialization-gradlePlugin = { group = "org.jetbrains.kotlin.plugin.serialization", name = "org.jetbrains.kotlin.plugin.serialization.gradle.plugin", version.ref = "kotlin" }
+kotlin-parcelize-gradlePlugin = { group = "org.jetbrains.kotlin.plugin.parcelize", name = "org.jetbrains.kotlin.plugin.parcelize.gradle.plugin", version.ref = "kotlin-parcelize" }
+ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+koin-compiler-gradlePlugin = { group = "io.insert-koin.compiler.plugin", name = "io.insert-koin.compiler.plugin.gradle.plugin", version.ref = "koin-plugin" }
+ktlint-gradlePlugin = { group = "org.jlleitschuh.gradle.ktlint", name = "org.jlleitschuh.gradle.ktlint.gradle.plugin", version.ref = "ktlint" }
+stability-analyzer-gradlePlugin = { group = "com.github.skydoves.compose.stability.analyzer", name = "com.github.skydoves.compose.stability.analyzer.gradle.plugin", version.ref = "stability-analyzer" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
