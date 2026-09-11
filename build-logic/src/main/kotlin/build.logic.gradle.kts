@@ -1,6 +1,4 @@
 import com.android.build.api.dsl.ApplicationExtension
-import gradle.kotlin.dsl.accessors._9e24a216dfd78f9126015c7c90c1ef90.composeStabilityAnalyzer
-import gradle.kotlin.dsl.accessors._9e24a216dfd78f9126015c7c90c1ef90.ksp
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.FileInputStream
@@ -55,12 +53,15 @@ extensions.configure<ApplicationExtension> {
 
     buildTypes {
         debug {
-            isDebuggable = true
+            optimization {
+                enable = true
+            }
         }
         release {
             isDebuggable = false
-            isMinifyEnabled = true
-            isShrinkResources = true
+            optimization {
+                enable = true
+            }
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
