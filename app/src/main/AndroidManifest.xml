@@ -7,7 +7,6 @@
     <application
         android:name=".base.MainApplication"
         android:allowBackup="true"
-        android:debuggable="true"
         android:icon="@drawable/my_movie_icon"
         android:label="@string/app_name"
         android:roundIcon="@drawable/my_movie_icon"

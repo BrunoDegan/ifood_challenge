@@ -1,38 +1,11 @@
 import com.android.build.api.dsl.ApplicationExtension
-import java.io.FileInputStream
-import java.util.Properties
 
 plugins {
-    id("ifood.android.application")
+    id("build.logic")
 }
-
-val localProperties =
-    Properties().apply {
-        val localPropertiesFile = rootProject.file("local.properties")
-        if (localPropertiesFile.exists()) {
-            load(FileInputStream(localPropertiesFile))
-        }
-    }
 
 extensions.configure<ApplicationExtension> {
     namespace = "com.brunodegan.ifood_challenge"
-
-    defaultConfig {
-        applicationId = "com.brunodegan.ifood_challenge"
-        versionCode = 1
-        versionName = "1.0"
-
-        buildConfigField(
-            "String",
-            "TMDB_BEARER_TOKEN",
-            "\"${localProperties.getProperty("TMDB_BEARER_TOKEN", "")}\"",
-        )
-        buildConfigField(
-            "String",
-            "TMDB_ACCOUNT_ID",
-            "\"${localProperties.getProperty("TMDB_ACCOUNT_ID", "")}\"",
-        )
-    }
 }
 
 dependencies {

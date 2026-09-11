@@ -1,6 +1,10 @@
 import com.android.build.api.dsl.ApplicationExtension
+import gradle.kotlin.dsl.accessors._9e24a216dfd78f9126015c7c90c1ef90.composeStabilityAnalyzer
+import gradle.kotlin.dsl.accessors._9e24a216dfd78f9126015c7c90c1ef90.ksp
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -13,6 +17,14 @@ plugins {
     id("com.github.skydoves.compose.stability.analyzer")
 }
 
+val localProperties =
+    Properties().apply {
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            load(FileInputStream(localPropertiesFile))
+        }
+    }
+
 extensions.configure<ApplicationExtension> {
     compileSdk = 37
 
@@ -24,12 +36,29 @@ extensions.configure<ApplicationExtension> {
     defaultConfig {
         minSdk = 30
         targetSdk = 37
-
+        applicationId = "com.brunodegan.ifood_challenge"
+        versionCode = 1
+        versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField(
+            "String",
+            "TMDB_BEARER_TOKEN",
+            "\"${localProperties.getProperty("TMDB_BEARER_TOKEN", "")}\"",
+        )
+        buildConfigField(
+            "String",
+            "TMDB_ACCOUNT_ID",
+            "\"${localProperties.getProperty("TMDB_ACCOUNT_ID", "")}\"",
+        )
     }
 
     buildTypes {
+        debug {
+            isDebuggable = true
+        }
         release {
+            isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
