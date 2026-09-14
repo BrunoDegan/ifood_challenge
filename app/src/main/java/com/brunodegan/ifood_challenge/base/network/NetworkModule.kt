@@ -33,7 +33,12 @@ class NetworkModule {
             .build()
             .createApi<RestApiService>()
 
-    private fun provideHttpInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    private fun provideHttpInterceptor(): HttpLoggingInterceptor =
+        if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        } else {
+            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
+        }
 
     private fun provideHttpClient(): OkHttpClient =
         OkHttpClient
