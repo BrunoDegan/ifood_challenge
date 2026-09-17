@@ -54,7 +54,7 @@ extensions.configure<ApplicationExtension> {
     buildTypes {
         debug {
             optimization {
-                enable = true
+                enable = false
             }
         }
         release {
