@@ -1,7 +1,7 @@
 package com.brunodegan.ifood_challenge.data.datasources.data.api
 
 import com.brunodegan.ifood_challenge.data.api.RestApiService
-import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils
+import com.brunodegan.ifood_challenge.testfixtures.MockUtils
 import io.mockk.unmockkAll
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse

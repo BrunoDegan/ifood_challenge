@@ -3,8 +3,8 @@ package com.brunodegan.ifood_challenge.data.datasources.data.remote
 import com.brunodegan.ifood_challenge.data.api.RestApiService
 import com.brunodegan.ifood_challenge.data.datasources.remote.RemoteDataSource
 import com.brunodegan.ifood_challenge.data.datasources.remote.RemoteDataSourceImpl
-import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils
-import com.brunodegan.ifood_challenge.data.datasources.utils.TestDispatcherRule
+import com.brunodegan.ifood_challenge.testfixtures.MockUtils
+import com.brunodegan.ifood_challenge.testfixtures.TestDispatcherRule
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

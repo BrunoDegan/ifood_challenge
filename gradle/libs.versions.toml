@@ -32,6 +32,7 @@ stability-analyzer = "0.13.0"
 [libraries]
 kotlinx-immutable-list = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "immutableList" }
 kotlinx-flow-test-tubine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine-test" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutine-version" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutine-version" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

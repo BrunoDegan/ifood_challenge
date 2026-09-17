@@ -7,8 +7,8 @@ import com.brunodegan.ifood_challenge.data.datasources.local.daos.NowPlayingDao
 import com.brunodegan.ifood_challenge.data.datasources.local.daos.PopularDao
 import com.brunodegan.ifood_challenge.data.datasources.local.daos.TopRatedDao
 import com.brunodegan.ifood_challenge.data.datasources.local.daos.UpComingDao
-import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils
-import com.brunodegan.ifood_challenge.data.datasources.utils.TestDispatcherRule
+import com.brunodegan.ifood_challenge.testfixtures.MockUtils
+import com.brunodegan.ifood_challenge.testfixtures.TestDispatcherRule
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

@@ -1,9 +1,9 @@
 package com.brunodegan.ifood_challenge.data.datasources.data.mappers
 
 import com.brunodegan.ifood_challenge.base.utils.formatUsDateToBrDate
-import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils
-import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils.MOVIES_POSTER_CDN_URL
 import com.brunodegan.ifood_challenge.data.mappers.PopularDataMapper
+import com.brunodegan.ifood_challenge.testfixtures.MockUtils
+import com.brunodegan.ifood_challenge.testfixtures.MockUtils.MOVIES_POSTER_CDN_URL
 import io.mockk.unmockkAll
 import org.junit.After
 import org.junit.Before

@@ -4,13 +4,13 @@ import app.cash.turbine.test
 import com.brunodegan.ifood_challenge.base.network.base.Resource
 import com.brunodegan.ifood_challenge.base.ui.SnackbarUiStateHolder
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.PopularMoviesEntity
-import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils.getResourceError
-import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils.mockAddToFavoriteMoviesData
-import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils.mockPopularMoviesEntity
-import com.brunodegan.ifood_challenge.data.datasources.utils.TestDispatcherRule
 import com.brunodegan.ifood_challenge.domain.addToFavorites.AddToFavoritesUseCase
 import com.brunodegan.ifood_challenge.domain.getPopular.GetPopularUseCase
 import com.brunodegan.ifood_challenge.domain.removeFromFavorites.RemoveFromFavoritesUseCase
+import com.brunodegan.ifood_challenge.testfixtures.MockUtils.getResourceError
+import com.brunodegan.ifood_challenge.testfixtures.MockUtils.mockAddToFavoriteMoviesData
+import com.brunodegan.ifood_challenge.testfixtures.MockUtils.mockPopularMoviesEntity
+import com.brunodegan.ifood_challenge.testfixtures.TestDispatcherRule
 import com.brunodegan.ifood_challenge.ui.screen.popularMovies.events.PopularMoviesUiEvents
 import com.brunodegan.ifood_challenge.ui.screen.popularMovies.state.PopularMoviesUiState
 import com.brunodegan.ifood_challenge.ui.screen.popularMovies.viewModel.PopularMoviesViewModel

@@ -1,7 +1,7 @@
 package com.brunodegan.ifood_challenge.data.datasources.data.mappers
 
-import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils
 import com.brunodegan.ifood_challenge.data.mappers.AddOrRemoveToFavoritesResponseDataMapper
+import com.brunodegan.ifood_challenge.testfixtures.MockUtils
 import io.mockk.unmockkAll
 import org.junit.After
 import org.junit.Assert.assertTrue

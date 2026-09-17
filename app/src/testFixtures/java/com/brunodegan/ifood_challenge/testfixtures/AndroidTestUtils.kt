@@ -1,4 +1,4 @@
-package utils
+package com.brunodegan.ifood_challenge.testfixtures
 
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.FavoriteMoviesEntity
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.NowPlayingMoviesEntity

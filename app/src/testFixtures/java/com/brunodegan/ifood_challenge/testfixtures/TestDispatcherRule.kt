@@ -1,4 +1,4 @@
-package com.brunodegan.ifood_challenge.data.datasources.utils
+package com.brunodegan.ifood_challenge.testfixtures
 
 import com.brunodegan.ifood_challenge.base.dispatchers.DispatchersProviderInterface
 import kotlinx.coroutines.CoroutineDispatcher

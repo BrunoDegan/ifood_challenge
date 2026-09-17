@@ -2,12 +2,12 @@ package com.brunodegan.ifood_challenge.data.datasources.domain.addToFavorites
 
 import com.brunodegan.ifood_challenge.base.network.base.Resource
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.AddToFavoriteMoviesData
-import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils
-import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils.getResourceError
-import com.brunodegan.ifood_challenge.data.datasources.utils.TestDispatcherRule
 import com.brunodegan.ifood_challenge.data.repositories.MoviesRepository
 import com.brunodegan.ifood_challenge.domain.addToFavorites.AddToFavoritesUseCase
 import com.brunodegan.ifood_challenge.domain.addToFavorites.AddToFavoritesUseCaseImpl
+import com.brunodegan.ifood_challenge.testfixtures.MockUtils
+import com.brunodegan.ifood_challenge.testfixtures.MockUtils.getResourceError
+import com.brunodegan.ifood_challenge.testfixtures.TestDispatcherRule
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

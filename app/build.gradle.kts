@@ -8,9 +8,14 @@ extensions.configure<ApplicationExtension> {
     namespace = "com.brunodegan.ifood_challenge"
 }
 
+android {
+    testFixtures.enable = true
+}
+
 dependencies {
     // AndroidX dependencies
     implementation(libs.kotlinx.immutable.list)
+    implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.window.core)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -29,11 +34,19 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.navigation3.android)
 
     // Test dependencies
-    testImplementation(libs.junit)
     testImplementation(libs.mockk)
     testImplementation(libs.okhttp.mockwebserver)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.kotlinx.flow.test.tubine)
+    testImplementation(testFixtures(project))
+
+    testFixturesApi(libs.junit)
+    testFixturesApi(libs.kotlinx.coroutines.test)
+    testFixturesApi(libs.kotlinx.immutable.list)
+    testFixturesImplementation(libs.retrofit.gson.converter)
+    testFixturesImplementation(platform(libs.androidx.compose.bom))
+    testFixturesImplementation(libs.androidx.ui)
+
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
@@ -45,6 +58,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(testFixtures(project))
 
     // Retrofit
     implementation(libs.retrofit.core)

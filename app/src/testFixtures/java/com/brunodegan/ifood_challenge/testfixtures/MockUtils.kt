@@ -1,4 +1,4 @@
-package com.brunodegan.ifood_challenge.data.datasources.utils
+package com.brunodegan.ifood_challenge.testfixtures
 
 import com.brunodegan.ifood_challenge.base.network.base.ErrorType
 import com.brunodegan.ifood_challenge.base.network.base.Resource
@@ -15,7 +15,6 @@ import com.brunodegan.ifood_challenge.data.datasources.local.entities.UpcomingMo
 import com.google.gson.Gson
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import java.lang.Exception
 
 object MockUtils {
     const val MOVIES_POSTER_CDN_URL = "https://image.tmdb.org/t/p/original"

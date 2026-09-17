@@ -4,13 +4,13 @@ import app.cash.turbine.test
 import com.brunodegan.ifood_challenge.base.network.base.Resource
 import com.brunodegan.ifood_challenge.base.ui.SnackbarUiStateHolder
 import com.brunodegan.ifood_challenge.data.datasources.local.entities.NowPlayingMoviesEntity
-import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils.getResourceError
-import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils.mockAddToFavoriteMoviesData
-import com.brunodegan.ifood_challenge.data.datasources.utils.MockUtils.mockNowPlayingMoviesEntity
-import com.brunodegan.ifood_challenge.data.datasources.utils.TestDispatcherRule
 import com.brunodegan.ifood_challenge.domain.addToFavorites.AddToFavoritesUseCase
 import com.brunodegan.ifood_challenge.domain.getNowPlaying.GetNowPlayingUseCase
 import com.brunodegan.ifood_challenge.domain.removeFromFavorites.RemoveFromFavoritesUseCase
+import com.brunodegan.ifood_challenge.testfixtures.MockUtils.getResourceError
+import com.brunodegan.ifood_challenge.testfixtures.MockUtils.mockAddToFavoriteMoviesData
+import com.brunodegan.ifood_challenge.testfixtures.MockUtils.mockNowPlayingMoviesEntity
+import com.brunodegan.ifood_challenge.testfixtures.TestDispatcherRule
 import com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.events.NowPlayingMoviesUiEvents
 import com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.state.NowPlayingMoviesUiState
 import com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.viewModel.NowPlayingMoviesViewModel

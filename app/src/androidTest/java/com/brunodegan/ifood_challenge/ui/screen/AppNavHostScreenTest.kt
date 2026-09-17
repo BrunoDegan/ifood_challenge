@@ -12,6 +12,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import com.brunodegan.ifood_challenge.base.navigation.AppNavHost
 import com.brunodegan.ifood_challenge.data.metrics.LocalMetrics
+import com.brunodegan.ifood_challenge.testfixtures.AndroidTestUtils
 import com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.FavoritesMoviesScreenContent
 import com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.state.FavoriteMoviesUiState
 import com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.NowPlayingMoviesScreenContent
@@ -25,7 +26,6 @@ import com.brunodegan.ifood_challenge.ui.screen.upComingMovies.state.UpComingMov
 import com.brunodegan.ifood_challenge.ui.theme.IfoodChallengeTheme
 import org.junit.Rule
 import org.junit.Test
-import utils.AndroidTestUtils
 
 class AppNavHostScreenTest {
     @get:Rule
