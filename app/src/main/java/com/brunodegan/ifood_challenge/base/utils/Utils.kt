@@ -21,9 +21,11 @@ fun String?.formatUsDateToBrDate(): String {
     }
 }
 
+private const val DEFAULT_CACHE_EXPIRATION_MILLIS = 10 * 60 * 1000L
+
 fun isCacheValid(
     lastUpdated: Long,
-    expirationTime: Long = 10L,
+    expirationTime: Long = DEFAULT_CACHE_EXPIRATION_MILLIS,
 ): Boolean = System.currentTimeMillis() - lastUpdated < expirationTime
 
 fun Double?.orZero(): Double = this ?: 0.0
