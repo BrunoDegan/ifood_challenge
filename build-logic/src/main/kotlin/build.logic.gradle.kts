@@ -24,12 +24,13 @@ val localProperties =
     }
 
 extensions.configure<ApplicationExtension> {
+    compileSdk = 37
 
     lint {
-        baseline = file("lint-baseline.xml")
+        abortOnError = true
+        ignoreWarnings = true
+        checkDependencies = true
     }
-
-    compileSdk = 37
 
     buildFeatures {
         compose = true
