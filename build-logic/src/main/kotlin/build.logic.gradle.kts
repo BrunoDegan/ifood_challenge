@@ -23,6 +23,10 @@ val localProperties =
         }
     }
 
+android {
+    testFixtures.enable = true
+}
+
 extensions.configure<ApplicationExtension> {
     compileSdk = 37
 
@@ -30,6 +34,7 @@ extensions.configure<ApplicationExtension> {
         abortOnError = true
         ignoreWarnings = true
         checkDependencies = true
+        baseline = file("lint-baseline.xml")
     }
 
     buildFeatures {
@@ -80,7 +85,6 @@ extensions.configure<ApplicationExtension> {
     }
 }
 
-// Compile time check
 ksp {
     arg("KOIN_CONFIG_CHECK", "true")
 }
@@ -94,10 +98,9 @@ tasks.withType<KotlinCompile>().configureEach {
 composeStabilityAnalyzer {
     traceAll {
         enabled.set(true)
-        threshold.set(2) // default: 2 — skips the initial-composition burst
+        threshold.set(2)
     }
     stabilityValidation {
-        // Log stability changes as warnings instead of failing the build
         failOnStabilityChange.set(true)
         includeTests.set(false)
         ignoreNonRegressiveChanges.set(false)
