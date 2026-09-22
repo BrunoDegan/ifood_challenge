@@ -8,12 +8,9 @@ extensions.configure<ApplicationExtension> {
     namespace = "com.brunodegan.ifood_challenge"
 }
 
-android {
-    testFixtures.enable = true
-}
-
 dependencies {
     // AndroidX dependencies
+    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.kotlinx.immutable.list)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.window.core)
@@ -24,7 +21,6 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material.icons.core)
-    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
 
     // Coil dependencies
