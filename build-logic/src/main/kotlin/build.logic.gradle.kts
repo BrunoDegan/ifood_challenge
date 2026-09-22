@@ -34,7 +34,6 @@ extensions.configure<ApplicationExtension> {
         abortOnError = true
         ignoreWarnings = true
         checkDependencies = true
-        baseline = file("lint-baseline.xml")
     }
 
     buildFeatures {
