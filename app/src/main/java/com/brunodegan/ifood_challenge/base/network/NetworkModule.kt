@@ -12,7 +12,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.Module
-import org.koin.core.annotation.Single
+import org.koin.core.annotation.Singleton
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -23,7 +23,7 @@ private inline fun <reified T : Any> Retrofit.createApi(): T = create(T::class.j
 @Configuration
 @ComponentScan("com.brunodegan.ifood_challenge.base.network")
 class NetworkModule {
-    @Single
+    @Singleton
     fun provideRestClient(): RestApiService =
         Retrofit
             .Builder()
