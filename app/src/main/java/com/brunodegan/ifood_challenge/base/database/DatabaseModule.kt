@@ -6,28 +6,28 @@ import com.brunodegan.ifood_challenge.base.database.AppDatabase.Companion.DATABA
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.Module
-import org.koin.core.annotation.Single
+import org.koin.core.annotation.Singleton
 
 @Module
 @Configuration
 @ComponentScan("com.brunodegan.ifood_challenge.base.database")
 object DatabaseModule {
-    @Single
+    @Singleton
     fun provideNowPlayingDao(database: AppDatabase) = database.nowPlayingDao()
 
-    @Single
+    @Singleton
     fun provideTopRatedDao(database: AppDatabase) = database.topRatedDao()
 
-    @Single
+    @Singleton
     fun provideUpComingDao(database: AppDatabase) = database.upComingDao()
 
-    @Single
+    @Singleton
     fun providePopularDao(database: AppDatabase) = database.popularDao()
 
-    @Single
+    @Singleton
     fun provideFavoriteDao(database: AppDatabase) = database.favoritesDao()
 
-    @Single
+    @Singleton
     fun initializeDb(context: Context) =
         Room
             .databaseBuilder(
