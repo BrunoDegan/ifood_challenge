@@ -6,6 +6,6 @@
         </trust-anchors>
     </base-config>
     <domain-config cleartextTrafficPermitted="false">
-        <domain includeSubdomains="true">https://api.themoviedb.org/3/</domain>
+        <domain includeSubdomains="true">api.themoviedb.org</domain>
     </domain-config>
 </network-security-config>
