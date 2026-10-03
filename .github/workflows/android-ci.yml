@@ -1,4 +1,4 @@
-name: Android Ifood Challenge CI configuration
+name: Android Android Playground CI configuration
 
 on:
   push:
