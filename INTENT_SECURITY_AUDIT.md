@@ -1,4 +1,4 @@
-# Intent Security Audit — ifood_challenge
+# Intent Security Audit — android-playground
 
 **Skill used:** `android-intent-security`
 **Date:** 2026-09-14

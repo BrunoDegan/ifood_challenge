@@ -44,7 +44,7 @@ extensions.configure<ApplicationExtension> {
     defaultConfig {
         minSdk = 30
         targetSdk = 37
-        applicationId = "com.brunodegan.ifood_challenge"
+        applicationId = "com.brunodegan.androidplayground"
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

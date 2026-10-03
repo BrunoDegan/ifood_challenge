@@ -1,8 +1,8 @@
-# iFood Challenge
+# Android Playground
 
 This project is an Android application built using **Kotlin** and **Jetpack Compose**. It showcases a list of favorite movies, allowing users to view details, interact with the UI, and manage their favorite movies. The app follows modern Android development practices, including MVVM architecture, dependency injection with Koin, and Jetpack libraries.
 
-![ifood_challlenge_video](https://github.com/user-attachments/assets/8b2f1bf5-cbb3-4ff4-a38f-561c3103c740)
+![android_playground_video](https://github.com/user-attachments/assets/8b2f1bf5-cbb3-4ff4-a38f-561c3103c740)
 
 ## Features
 
@@ -28,7 +28,7 @@ This project is an Android application built using **Kotlin** and **Jetpack Comp
 
 ## Project Structure
 
-- `app/src/main/java/com/brunodegan/ifood_challenge/`
+- `app/src/main/java/com/brunodegan/androidplayground/`
   - **ui**: Contains UI components and screens.
   - **viewModel**: ViewModel classes for managing UI state.
   - **domain**: Use cases for business logic.
@@ -48,5 +48,5 @@ This project is an Android application built using **Kotlin** and **Jetpack Comp
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/BrunoDegan/ifood_challenge.git
-   cd ifood_challenge
+   git clone https://github.com/BrunoDegan/android-playground.git
+   cd android-playground

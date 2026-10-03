@@ -5,13 +5,13 @@
 //   ./gradlew :app:stabilityDump
 
 @Composable
-public fun com.brunodegan.ifood_challenge.base.navigation.AppNavHost(): kotlin.Unit
+public fun com.brunodegan.androidplayground.base.navigation.AppNavHost(): kotlin.Unit
   skippable: true
   restartable: true
   params:
 
 @Composable
-public fun com.brunodegan.ifood_challenge.base.ui.CustomAppBar(title: kotlin.String, onBackButtonClicked: kotlin.Function0<kotlin.Unit>, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, modifier: androidx.compose.ui.Modifier): kotlin.Unit
+public fun com.brunodegan.androidplayground.base.ui.CustomAppBar(title: kotlin.String, onBackButtonClicked: kotlin.Function0<kotlin.Unit>, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, modifier: androidx.compose.ui.Modifier): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -21,7 +21,7 @@ public fun com.brunodegan.ifood_challenge.base.ui.CustomAppBar(title: kotlin.Str
     - modifier: STABLE (marked @Stable or @Immutable)
 
 @Composable
-public fun com.brunodegan.ifood_challenge.base.ui.ErrorUiState(modifier: androidx.compose.ui.Modifier, errorData: com.brunodegan.ifood_challenge.base.network.base.ErrorType, onRetryButtonClicked: kotlin.Function0<kotlin.Unit>): kotlin.Unit
+public fun com.brunodegan.androidplayground.base.ui.ErrorUiState(modifier: androidx.compose.ui.Modifier, errorData: com.brunodegan.androidplayground.base.network.base.ErrorType, onRetryButtonClicked: kotlin.Function0<kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -30,14 +30,14 @@ public fun com.brunodegan.ifood_challenge.base.ui.ErrorUiState(modifier: android
     - onRetryButtonClicked: STABLE (function type)
 
 @Composable
-public fun com.brunodegan.ifood_challenge.base.ui.LoaderUiState(modifier: androidx.compose.ui.Modifier): kotlin.Unit
+public fun com.brunodegan.androidplayground.base.ui.LoaderUiState(modifier: androidx.compose.ui.Modifier): kotlin.Unit
   skippable: true
   restartable: true
   params:
     - modifier: STABLE (marked @Stable or @Immutable)
 
 @Composable
-public fun com.brunodegan.ifood_challenge.base.ui.ObserveAsEvent(flow: kotlinx.coroutines.flow.Flow<T of com.brunodegan.ifood_challenge.base.ui.ObserveAsEvent>, onEvent: kotlin.Function1<T of com.brunodegan.ifood_challenge.base.ui.ObserveAsEvent, kotlin.Unit>): kotlin.Unit
+public fun com.brunodegan.androidplayground.base.ui.ObserveAsEvent(flow: kotlinx.coroutines.flow.Flow<T of com.brunodegan.androidplayground.base.ui.ObserveAsEvent>, onEvent: kotlin.Function1<T of com.brunodegan.androidplayground.base.ui.ObserveAsEvent, kotlin.Unit>): kotlin.Unit
   skippable: false
   restartable: true
   params:
@@ -45,7 +45,7 @@ public fun com.brunodegan.ifood_challenge.base.ui.ObserveAsEvent(flow: kotlinx.c
     - onEvent: STABLE (function type)
 
 @Composable
-public fun com.brunodegan.ifood_challenge.data.metrics.TrackScreen(screenName: kotlin.String, analyticsHelper: com.brunodegan.ifood_challenge.data.metrics.Metrics): kotlin.Unit
+public fun com.brunodegan.androidplayground.data.metrics.TrackScreen(screenName: kotlin.String, analyticsHelper: com.brunodegan.androidplayground.data.metrics.Metrics): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -53,7 +53,7 @@ public fun com.brunodegan.ifood_challenge.data.metrics.TrackScreen(screenName: k
     - analyticsHelper: STABLE (marked @Stable or @Immutable)
 
 @Composable
-public fun com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.FavoriteMoviesScreen(modifier: androidx.compose.ui.Modifier, listState: androidx.compose.foundation.lazy.LazyListState, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, onNavigateUp: kotlin.Function0<kotlin.Unit>, onShowSnackbar: kotlin.Function1<kotlin.String, kotlin.Unit>): kotlin.Unit
+public fun com.brunodegan.androidplayground.ui.screen.favoriteMovies.FavoriteMoviesScreen(modifier: androidx.compose.ui.Modifier, listState: androidx.compose.foundation.lazy.LazyListState, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, onNavigateUp: kotlin.Function0<kotlin.Unit>, onShowSnackbar: kotlin.Function1<kotlin.String, kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -64,7 +64,7 @@ public fun com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.FavoriteMovie
     - onShowSnackbar: STABLE (function type)
 
 @Composable
-public fun com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.FavoritesMoviesCard(viewData: com.brunodegan.ifood_challenge.data.datasources.local.entities.FavoriteMoviesEntity, modifier: androidx.compose.ui.Modifier): kotlin.Unit
+public fun com.brunodegan.androidplayground.ui.screen.favoriteMovies.FavoritesMoviesCard(viewData: com.brunodegan.androidplayground.data.datasources.local.entities.FavoriteMoviesEntity, modifier: androidx.compose.ui.Modifier): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -72,7 +72,7 @@ public fun com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.FavoritesMovi
     - modifier: STABLE (marked @Stable or @Immutable)
 
 @Composable
-internal fun com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.FavoritesMoviesScreenContent(scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, listState: androidx.compose.foundation.lazy.LazyListState, state: com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.state.FavoriteMoviesUiState, modifier: androidx.compose.ui.Modifier, onEvent: kotlin.Function1<com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.events.FavoriteMoviesUiEvents, kotlin.Unit>): kotlin.Unit
+internal fun com.brunodegan.androidplayground.ui.screen.favoriteMovies.FavoritesMoviesScreenContent(scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, listState: androidx.compose.foundation.lazy.LazyListState, state: com.brunodegan.androidplayground.ui.screen.favoriteMovies.state.FavoriteMoviesUiState, modifier: androidx.compose.ui.Modifier, onEvent: kotlin.Function1<com.brunodegan.androidplayground.ui.screen.favoriteMovies.events.FavoriteMoviesUiEvents, kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -83,7 +83,7 @@ internal fun com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.FavoritesMo
     - onEvent: STABLE (function type)
 
 @Composable
-public fun com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.SuccessState(modifier: androidx.compose.ui.Modifier, listState: androidx.compose.foundation.lazy.LazyListState, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, viewData: kotlinx.collections.immutable.ImmutableList<com.brunodegan.ifood_challenge.data.datasources.local.entities.FavoriteMoviesEntity>): kotlin.Unit
+public fun com.brunodegan.androidplayground.ui.screen.favoriteMovies.SuccessState(modifier: androidx.compose.ui.Modifier, listState: androidx.compose.foundation.lazy.LazyListState, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, viewData: kotlinx.collections.immutable.ImmutableList<com.brunodegan.androidplayground.data.datasources.local.entities.FavoriteMoviesEntity>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -93,7 +93,7 @@ public fun com.brunodegan.ifood_challenge.ui.screen.favoriteMovies.SuccessState(
     - viewData: STABLE (known stable type)
 
 @Composable
-private fun com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.NowPlayingMoviesCard(modifier: androidx.compose.ui.Modifier, viewData: com.brunodegan.ifood_challenge.data.datasources.local.entities.NowPlayingMoviesEntity, onFavoriteButtonClicked: kotlin.Function1<kotlin.Int, kotlin.Unit>, onRemoveFavButtonClickedUiEvent: kotlin.Function1<kotlin.Int, kotlin.Unit>): kotlin.Unit
+private fun com.brunodegan.androidplayground.ui.screen.nowPlayingMovies.NowPlayingMoviesCard(modifier: androidx.compose.ui.Modifier, viewData: com.brunodegan.androidplayground.data.datasources.local.entities.NowPlayingMoviesEntity, onFavoriteButtonClicked: kotlin.Function1<kotlin.Int, kotlin.Unit>, onRemoveFavButtonClickedUiEvent: kotlin.Function1<kotlin.Int, kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -103,7 +103,7 @@ private fun com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.NowPlaying
     - onRemoveFavButtonClickedUiEvent: STABLE (function type)
 
 @Composable
-public fun com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.NowPlayingMoviesScreen(modifier: androidx.compose.ui.Modifier, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, listState: androidx.compose.foundation.lazy.LazyListState, onNavigateUp: kotlin.Function0<kotlin.Unit>, onShowSnackbar: kotlin.Function1<kotlin.String, kotlin.Unit>): kotlin.Unit
+public fun com.brunodegan.androidplayground.ui.screen.nowPlayingMovies.NowPlayingMoviesScreen(modifier: androidx.compose.ui.Modifier, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, listState: androidx.compose.foundation.lazy.LazyListState, onNavigateUp: kotlin.Function0<kotlin.Unit>, onShowSnackbar: kotlin.Function1<kotlin.String, kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -114,7 +114,7 @@ public fun com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.NowPlayingM
     - onShowSnackbar: STABLE (function type)
 
 @Composable
-internal fun com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.NowPlayingMoviesScreenContent(listState: androidx.compose.foundation.lazy.LazyListState, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, state: com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.state.NowPlayingMoviesUiState, modifier: androidx.compose.ui.Modifier, onEvent: kotlin.Function1<com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.events.NowPlayingMoviesUiEvents, kotlin.Unit>): kotlin.Unit
+internal fun com.brunodegan.androidplayground.ui.screen.nowPlayingMovies.NowPlayingMoviesScreenContent(listState: androidx.compose.foundation.lazy.LazyListState, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, state: com.brunodegan.androidplayground.ui.screen.nowPlayingMovies.state.NowPlayingMoviesUiState, modifier: androidx.compose.ui.Modifier, onEvent: kotlin.Function1<com.brunodegan.androidplayground.ui.screen.nowPlayingMovies.events.NowPlayingMoviesUiEvents, kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -125,7 +125,7 @@ internal fun com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.NowPlayin
     - onEvent: STABLE (function type)
 
 @Composable
-private fun com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.SuccessState(modifier: androidx.compose.ui.Modifier, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, listState: androidx.compose.foundation.lazy.LazyListState, viewData: kotlinx.collections.immutable.ImmutableList<com.brunodegan.ifood_challenge.data.datasources.local.entities.NowPlayingMoviesEntity>, onFavoriteButtonClicked: kotlin.Function1<kotlin.Int, kotlin.Unit>, onRemoveFavButtonClickedUiEvent: kotlin.Function1<kotlin.Int, kotlin.Unit>): kotlin.Unit
+private fun com.brunodegan.androidplayground.ui.screen.nowPlayingMovies.SuccessState(modifier: androidx.compose.ui.Modifier, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, listState: androidx.compose.foundation.lazy.LazyListState, viewData: kotlinx.collections.immutable.ImmutableList<com.brunodegan.androidplayground.data.datasources.local.entities.NowPlayingMoviesEntity>, onFavoriteButtonClicked: kotlin.Function1<kotlin.Int, kotlin.Unit>, onRemoveFavButtonClickedUiEvent: kotlin.Function1<kotlin.Int, kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -137,7 +137,7 @@ private fun com.brunodegan.ifood_challenge.ui.screen.nowPlayingMovies.SuccessSta
     - onRemoveFavButtonClickedUiEvent: STABLE (function type)
 
 @Composable
-private fun com.brunodegan.ifood_challenge.ui.screen.popularMovies.PopularMoviesCard(modifier: androidx.compose.ui.Modifier, viewData: com.brunodegan.ifood_challenge.data.datasources.local.entities.PopularMoviesEntity, onFavoriteButtonClicked: kotlin.Function1<kotlin.Int, kotlin.Unit>, onRemoveFavButtonClickedUiEvent: kotlin.Function1<kotlin.Int, kotlin.Unit>): kotlin.Unit
+private fun com.brunodegan.androidplayground.ui.screen.popularMovies.PopularMoviesCard(modifier: androidx.compose.ui.Modifier, viewData: com.brunodegan.androidplayground.data.datasources.local.entities.PopularMoviesEntity, onFavoriteButtonClicked: kotlin.Function1<kotlin.Int, kotlin.Unit>, onRemoveFavButtonClickedUiEvent: kotlin.Function1<kotlin.Int, kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -147,7 +147,7 @@ private fun com.brunodegan.ifood_challenge.ui.screen.popularMovies.PopularMovies
     - onRemoveFavButtonClickedUiEvent: STABLE (function type)
 
 @Composable
-public fun com.brunodegan.ifood_challenge.ui.screen.popularMovies.PopularMoviesScreen(modifier: androidx.compose.ui.Modifier, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, listState: androidx.compose.foundation.lazy.LazyListState, onNavigateUp: kotlin.Function0<kotlin.Unit>, onShowSnackbar: kotlin.Function1<kotlin.String, kotlin.Unit>): kotlin.Unit
+public fun com.brunodegan.androidplayground.ui.screen.popularMovies.PopularMoviesScreen(modifier: androidx.compose.ui.Modifier, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, listState: androidx.compose.foundation.lazy.LazyListState, onNavigateUp: kotlin.Function0<kotlin.Unit>, onShowSnackbar: kotlin.Function1<kotlin.String, kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -158,7 +158,7 @@ public fun com.brunodegan.ifood_challenge.ui.screen.popularMovies.PopularMoviesS
     - onShowSnackbar: STABLE (function type)
 
 @Composable
-internal fun com.brunodegan.ifood_challenge.ui.screen.popularMovies.PopularMoviesScreenContent(listState: androidx.compose.foundation.lazy.LazyListState, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, state: com.brunodegan.ifood_challenge.ui.screen.popularMovies.state.PopularMoviesUiState, modifier: androidx.compose.ui.Modifier, onEvent: kotlin.Function1<com.brunodegan.ifood_challenge.ui.screen.popularMovies.events.PopularMoviesUiEvents, kotlin.Unit>): kotlin.Unit
+internal fun com.brunodegan.androidplayground.ui.screen.popularMovies.PopularMoviesScreenContent(listState: androidx.compose.foundation.lazy.LazyListState, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, state: com.brunodegan.androidplayground.ui.screen.popularMovies.state.PopularMoviesUiState, modifier: androidx.compose.ui.Modifier, onEvent: kotlin.Function1<com.brunodegan.androidplayground.ui.screen.popularMovies.events.PopularMoviesUiEvents, kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -169,7 +169,7 @@ internal fun com.brunodegan.ifood_challenge.ui.screen.popularMovies.PopularMovie
     - onEvent: STABLE (function type)
 
 @Composable
-private fun com.brunodegan.ifood_challenge.ui.screen.popularMovies.SuccessState(modifier: androidx.compose.ui.Modifier, listState: androidx.compose.foundation.lazy.LazyListState, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, viewData: kotlinx.collections.immutable.ImmutableList<com.brunodegan.ifood_challenge.data.datasources.local.entities.PopularMoviesEntity>, onFavoriteButtonClicked: kotlin.Function1<kotlin.Int, kotlin.Unit>, onRemoveFavButtonClickedUiEvent: kotlin.Function1<kotlin.Int, kotlin.Unit>): kotlin.Unit
+private fun com.brunodegan.androidplayground.ui.screen.popularMovies.SuccessState(modifier: androidx.compose.ui.Modifier, listState: androidx.compose.foundation.lazy.LazyListState, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, viewData: kotlinx.collections.immutable.ImmutableList<com.brunodegan.androidplayground.data.datasources.local.entities.PopularMoviesEntity>, onFavoriteButtonClicked: kotlin.Function1<kotlin.Int, kotlin.Unit>, onRemoveFavButtonClickedUiEvent: kotlin.Function1<kotlin.Int, kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -181,7 +181,7 @@ private fun com.brunodegan.ifood_challenge.ui.screen.popularMovies.SuccessState(
     - onRemoveFavButtonClickedUiEvent: STABLE (function type)
 
 @Composable
-private fun com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.SuccessState(scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, listState: androidx.compose.foundation.lazy.LazyListState, modifier: androidx.compose.ui.Modifier, viewData: kotlinx.collections.immutable.ImmutableList<com.brunodegan.ifood_challenge.data.datasources.local.entities.TopRatedMoviesEntity>, onFavoriteButtonClicked: kotlin.Function1<kotlin.Int, kotlin.Unit>, onRemoveFavButtonClickedUiEvent: kotlin.Function1<kotlin.Int, kotlin.Unit>): kotlin.Unit
+private fun com.brunodegan.androidplayground.ui.screen.topRatedMovies.SuccessState(scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, listState: androidx.compose.foundation.lazy.LazyListState, modifier: androidx.compose.ui.Modifier, viewData: kotlinx.collections.immutable.ImmutableList<com.brunodegan.androidplayground.data.datasources.local.entities.TopRatedMoviesEntity>, onFavoriteButtonClicked: kotlin.Function1<kotlin.Int, kotlin.Unit>, onRemoveFavButtonClickedUiEvent: kotlin.Function1<kotlin.Int, kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -193,7 +193,7 @@ private fun com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.SuccessState
     - onRemoveFavButtonClickedUiEvent: STABLE (function type)
 
 @Composable
-private fun com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.TopRatedMoviesCard(modifier: androidx.compose.ui.Modifier, viewData: com.brunodegan.ifood_challenge.data.datasources.local.entities.TopRatedMoviesEntity, onFavoriteButtonClicked: kotlin.Function1<kotlin.Int, kotlin.Unit>, onRemoveFavButtonClickedUiEvent: kotlin.Function1<kotlin.Int, kotlin.Unit>): kotlin.Unit
+private fun com.brunodegan.androidplayground.ui.screen.topRatedMovies.TopRatedMoviesCard(modifier: androidx.compose.ui.Modifier, viewData: com.brunodegan.androidplayground.data.datasources.local.entities.TopRatedMoviesEntity, onFavoriteButtonClicked: kotlin.Function1<kotlin.Int, kotlin.Unit>, onRemoveFavButtonClickedUiEvent: kotlin.Function1<kotlin.Int, kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -203,7 +203,7 @@ private fun com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.TopRatedMovi
     - onRemoveFavButtonClickedUiEvent: STABLE (function type)
 
 @Composable
-public fun com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.TopRatedVideosScreen(modifier: androidx.compose.ui.Modifier, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, listState: androidx.compose.foundation.lazy.LazyListState, onShowSnackbar: kotlin.Function1<kotlin.String, kotlin.Unit>, onNavigateUp: kotlin.Function0<kotlin.Unit>): kotlin.Unit
+public fun com.brunodegan.androidplayground.ui.screen.topRatedMovies.TopRatedVideosScreen(modifier: androidx.compose.ui.Modifier, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, listState: androidx.compose.foundation.lazy.LazyListState, onShowSnackbar: kotlin.Function1<kotlin.String, kotlin.Unit>, onNavigateUp: kotlin.Function0<kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -214,7 +214,7 @@ public fun com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.TopRatedVideo
     - onNavigateUp: STABLE (function type)
 
 @Composable
-internal fun com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.TopRatedVideosScreenContent(scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, state: com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.state.TopRatedMoviesUiState, modifier: androidx.compose.ui.Modifier, listState: androidx.compose.foundation.lazy.LazyListState, onEvent: kotlin.Function1<com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.events.TopRatedMoviesUiEvents, kotlin.Unit>): kotlin.Unit
+internal fun com.brunodegan.androidplayground.ui.screen.topRatedMovies.TopRatedVideosScreenContent(scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, state: com.brunodegan.androidplayground.ui.screen.topRatedMovies.state.TopRatedMoviesUiState, modifier: androidx.compose.ui.Modifier, listState: androidx.compose.foundation.lazy.LazyListState, onEvent: kotlin.Function1<com.brunodegan.androidplayground.ui.screen.topRatedMovies.events.TopRatedMoviesUiEvents, kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -225,7 +225,7 @@ internal fun com.brunodegan.ifood_challenge.ui.screen.topRatedMovies.TopRatedVid
     - onEvent: STABLE (function type)
 
 @Composable
-private fun com.brunodegan.ifood_challenge.ui.screen.upComingMovies.SuccessState(scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, modifier: androidx.compose.ui.Modifier, listState: androidx.compose.foundation.lazy.LazyListState, viewData: kotlinx.collections.immutable.ImmutableList<com.brunodegan.ifood_challenge.data.datasources.local.entities.UpcomingMoviesEntity>, onFavoriteButtonClicked: kotlin.Function1<kotlin.Int, kotlin.Unit>, onRemoveFavButtonClickedUiEvent: kotlin.Function1<kotlin.Int, kotlin.Unit>): kotlin.Unit
+private fun com.brunodegan.androidplayground.ui.screen.upComingMovies.SuccessState(scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, modifier: androidx.compose.ui.Modifier, listState: androidx.compose.foundation.lazy.LazyListState, viewData: kotlinx.collections.immutable.ImmutableList<com.brunodegan.androidplayground.data.datasources.local.entities.UpcomingMoviesEntity>, onFavoriteButtonClicked: kotlin.Function1<kotlin.Int, kotlin.Unit>, onRemoveFavButtonClickedUiEvent: kotlin.Function1<kotlin.Int, kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -237,7 +237,7 @@ private fun com.brunodegan.ifood_challenge.ui.screen.upComingMovies.SuccessState
     - onRemoveFavButtonClickedUiEvent: STABLE (function type)
 
 @Composable
-private fun com.brunodegan.ifood_challenge.ui.screen.upComingMovies.UpComingMovesCard(modifier: androidx.compose.ui.Modifier, viewData: com.brunodegan.ifood_challenge.data.datasources.local.entities.UpcomingMoviesEntity, onFavoriteButtonClicked: kotlin.Function1<kotlin.Int, kotlin.Unit>, onRemoveFavButtonClickedUiEvent: kotlin.Function1<kotlin.Int, kotlin.Unit>): kotlin.Unit
+private fun com.brunodegan.androidplayground.ui.screen.upComingMovies.UpComingMovesCard(modifier: androidx.compose.ui.Modifier, viewData: com.brunodegan.androidplayground.data.datasources.local.entities.UpcomingMoviesEntity, onFavoriteButtonClicked: kotlin.Function1<kotlin.Int, kotlin.Unit>, onRemoveFavButtonClickedUiEvent: kotlin.Function1<kotlin.Int, kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -247,7 +247,7 @@ private fun com.brunodegan.ifood_challenge.ui.screen.upComingMovies.UpComingMove
     - onRemoveFavButtonClickedUiEvent: STABLE (function type)
 
 @Composable
-public fun com.brunodegan.ifood_challenge.ui.screen.upComingMovies.UpComingMoviesScreen(modifier: androidx.compose.ui.Modifier, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, listState: androidx.compose.foundation.lazy.LazyListState, onShowSnackbar: kotlin.Function1<kotlin.String, kotlin.Unit>, onNavigateUp: kotlin.Function0<kotlin.Unit>): kotlin.Unit
+public fun com.brunodegan.androidplayground.ui.screen.upComingMovies.UpComingMoviesScreen(modifier: androidx.compose.ui.Modifier, scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, listState: androidx.compose.foundation.lazy.LazyListState, onShowSnackbar: kotlin.Function1<kotlin.String, kotlin.Unit>, onNavigateUp: kotlin.Function0<kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -258,7 +258,7 @@ public fun com.brunodegan.ifood_challenge.ui.screen.upComingMovies.UpComingMovie
     - onNavigateUp: STABLE (function type)
 
 @Composable
-internal fun com.brunodegan.ifood_challenge.ui.screen.upComingMovies.UpComingMoviesScreenContent(scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, state: com.brunodegan.ifood_challenge.ui.screen.upComingMovies.state.UpComingMoviesUiState, listState: androidx.compose.foundation.lazy.LazyListState, modifier: androidx.compose.ui.Modifier, onEvent: kotlin.Function1<com.brunodegan.ifood_challenge.ui.screen.upComingMovies.events.UpcomingMoviesUiEvent, kotlin.Unit>): kotlin.Unit
+internal fun com.brunodegan.androidplayground.ui.screen.upComingMovies.UpComingMoviesScreenContent(scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior, state: com.brunodegan.androidplayground.ui.screen.upComingMovies.state.UpComingMoviesUiState, listState: androidx.compose.foundation.lazy.LazyListState, modifier: androidx.compose.ui.Modifier, onEvent: kotlin.Function1<com.brunodegan.androidplayground.ui.screen.upComingMovies.events.UpcomingMoviesUiEvent, kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -269,7 +269,7 @@ internal fun com.brunodegan.ifood_challenge.ui.screen.upComingMovies.UpComingMov
     - onEvent: STABLE (function type)
 
 @Composable
-public fun com.brunodegan.ifood_challenge.ui.theme.IfoodChallengeTheme(darkTheme: kotlin.Boolean, dynamicColor: kotlin.Boolean, content: @[Composable] androidx.compose.runtime.internal.ComposableFunction0<kotlin.Unit>): kotlin.Unit
+public fun com.brunodegan.androidplayground.ui.theme.AndroidPlaygroundTheme(darkTheme: kotlin.Boolean, dynamicColor: kotlin.Boolean, content: @[Composable] androidx.compose.runtime.internal.ComposableFunction0<kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:

@@ -17,6 +17,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ifood_challenge"
+rootProject.name = "android-playground"
 include(":app")
  

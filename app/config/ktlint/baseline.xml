@@ -1,200 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
 <baseline version="1.0">
-    <file name="src/androidTest/java/com/brunodegan/ifood_challenge/ui/screen/AppNavHostScreenTest.kt">
+    <file name="src/androidTest/java/com/brunodegan/androidplayground/ui/screen/AppNavHostScreenTest.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/base/MainActivity.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/base/MainActivity.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="31" column="5" source="standard:function-naming" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/base/MainApplication.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/base/MainApplication.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/base/database/AppDatabase.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/base/database/AppDatabase.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/base/database/DatabaseModule.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/base/database/DatabaseModule.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/base/database/DatabaseTypeConverter.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/base/database/DatabaseTypeConverter.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/base/dispatchers/DispatchersProvider.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/base/dispatchers/DispatchersProvider.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/base/navigation/AppNavHost.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/base/navigation/AppNavHost.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="48" column="5" source="standard:function-naming" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/base/navigation/NavigationItems.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/base/navigation/NavigationItems.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/base/network/NetworkModule.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/base/network/NetworkModule.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/base/network/base/NetworkBaseApiResponse.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/base/network/base/NetworkBaseApiResponse.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/base/routes/ScreenRoutes.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/base/routes/ScreenRoutes.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/base/ui/CustomAppBar.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/base/ui/CustomAppBar.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="23" column="5" source="standard:function-naming" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/base/ui/CustomMovieShape.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/base/ui/CustomMovieShape.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="49" column="5" source="standard:function-naming" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/base/ui/ErrorUiState.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/base/ui/ErrorUiState.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="33" column="5" source="standard:function-naming" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/base/ui/LoaderUiState.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/base/ui/LoaderUiState.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="19" column="5" source="standard:function-naming" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/base/ui/ObserveAsEvents.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/base/ui/ObserveAsEvents.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="12" column="9" source="standard:function-naming" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/base/ui/SnackbarUiStateHolder.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/base/ui/SnackbarUiStateHolder.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/base/utils/Utils.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/base/utils/Utils.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/api/RestApiService.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/api/RestApiService.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/datasources/local/LocalDataSource.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/datasources/local/LocalDataSource.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/datasources/local/LocalDataSourceImpl.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/datasources/local/LocalDataSourceImpl.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/datasources/local/daos/FavoritesDao.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/datasources/local/daos/FavoritesDao.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/datasources/local/daos/NowPlayingDao.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/datasources/local/daos/NowPlayingDao.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/datasources/local/daos/PopularDao.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/datasources/local/daos/PopularDao.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/datasources/local/daos/TopRatedDao.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/datasources/local/daos/TopRatedDao.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/datasources/local/daos/UpComingDao.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/datasources/local/daos/UpComingDao.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/datasources/local/entities/ApiEntity.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/datasources/local/entities/ApiEntity.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/datasources/local/entities/FavoriteMoviesEntity.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/datasources/local/entities/FavoriteMoviesEntity.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/datasources/local/entities/NowPlayingMoviesEntity.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/datasources/local/entities/NowPlayingMoviesEntity.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/datasources/local/entities/PopularMoviesEntity.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/datasources/local/entities/PopularMoviesEntity.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/datasources/local/entities/TopRatedMoviesEntity.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/datasources/local/entities/TopRatedMoviesEntity.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/datasources/local/entities/UpcomingMoviesEntity.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/datasources/local/entities/UpcomingMoviesEntity.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/datasources/remote/RemoteDataSource.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/datasources/remote/RemoteDataSource.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/datasources/remote/RemoteDataSourceImpl.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/datasources/remote/RemoteDataSourceImpl.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/mappers/AddOrRemoveToFavoritesResponseDataMapper.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/mappers/AddOrRemoveToFavoritesResponseDataMapper.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/mappers/BaseMapper.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/mappers/BaseMapper.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/mappers/FavoritesDataMapper.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/mappers/FavoritesDataMapper.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/mappers/NowPlayingDataMapper.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/mappers/NowPlayingDataMapper.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/mappers/PopularDataMapper.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/mappers/PopularDataMapper.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/mappers/TopRatedDataMapper.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/mappers/TopRatedDataMapper.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/mappers/UpcomingDataMapper.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/mappers/UpcomingDataMapper.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/metrics/AnalyticsData.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/metrics/AnalyticsData.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/metrics/Metrics.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/metrics/Metrics.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/metrics/Tracker.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/metrics/Tracker.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="7" column="5" source="standard:function-naming" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/repositories/MoviesRepository.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/repositories/MoviesRepository.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/data/repositories/MoviesRepositoryImpl.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/data/repositories/MoviesRepositoryImpl.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/di/AppModule.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/di/AppModule.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/domain/addToFavorites/AddToFavoritesUseCase.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/domain/addToFavorites/AddToFavoritesUseCase.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/domain/addToFavorites/AddToFavoritesUseCaseImpl.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/domain/addToFavorites/AddToFavoritesUseCaseImpl.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/domain/getFavorites/GetFavoritesUseCase.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/domain/getFavorites/GetFavoritesUseCase.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/domain/getFavorites/GetFavoritesUseCaseImpl.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/domain/getFavorites/GetFavoritesUseCaseImpl.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/domain/getNowPlaying/GetNowPlayingUseCase.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/domain/getNowPlaying/GetNowPlayingUseCase.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/domain/getNowPlaying/GetNowPlayingUseCaseImpl.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/domain/getNowPlaying/GetNowPlayingUseCaseImpl.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/domain/getPopular/GetPopularUseCase.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/domain/getPopular/GetPopularUseCase.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/domain/getPopular/GetPopularUseCaseImpl.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/domain/getPopular/GetPopularUseCaseImpl.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/domain/getTopRated/GetTopRatedUseCase.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/domain/getTopRated/GetTopRatedUseCase.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/domain/getTopRated/GetTopRatedUseCaseImpl.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/domain/getTopRated/GetTopRatedUseCaseImpl.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/domain/getUpComing/GetUpComingUseCase.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/domain/getUpComing/GetUpComingUseCase.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/domain/getUpComing/GetUpComingUseCaseImpl.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/domain/getUpComing/GetUpComingUseCaseImpl.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/domain/removeFromFavorites/RemoveFromFavoritesUseCase.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/domain/removeFromFavorites/RemoveFromFavoritesUseCase.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/domain/removeFromFavorites/RemoveFromFavoritesUseCaseImpl.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/domain/removeFromFavorites/RemoveFromFavoritesUseCaseImpl.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/favoriteMovies/FavoriteMoviesScreen.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/favoriteMovies/FavoriteMoviesScreen.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="72" column="5" source="standard:function-naming" />
         <error line="106" column="14" source="standard:function-naming" />
@@ -202,16 +202,16 @@
         <error line="169" column="5" source="standard:function-naming" />
         <error line="307" column="5" source="standard:function-naming" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/favoriteMovies/events/FavoriteMoviesUiEvents.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/favoriteMovies/events/FavoriteMoviesUiEvents.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/favoriteMovies/state/FavoriteMoviesUiState.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/favoriteMovies/state/FavoriteMoviesUiState.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/favoriteMovies/viewModel/FavoritesViewModel.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/favoriteMovies/viewModel/FavoritesViewModel.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/nowPlayingMovies/NowPlayingMoviesScreen.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/nowPlayingMovies/NowPlayingMoviesScreen.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="85" column="5" source="standard:function-naming" />
         <error line="119" column="14" source="standard:function-naming" />
@@ -219,16 +219,16 @@
         <error line="198" column="13" source="standard:function-naming" />
         <error line="472" column="5" source="standard:function-naming" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/nowPlayingMovies/events/NowPlayingMoviesUiEvents.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/nowPlayingMovies/events/NowPlayingMoviesUiEvents.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/nowPlayingMovies/state/NowPlayingMoviesUiState.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/nowPlayingMovies/state/NowPlayingMoviesUiState.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/nowPlayingMovies/viewModel/NowPlayingMoviesViewModel.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/nowPlayingMovies/viewModel/NowPlayingMoviesViewModel.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/popularMovies/PopularMoviesScreen.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/popularMovies/PopularMoviesScreen.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="83" column="5" source="standard:function-naming" />
         <error line="117" column="14" source="standard:function-naming" />
@@ -236,16 +236,16 @@
         <error line="196" column="13" source="standard:function-naming" />
         <error line="472" column="5" source="standard:function-naming" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/popularMovies/events/PopularMoviesUiEvents.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/popularMovies/events/PopularMoviesUiEvents.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/popularMovies/state/PopularMoviesUiState.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/popularMovies/state/PopularMoviesUiState.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/popularMovies/viewModel/PopularMoviesViewModel.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/popularMovies/viewModel/PopularMoviesViewModel.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/topRatedMovies/TopRatedMoviesScreen.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/topRatedMovies/TopRatedMoviesScreen.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="85" column="5" source="standard:function-naming" />
         <error line="119" column="14" source="standard:function-naming" />
@@ -253,16 +253,16 @@
         <error line="198" column="13" source="standard:function-naming" />
         <error line="468" column="5" source="standard:function-naming" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/topRatedMovies/events/TopRatedMoviesUiEvents.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/topRatedMovies/events/TopRatedMoviesUiEvents.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/topRatedMovies/state/TopRatedMoviesUiState.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/topRatedMovies/state/TopRatedMoviesUiState.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/topRatedMovies/viewModel/TopRatedMoviesViewModel.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/topRatedMovies/viewModel/TopRatedMoviesViewModel.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/upComingMovies/UpComingMoviesScreen.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/upComingMovies/UpComingMoviesScreen.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="84" column="5" source="standard:function-naming" />
         <error line="118" column="14" source="standard:function-naming" />
@@ -270,58 +270,58 @@
         <error line="197" column="13" source="standard:function-naming" />
         <error line="471" column="5" source="standard:function-naming" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/upComingMovies/events/UpcomingMoviesUiEvent.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/upComingMovies/events/UpcomingMoviesUiEvent.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/upComingMovies/state/UpComingMoviesUiState.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/upComingMovies/state/UpComingMoviesUiState.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/screen/upComingMovies/viewModel/UpComingMoviesViewModel.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/screen/upComingMovies/viewModel/UpComingMoviesViewModel.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/theme/Color.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/theme/Color.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/theme/Theme.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/theme/Theme.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="49" column="5" source="standard:function-naming" />
     </file>
-    <file name="src/main/java/com/brunodegan/ifood_challenge/ui/theme/Type.kt">
+    <file name="src/main/java/com/brunodegan/androidplayground/ui/theme/Type.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/base/utils/UtilsTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/base/utils/UtilsTest.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/data/api/RestApiServiceTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/data/api/RestApiServiceTest.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/data/local/LocalDataSourceImplTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/data/local/LocalDataSourceImplTest.kt">
         <error line="1" column="1" source="standard:filename" />
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/data/mappers/AddOrRemoveToFavoritesResponseDataMapperTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/data/mappers/AddOrRemoveToFavoritesResponseDataMapperTest.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/data/mappers/FavoritesDataMapperTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/data/mappers/FavoritesDataMapperTest.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/data/mappers/NowPlayingMapperTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/data/mappers/NowPlayingMapperTest.kt">
         <error line="1" column="1" source="standard:filename" />
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/data/mappers/PopularDataMapperTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/data/mappers/PopularDataMapperTest.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/data/mappers/TopRatedMapperTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/data/mappers/TopRatedMapperTest.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/data/mappers/UpcomingDataMapperTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/data/mappers/UpcomingDataMapperTest.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/data/remote/RemoteDataSourceImplTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/data/remote/RemoteDataSourceImplTest.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/data/repositories/MoviesRepositoryTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/data/repositories/MoviesRepositoryTest.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="142" column="141" source="standard:max-line-length" />
         <error line="220" column="141" source="standard:max-line-length" />
@@ -331,64 +331,64 @@
         <error line="369" column="141" source="standard:max-line-length" />
         <error line="407" column="141" source="standard:max-line-length" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/domain/addToFavorites/AddToFavoritesUseCaseTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/domain/addToFavorites/AddToFavoritesUseCaseTest.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/domain/getFavorites/GetFavoritesUseCaseTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/domain/getFavorites/GetFavoritesUseCaseTest.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/domain/getNowPlaying/GetNowPlayingUseCaseTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/domain/getNowPlaying/GetNowPlayingUseCaseTest.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/domain/getPopular/GetPopularUseCaseTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/domain/getPopular/GetPopularUseCaseTest.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/domain/getTopRated/GetTopRatedUseCaseTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/domain/getTopRated/GetTopRatedUseCaseTest.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/domain/getUpcoming/GetUpComingUseCaseTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/domain/getUpcoming/GetUpComingUseCaseTest.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/domain/removeFromFavorites/RemoveFromFavoritesUseCaseTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/domain/removeFromFavorites/RemoveFromFavoritesUseCaseTest.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/ui/favoriteMovies/FavoritesViewModelTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/ui/favoriteMovies/FavoritesViewModelTest.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="57" column="141" source="standard:max-line-length" />
         <error line="89" column="141" source="standard:max-line-length" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/ui/nowPlayingMovies/NowPlayingMoviesViewModelTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/ui/nowPlayingMovies/NowPlayingMoviesViewModelTest.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="68" column="141" source="standard:max-line-length" />
         <error line="100" column="141" source="standard:max-line-length" />
         <error line="117" column="141" source="standard:max-line-length" />
         <error line="146" column="141" source="standard:max-line-length" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/ui/popularMovies/PopularMoviesViewModelTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/ui/popularMovies/PopularMoviesViewModelTest.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="68" column="141" source="standard:max-line-length" />
         <error line="100" column="141" source="standard:max-line-length" />
         <error line="117" column="141" source="standard:max-line-length" />
         <error line="146" column="141" source="standard:max-line-length" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/ui/topRatedMovies/TopRatedMoviesViewModelTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/ui/topRatedMovies/TopRatedMoviesViewModelTest.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="68" column="141" source="standard:max-line-length" />
         <error line="100" column="141" source="standard:max-line-length" />
         <error line="117" column="141" source="standard:max-line-length" />
         <error line="146" column="141" source="standard:max-line-length" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/ui/upComingMovies/UpComingMoviesViewModelTest.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/ui/upComingMovies/UpComingMoviesViewModelTest.kt">
         <error line="1" column="9" source="standard:package-name" />
         <error line="68" column="141" source="standard:max-line-length" />
         <error line="100" column="141" source="standard:max-line-length" />
         <error line="117" column="141" source="standard:max-line-length" />
         <error line="138" column="141" source="standard:max-line-length" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/utils/MockUtils.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/utils/MockUtils.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
-    <file name="src/test/java/com/brunodegan/ifood_challenge/data/datasources/utils/TestDispatcherRule.kt">
+    <file name="src/test/java/com/brunodegan/androidplayground/data/datasources/utils/TestDispatcherRule.kt">
         <error line="1" column="9" source="standard:package-name" />
     </file>
 </baseline>

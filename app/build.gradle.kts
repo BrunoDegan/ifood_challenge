@@ -5,7 +5,7 @@ plugins {
 }
 
 extensions.configure<ApplicationExtension> {
-    namespace = "com.brunodegan.ifood_challenge"
+    namespace = "com.brunodegan.androidplayground"
 }
 
 dependencies {
